@@ -36,8 +36,7 @@ export class AppComponent implements AfterViewInit {
     this.sandGeo = new BoxGeometry(0, 0, 0);
     this.grassGeo = new BoxGeometry(0, 0, 0);
 
-
-    this.scene.background = new Color("white");
+    this.scene.background = new Color("black");
     this.camera = new PerspectiveCamera(45, innerWidth / innerHeight, 10, 1000);
 
     this.camera.position.set(0, 60, 16);
@@ -65,7 +64,7 @@ export class AppComponent implements AfterViewInit {
     const envMapTexture = await new RGBELoader().setDataType(FloatType).loadAsync("assets/envmap.hdr");
     const envMap = this.pmrem.fromEquirectangular(envMapTexture).texture;
     const texture = await this.loadTexture();
-    this.createHexMap(texture, envMap)
+    this.createHexMap(texture, envMap);
 
     this.renderer.setAnimationLoop(() => {
       controls.update();
@@ -87,7 +86,7 @@ export class AppComponent implements AfterViewInit {
     const geo = this.hexGeometry(height, position);
 
     if (stoneTile.indexOf(tileIndex) >= 0) {
-      this.stoneGeo = mergeBufferGeometries([geo, this.stoneGeo])
+      this.stoneGeo = mergeBufferGeometries([geo, this.stoneGeo]);
       return;
     }
 
@@ -105,10 +104,7 @@ export class AppComponent implements AfterViewInit {
       this.grassGeo = mergeBufferGeometries([geo, this.grassGeo]);
       return;
     }
-
     this.dirt2Geo = mergeBufferGeometries([geo, this.dirt2Geo]);
-
-
   }
 
   ngAfterViewInit(): void {
@@ -139,7 +135,6 @@ export class AppComponent implements AfterViewInit {
       water: await new TextureLoader().loadAsync("assets/water.jpg"),
       stone: await new TextureLoader().loadAsync("assets/stone.png"),
     };
-
     return textures;
   }
 
