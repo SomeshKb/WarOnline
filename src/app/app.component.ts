@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
-import { ACESFilmicToneMapping, AmbientLight, BoxGeometry, BufferGeometry, Color, CylinderGeometry, FloatType, Mesh, MeshPhysicalMaterial, PCFShadowMap, PerspectiveCamera, PMREMGenerator, PointLight, Scene, sRGBEncoding, Texture, TextureLoader, Vector2, WebGLRenderer } from "three";
+import { ACESFilmicToneMapping, AmbientLight, BoxGeometry, BufferGeometry, Color, CylinderGeometry, FloatType, Mesh, MeshPhysicalMaterial, PCFShadowMap, PerspectiveCamera, PMREMGenerator, PointLight, Scene, SphereGeometry, sRGBEncoding, Texture, TextureLoader, Vector2, WebGLRenderer } from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
 import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils';
@@ -57,9 +57,9 @@ export class AppComponent implements AfterViewInit {
     controls.target.set(0, 0, 0);
     controls.dampingFactor = 0.5;
     controls.enableDamping = true;
-    controls.enableRotate = false;
-    controls.maxZoom=100.00;
-    controls.minZoom=1.0;
+    // controls.enableRotate = false;
+    controls.maxZoom = 100.00;
+    controls.minZoom = 1.0;
 
 
 
@@ -74,7 +74,6 @@ export class AppComponent implements AfterViewInit {
 
     this.renderer.setAnimationLoop(() => {
       controls.update();
-      console.log(controls)
       this.renderer.render(this.scene, this.camera);
     });
 
@@ -82,11 +81,11 @@ export class AppComponent implements AfterViewInit {
     //   event.preventDefault(); /// prevent scrolling
 
     //   console.log(event);
-      
+
     //   let zoom = this.camera.zoom; // take current zoom value
     //   zoom += event.deltaY * -0.01; /// adjust it
     //   zoom = Math.min(Math.max(.125, zoom), 4); /// clamp the value
-    
+
     //   this.camera.zoom = zoom /// assign new zoom value
     //   this.camera.updateProjectionMatrix(); /// make the changes take effect
     // }, { passive: false });
@@ -118,21 +117,33 @@ export class AppComponent implements AfterViewInit {
 
     if (stoneTile.indexOf(tileIndex) >= 0) {
       this.stoneGeo = mergeBufferGeometries([geo, this.stoneGeo]);
+      if (Math.random() > 0.3) {
+        this.stoneGeo = mergeBufferGeometries([this.stoneGeo, this.createStone(height, position)]);
+      }
       return;
     }
 
     if (sandTile.indexOf(tileIndex) >= 0) {
       this.sandGeo = mergeBufferGeometries([geo, this.sandGeo]);
+      if (Math.random() > 0.3) {
+        this.sandGeo = mergeBufferGeometries([this.sandGeo, this.createStone(height, position)]);
+      }
       return;
     }
 
     if (dirtTile.indexOf(tileIndex) >= 0) {
       this.dirtGeo = mergeBufferGeometries([geo, this.dirtGeo]);
+      if (Math.random() > 0.1) {
+        // this.grassGeo = mergeBufferGeometries([this.grassGeo, this.createTree(height, position)]);
+      }
       return;
     }
 
     if (grassTile.indexOf(tileIndex) >= 0) {
       this.grassGeo = mergeBufferGeometries([geo, this.grassGeo]);
+      if (Math.random() > 0.8) {
+        // this.grassGeo = mergeBufferGeometries([this.grassGeo, this.createTree(height, position)]);
+      }
       return;
     }
     this.seaGeo = mergeBufferGeometries([geo, this.seaGeo]);
@@ -140,10 +151,6 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.initialize();
-  }
-
-  getAspectRatio() {
-    return this.canvasRef.nativeElement.clientWidth / this.canvasRef.nativeElement.clientHeight;
   }
 
   createHexMap(texture, envMap) {
@@ -213,6 +220,31 @@ export class AppComponent implements AfterViewInit {
     // seaMesh.castShadow = true;
 
     return seaMesh;
+  }
+
+
+  createStone(height, position) {
+    const px = Math.random() * 0.4;
+    const pz = Math.random() * 0.4;
+
+    const geo = new SphereGeometry(Math.random() * 0.3 + 0.1, 7, 7)
+    geo.translate(position.x + px, height, position.y + pz);
+    return geo;
+  }
+
+  createTree(height, position) {
+    const treeHeight = Math.random();
+
+    const geo = new CylinderGeometry(0, 1.5, treeHeight, 3);
+    geo.translate(position.x, height + treeHeight * 0 + 1, position.y);
+
+    const geo2 = new CylinderGeometry(0, 1.15, treeHeight, 3);
+    geo2.translate(position.x, height + treeHeight * 0.6 + 1, position.y);
+
+    const geo3 = new CylinderGeometry(0, 0.8, treeHeight, 3);
+    geo3.translate(position.x, height + treeHeight * 1.25 + 1, position.y);
+
+    return mergeBufferGeometries([geo, geo2, geo3]);
   }
 
 }
