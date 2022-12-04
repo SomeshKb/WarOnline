@@ -1,4 +1,4 @@
-export const grassTile: Number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-export const stoneTile: Number[] = [11, 12, 13, 14, 15, 16, 17, 18, 19];
-export const dirtTile: Number[] = [21, 22, 23, 24, 25, 26, 27, 28, 29];
-export const sandTile: Number[] = [31, 32, 33, 34, 35, 36, 37, 38, 39];
+export const grassTile: Number[] = [13,14,15,23,24,25,34];
+export const stoneTile: Number[] = [];
+export const dirtTile: Number[] = [];
+export const sandTile: Number[] = [35,44,33];

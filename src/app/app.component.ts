@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
-import { ACESFilmicToneMapping, BoxGeometry, BufferGeometry, Color, CylinderGeometry, FloatType, Mesh, MeshPhysicalMaterial, PerspectiveCamera, PMREMGenerator, Scene, sRGBEncoding, Texture, TextureLoader, Vector2, WebGLRenderer } from "three";
+import { ACESFilmicToneMapping, AmbientLight, BoxGeometry, BufferGeometry, Color, CylinderGeometry, FloatType, Mesh, MeshPhysicalMaterial, PCFShadowMap, PerspectiveCamera, PMREMGenerator, PointLight, Scene, sRGBEncoding, Texture, TextureLoader, Vector2, WebGLRenderer } from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
 import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils';
@@ -27,6 +27,7 @@ export class AppComponent implements AfterViewInit {
   dirt2Geo !: BoxGeometry | BufferGeometry;
   sandGeo !: BoxGeometry | BufferGeometry;
   grassGeo !: BoxGeometry | BufferGeometry;
+  seaGeo !: BoxGeometry | BufferGeometry;
 
   async initialize() {
 
@@ -35,29 +36,34 @@ export class AppComponent implements AfterViewInit {
     this.dirt2Geo = new BoxGeometry(0, 0, 0);
     this.sandGeo = new BoxGeometry(0, 0, 0);
     this.grassGeo = new BoxGeometry(0, 0, 0);
+    this.seaGeo = new BoxGeometry(0, 0, 0);
 
     this.scene.background = new Color("black");
-    this.camera = new PerspectiveCamera(45, innerWidth / innerHeight, 10, 1000);
 
+    this.camera = new PerspectiveCamera(45, innerWidth / innerHeight, 10, 1000);
     this.camera.position.set(0, 60, 16);
+
     this.renderer = new WebGLRenderer({ antialias: true, canvas: this.canvasRef.nativeElement });
     this.renderer.setSize(innerWidth, innerHeight);
     this.renderer.toneMapping = ACESFilmicToneMapping;
     this.renderer.outputEncoding = sRGBEncoding;
+    this.renderer.physicallyCorrectLights = true;
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = PCFShadowMap;
     this.renderer.setPixelRatio(devicePixelRatio);
+
+
     const controls = new OrbitControls(this.camera, this.renderer.domElement);
     controls.target.set(0, 0, 0);
     controls.dampingFactor = 0.5;
     controls.enableDamping = true;
+    controls.enableRotate = false;
+    controls.maxZoom=100.00;
+    controls.minZoom=1.0;
 
-    // const light = new PointLight(new Color("#FFCBBE").convertSRGBToLinear(), 80, 200);
-    // light.position.set(0, 60, 16);
-    // light.castShadow = true;
-    // light.shadow.mapSize.width = 512;
-    // light.shadow.mapSize.height = 512;
-    // light.shadow.camera.near = 0.5;
-    // light.shadow.camera.far = 500;
-    // this.scene.add(light);
+
+
+    this.addLight();
 
     this.pmrem = new PMREMGenerator(this.renderer);
     this.pmrem.compileEquirectangularShader();
@@ -68,12 +74,37 @@ export class AppComponent implements AfterViewInit {
 
     this.renderer.setAnimationLoop(() => {
       controls.update();
+      console.log(controls)
       this.renderer.render(this.scene, this.camera);
     });
+
+    // window.addEventListener('wheel', (event) => {
+    //   event.preventDefault(); /// prevent scrolling
+
+    //   console.log(event);
+      
+    //   let zoom = this.camera.zoom; // take current zoom value
+    //   zoom += event.deltaY * -0.01; /// adjust it
+    //   zoom = Math.min(Math.max(.125, zoom), 4); /// clamp the value
+    
+    //   this.camera.zoom = zoom /// assign new zoom value
+    //   this.camera.updateProjectionMatrix(); /// make the changes take effect
+    // }, { passive: false });
   }
 
   tileToPosition(tileX, tileY) {
     return new Vector2((tileX + (tileY % 2) * 0.5) * 1.77, tileY * 1.535);
+  }
+
+  addLight() {
+    const light = new PointLight(new Color("#FFCBBE").convertSRGBToLinear(), 1, 2000);
+    light.position.set(0, 60, 16);
+    light.castShadow = true;
+    light.shadow.mapSize.width = 512;
+    light.shadow.mapSize.height = 512;
+    light.shadow.camera.near = 0.5;
+    light.shadow.camera.far = 500;
+    this.scene.add(light);
   }
 
   hexGeometry(height, position) {
@@ -104,7 +135,7 @@ export class AppComponent implements AfterViewInit {
       this.grassGeo = mergeBufferGeometries([geo, this.grassGeo]);
       return;
     }
-    this.dirt2Geo = mergeBufferGeometries([geo, this.dirt2Geo]);
+    this.seaGeo = mergeBufferGeometries([geo, this.seaGeo]);
   }
 
   ngAfterViewInit(): void {
@@ -117,8 +148,8 @@ export class AppComponent implements AfterViewInit {
 
   createHexMap(texture, envMap) {
     let count = 0;
-    for (let i = -15; i < 15; i++) {
-      for (let j = -15; j < 15; j++) {
+    for (let i = -5; i < 5; i++) {
+      for (let j = -5; j < 5; j++) {
         this.makeHex(1, this.tileToPosition(i, j), count++);
       }
     }
@@ -144,7 +175,8 @@ export class AppComponent implements AfterViewInit {
     const dirt2Mesh = this.hexMesh(this.dirt2Geo as BoxGeometry, textures.dirt2, envMap);
     const dirtMesh = this.hexMesh(this.dirtGeo as BoxGeometry, textures.dirt, envMap);
     const sandMesh = this.hexMesh(this.sandGeo as BoxGeometry, textures.sand, envMap);
-    this.scene.add(stoneMesh, grassMesh, dirt2Mesh, dirtMesh, sandMesh);
+    const seaMesh = this.createSeaMesh(this.seaGeo as BoxGeometry, textures.water, envMap)
+    this.scene.add(stoneMesh, grassMesh, dirt2Mesh, dirtMesh, sandMesh, seaMesh);
   }
 
   hexMesh(geo: BoxGeometry, map: Texture, envMap) {
@@ -156,9 +188,31 @@ export class AppComponent implements AfterViewInit {
     });
 
     const mesh = new Mesh(geo, mat);
-    // mesh.castShadow = true;
-    // mesh.receiveShadow = true;
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
     return mesh;
+  }
+
+
+  createSeaMesh(geo: BoxGeometry, waterTexture: Texture, envMap) {
+    const seaMesh = new Mesh(geo,
+      new MeshPhysicalMaterial({
+        envMap: envMap,
+        color: new Color("#55aaff").convertSRGBToLinear().multiplyScalar(3),
+        ior: 1.4,
+        transmission: 1,
+        transparent: true,
+        envMapIntensity: 0.5,
+        roughness: 1,
+        metalness: 0.1,
+        roughnessMap: waterTexture,
+        metalnessMap: waterTexture
+      })
+    );
+
+    // seaMesh.castShadow = true;
+
+    return seaMesh;
   }
 
 }
