@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
-import { ACESFilmicToneMapping, BoxGeometry, BufferGeometry, Color, CylinderGeometry, FloatType, Mesh, MeshPhysicalMaterial, MeshStandardMaterial, PerspectiveCamera, PMREMGenerator, PointLight, Scene, sRGBEncoding, Texture, TextureLoader, Vector2, WebGLRenderer } from "three";
+import { ACESFilmicToneMapping, BoxGeometry, BufferGeometry, Color, CylinderGeometry, FloatType, Mesh, MeshPhysicalMaterial, PerspectiveCamera, PMREMGenerator, Scene, sRGBEncoding, Texture, TextureLoader, Vector2, WebGLRenderer } from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
 import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils';
@@ -21,7 +21,6 @@ export class AppComponent implements AfterViewInit {
   private scene: Scene = new Scene();
   mousePos = new Vector2(0, 0);
   pmrem !: PMREMGenerator;
-  hexagonGeometeries !: BoxGeometry | BufferGeometry;
 
   stoneGeo !: BoxGeometry | BufferGeometry;
   dirtGeo !: BoxGeometry | BufferGeometry;
@@ -62,8 +61,7 @@ export class AppComponent implements AfterViewInit {
     // this.scene.add(light);
 
     this.pmrem = new PMREMGenerator(this.renderer);
-    // this.pmrem.compileEquirectangularShader();
-    this.hexagonGeometeries = new BoxGeometry(0, 0, 0);
+    this.pmrem.compileEquirectangularShader();
     const envMapTexture = await new RGBELoader().setDataType(FloatType).loadAsync("assets/envmap.hdr");
     const envMap = this.pmrem.fromEquirectangular(envMapTexture).texture;
     const texture = await this.loadTexture();
@@ -87,23 +85,23 @@ export class AppComponent implements AfterViewInit {
 
   makeHex(height, position, tileIndex) {
     const geo = this.hexGeometry(height, position);
-   
-    if(stoneTile.indexOf(tileIndex)>=0) {
+
+    if (stoneTile.indexOf(tileIndex) >= 0) {
       this.stoneGeo = mergeBufferGeometries([geo, this.stoneGeo])
       return;
     }
 
-    if(sandTile.indexOf(tileIndex)>=0) {
+    if (sandTile.indexOf(tileIndex) >= 0) {
       this.sandGeo = mergeBufferGeometries([geo, this.sandGeo]);
       return;
     }
 
-    if(dirtTile.indexOf(tileIndex)>=0) {
+    if (dirtTile.indexOf(tileIndex) >= 0) {
       this.dirtGeo = mergeBufferGeometries([geo, this.dirtGeo]);
       return;
     }
 
-    if(grassTile.indexOf(tileIndex)>=0) {
+    if (grassTile.indexOf(tileIndex) >= 0) {
       this.grassGeo = mergeBufferGeometries([geo, this.grassGeo]);
       return;
     }
@@ -169,17 +167,3 @@ export class AppComponent implements AfterViewInit {
   }
 
 }
-
-class ExtendedCylinderGeometry extends CylinderGeometry {
-  constructor(radiusTop?: number,
-    radiusBottom?: number,
-    height?: number,
-    radialSegments?: number,
-    heightSegments?: number,
-    openEnded?: boolean,
-    index?: number) {
-    super();
-    index = index;
-  }
-}
-
