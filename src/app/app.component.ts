@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
-import { ACESFilmicToneMapping, BoxGeometry, BufferGeometry, Color, CylinderGeometry, FloatType, Mesh, MeshPhysicalMaterial, MeshStandardMaterial, PerspectiveCamera, PMREMGenerator, Scene, sRGBEncoding, Texture, TextureLoader, Vector2, WebGLRenderer } from "three";
+import { ACESFilmicToneMapping, BoxGeometry, BufferGeometry, Color, CylinderGeometry, FloatType, Mesh, MeshPhysicalMaterial, MeshStandardMaterial, PerspectiveCamera, PMREMGenerator, PointLight, Scene, sRGBEncoding, Texture, TextureLoader, Vector2, WebGLRenderer } from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
 import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils';
+import { dirtTile, grassTile, sandTile, stoneTile } from "./data";
 
 @Component({
   selector: 'app-root',
@@ -41,7 +42,6 @@ export class AppComponent implements AfterViewInit {
     this.camera = new PerspectiveCamera(45, innerWidth / innerHeight, 10, 1000);
 
     this.camera.position.set(0, 60, 16);
-    const aspectRatio = this.getAspectRatio();
     this.renderer = new WebGLRenderer({ antialias: true, canvas: this.canvasRef.nativeElement });
     this.renderer.setSize(innerWidth, innerHeight);
     this.renderer.toneMapping = ACESFilmicToneMapping;
@@ -51,6 +51,15 @@ export class AppComponent implements AfterViewInit {
     controls.target.set(0, 0, 0);
     controls.dampingFactor = 0.5;
     controls.enableDamping = true;
+
+    // const light = new PointLight(new Color("#FFCBBE").convertSRGBToLinear(), 80, 200);
+    // light.position.set(0, 60, 16);
+    // light.castShadow = true;
+    // light.shadow.mapSize.width = 512;
+    // light.shadow.mapSize.height = 512;
+    // light.shadow.camera.near = 0.5;
+    // light.shadow.camera.far = 500;
+    // this.scene.add(light);
 
     this.pmrem = new PMREMGenerator(this.renderer);
     // this.pmrem.compileEquirectangularShader();
@@ -71,20 +80,37 @@ export class AppComponent implements AfterViewInit {
   }
 
   hexGeometry(height, position) {
-    let geo = new CylinderGeometry(1, 1, height, 6, 1, false);
+    const geo = new CylinderGeometry(1, 1, height, 6, 1, false);
     geo.translate(position.x, height * 0.5, position.y);
     return geo;
   }
 
-  makeHex(height, position) {
-    let geo = this.hexGeometry(height, position);
-    // this.grassGeo = mergeBufferGeometries([this.grassGeo, geo]);
-
-    if (position.x == 0) {
-      this.stoneGeo = mergeBufferGeometries([geo, this.stoneGeo]);
-    } else {
-      this.dirtGeo = mergeBufferGeometries([geo, this.dirtGeo]);
+  makeHex(height, position, tileIndex) {
+    const geo = this.hexGeometry(height, position);
+   
+    if(stoneTile.indexOf(tileIndex)>=0) {
+      this.stoneGeo = mergeBufferGeometries([geo, this.stoneGeo])
+      return;
     }
+
+    if(sandTile.indexOf(tileIndex)>=0) {
+      this.sandGeo = mergeBufferGeometries([geo, this.sandGeo]);
+      return;
+    }
+
+    if(dirtTile.indexOf(tileIndex)>=0) {
+      this.dirtGeo = mergeBufferGeometries([geo, this.dirtGeo]);
+      return;
+    }
+
+    if(grassTile.indexOf(tileIndex)>=0) {
+      this.grassGeo = mergeBufferGeometries([geo, this.grassGeo]);
+      return;
+    }
+
+    this.dirt2Geo = mergeBufferGeometries([geo, this.dirt2Geo]);
+
+
   }
 
   ngAfterViewInit(): void {
@@ -96,14 +122,14 @@ export class AppComponent implements AfterViewInit {
   }
 
   createHexMap(texture, envMap) {
+    let count = 0;
     for (let i = -15; i < 15; i++) {
       for (let j = -15; j < 15; j++) {
-        this.makeHex(1, this.tileToPosition(i, j));
+        this.makeHex(1, this.tileToPosition(i, j), count++);
       }
     }
 
     this.createMeshTexture(texture, envMap);
-
   }
 
   async loadTexture() {
@@ -120,7 +146,6 @@ export class AppComponent implements AfterViewInit {
   }
 
   createMeshTexture(textures, envMap) {
-    debugger
     const stoneMesh = this.hexMesh(this.stoneGeo as BoxGeometry, textures.stone, envMap);
     const grassMesh = this.hexMesh(this.grassGeo as BoxGeometry, textures.grass, envMap);
     const dirt2Mesh = this.hexMesh(this.dirt2Geo as BoxGeometry, textures.dirt2, envMap);
@@ -130,16 +155,31 @@ export class AppComponent implements AfterViewInit {
   }
 
   hexMesh(geo: BoxGeometry, map: Texture, envMap) {
-    let mat = new MeshPhysicalMaterial({
+    const mat = new MeshPhysicalMaterial({
       envMap: envMap,
       envMapIntensity: 0.135,
       flatShading: true,
       map: map
     });
 
-    let mesh = new Mesh(geo, mat);
+    const mesh = new Mesh(geo, mat);
+    // mesh.castShadow = true;
+    // mesh.receiveShadow = true;
     return mesh;
   }
 
+}
+
+class ExtendedCylinderGeometry extends CylinderGeometry {
+  constructor(radiusTop?: number,
+    radiusBottom?: number,
+    height?: number,
+    radialSegments?: number,
+    heightSegments?: number,
+    openEnded?: boolean,
+    index?: number) {
+    super();
+    index = index;
+  }
 }
 
