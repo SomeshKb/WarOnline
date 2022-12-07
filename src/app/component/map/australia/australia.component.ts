@@ -1,15 +1,14 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { asiaTileData } from "src/app/tile-data";
-import { Color, PerspectiveCamera, PMREMGenerator, Raycaster, Scene, Vector2, WebGLRenderer } from "three";
-import { HexGeneratorService } from "../../../services/hex-generator.service";
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { HexGeneratorService } from 'src/app/services/hex-generator.service';
+import { australiaTileData } from 'src/app/tile-data';
+import { PerspectiveCamera, WebGLRenderer, Scene, PMREMGenerator, Raycaster, Vector2, Color } from 'three';
 
 @Component({
-  selector: 'app-asia',
-  templateUrl: './asia.component.html',
-  styleUrls: ['./asia.component.css']
+  selector: 'app-australia',
+  templateUrl: './australia.component.html',
+  styleUrls: ['./australia.component.css']
 })
-export class AsiaComponent implements OnInit, AfterViewInit {
-
+export class AustraliaComponent implements OnInit {
   @ViewChild('canvas') canvasRef: ElementRef;
 
   private camera!: PerspectiveCamera;
@@ -36,15 +35,16 @@ export class AsiaComponent implements OnInit, AfterViewInit {
     const envMap = await this.hexGenerator.updateEnvMap(this.pmrem);
 
     const tileData = {
-      stoneTile: asiaTileData.stoneTile,
-      sandTile: asiaTileData.sandTile,
-      dirtTile: asiaTileData.dirtTile,
-      grassTile: asiaTileData.grassTile
+      stoneTile: australiaTileData.stoneTile,
+      sandTile: australiaTileData.sandTile,
+      dirtTile: australiaTileData.dirtTile,
+      grassTile: australiaTileData.grassTile
     }
 
     this.hexGenerator.createHexMap(texture, envMap, 9, 9, this.scene, tileData);
     const controls = this.hexGenerator.addOrbitalControl(this.camera, this.renderer);
     this.hexGenerator.addLight(this.scene);
+
     this.renderer.setAnimationLoop(() => {
       controls.update();
       this.renderer.render(this.scene, this.camera);
