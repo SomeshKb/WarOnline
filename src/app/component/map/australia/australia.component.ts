@@ -25,7 +25,7 @@ export class AustraliaComponent implements OnInit {
   }
 
   async initializeScene() {
-    this.scene.background = new Color("#002e54");
+    this.scene.background = new Color("#0E5378");
     this.camera = this.hexGenerator.updateCamera(80, 0, 20, 0);
     this.renderer = this.hexGenerator.addRenderer(this.canvasRef);
     this.pmrem = new PMREMGenerator(this.renderer);

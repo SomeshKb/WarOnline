@@ -1,32 +1,50 @@
-.continent-div{
-    height: 75px;
+.continent-div {
+  height: 75px;
+  position: absolute;
+  bottom: 0px;
+  align-self: center;
+  background: #ffffff;
+  display: flex;
+  left: calc((100% - 525px) / 2);
+  border: 5px solid #1fd9e4;
+  border-bottom: none;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.continent-routes {
+  height: 75px;
+}
+
+.continent-routes.first {
+  border-top-left-radius: 5px;
+}
+
+.continent-routes.last {
+  border-top-right-radius: 5px;
+}
+
+.header {
+  position: absolute;
+  top: 0px;
+  height: 75px;
+  width: 100%;
+}
+
+.left-menu {
     position: absolute;
-    bottom: 0px;
-    align-self: center;
-    background: #ffffff;
-    display: flex;
-    left: calc((100% - 525px) / 2);
-    border: 5px solid #1fd9e4;
-    border-bottom: none;
-    border-top-left-radius: 10px ;
-    border-top-right-radius: 10px ;
+    left: 0px;
+    top: 25%;
+    width: 100px;
 }
 
-.continent-routes{
-    height: 75px;
+.selected-continent {
+  filter: brightness(0.7);
 }
 
-.continent-routes.first{
-    border-top-left-radius: 5px ;
-}
-
-.continent-routes.last{
-    border-top-right-radius: 5px ;
-}
-
-.header{
-    position: absolute;
-    top:0px;
-    height: 75px;
-    width: 100%;
+.chat-window{
+  position: absolute;
+  width: 100px;
+  right: 200px;
+  bottom: 0px;
 }

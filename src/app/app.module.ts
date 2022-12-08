@@ -6,13 +6,17 @@ import { AppComponent } from './app.component';
 import { AsiaComponent } from './component/map/asia/asia.component';
 import { AustraliaComponent } from './component/map/australia/australia.component';
 import { HeaderComponent } from './component/header/header.component';
+import { LeftNavComponent } from './component/left-nav/left-nav.component';
+import { ChatWindowComponent } from './component/chat-window/chat-window.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AsiaComponent,
     AustraliaComponent,
-    HeaderComponent
+    HeaderComponent,
+    LeftNavComponent,
+    ChatWindowComponent
   ],
   imports: [
     BrowserModule,

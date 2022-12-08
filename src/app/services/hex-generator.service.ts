@@ -18,7 +18,7 @@ export class HexGeneratorService {
   }
 
   addRenderer(canvasRef: ElementRef) {
-    const renderer = new WebGLRenderer({ antialias: true, canvas: canvasRef.nativeElement });
+    const renderer = new WebGLRenderer({ antialias: true, canvas: canvasRef.nativeElement, alpha: true });
     renderer.setSize(innerWidth, innerHeight);
     renderer.toneMapping = ACESFilmicToneMapping;
     renderer.outputEncoding = sRGBEncoding;

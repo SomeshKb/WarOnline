@@ -1,0 +1,23 @@
+<div class="wrapper" [ngClass]="{'collapse': collapse}">
+
+    <div class="type-tab">
+        <div class="chat-wrapper">
+            <diV class="world chat">
+                WC
+            </diV>
+            <diV class="country chat">
+                CC
+            </diV>
+            <diV class="squad chat">
+                SC
+            </diV>
+        </div>
+
+        <button class="collapse-btn" (click)="toggle()">
+            <i class='fas'  [ngClass]="collapse? 'fa-angle-double-up' : 'fa-angle-double-down'"></i>
+        </button>
+
+    </div>
+
+
+</div>

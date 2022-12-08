@@ -1,0 +1,39 @@
+.wrapper {
+    background: linear-gradient(0.33turn, #02374e, #1668aa, #02374e, #1668aa);
+    height: 300px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    width: 270px;
+    transition: all .5s ease-in-out;
+    border: 2px solid #046a71;
+    border-bottom: none ;
+    color: #fff;
+  }
+  
+  /* .wrapper:hover {
+      width: 100%;
+  } */
+
+  .type-tab {
+    display: flex;
+    border-bottom: 1px solid rgb(63, 226, 255);
+}
+
+.chat {
+    padding: 10px;
+
+}
+
+.collapse{
+    height: 40px;
+}
+.chat-wrapper{
+    display: flex;
+    width: 100%;
+}
+
+.collapse-btn {
+    background: #ffffff00;
+    border-color: #fffdfd00;
+    color: rgb(0, 195, 255);
+}
