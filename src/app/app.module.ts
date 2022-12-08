@@ -8,6 +8,8 @@ import { AustraliaComponent } from './component/map/australia/australia.componen
 import { HeaderComponent } from './component/header/header.component';
 import { LeftNavComponent } from './component/left-nav/left-nav.component';
 import { ChatWindowComponent } from './component/chat-window/chat-window.component';
+import { DistictComponent } from './component/distict/distict.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -16,11 +18,13 @@ import { ChatWindowComponent } from './component/chat-window/chat-window.compone
     AustraliaComponent,
     HeaderComponent,
     LeftNavComponent,
-    ChatWindowComponent
+    ChatWindowComponent,
+    DistictComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

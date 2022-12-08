@@ -64,6 +64,6 @@ export class AsiaComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.initializeScene();
+    // this.initializeScene();
   }
 }

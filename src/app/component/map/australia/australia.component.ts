@@ -60,10 +60,12 @@ export class AustraliaComponent implements OnInit {
     const intersects = this.raycaster.intersectObjects(this.scene.children);
     if (intersects.length >= 1) {
       console.log(intersects[0].object["geometry"].name)
+      // this.openDialog(intersects[0].object["geometry"].name);
     }
   }
 
   ngAfterViewInit(): void {
     this.initializeScene();
   }
+
 }
