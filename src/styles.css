@@ -1,11 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+html,
 body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
   width: 100% !important;
   margin: 0px !important;
   overflow-y: hidden;
-  font-family: sans-serif;
 }
 
 button {
   cursor: pointer;
+}
+
+.cdk-global-scrollblock {
+  overflow: hidden;
 }

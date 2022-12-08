@@ -1,20 +1,17 @@
-import { Component, Inject, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-
-
+import { Component, Inject, OnInit } from '@angular/core';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 @Component({
   selector: 'app-distict',
   templateUrl: './distict.component.html',
   styleUrls: ['./distict.component.css']
 })
-export class DistictComponent implements OnInit, OnChanges {
+export class DistictComponent implements OnInit {
+  tileID = null;
 
-  constructor() {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: {tileID: string}) {
+    this.tileID = data.tileID;
+  }
 
   ngOnInit(): void {
   }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes)
-  }
-
 }

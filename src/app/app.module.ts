@@ -10,6 +10,7 @@ import { LeftNavComponent } from './component/left-nav/left-nav.component';
 import { ChatWindowComponent } from './component/chat-window/chat-window.component';
 import { DistictComponent } from './component/distict/distict.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -19,12 +20,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HeaderComponent,
     LeftNavComponent,
     ChatWindowComponent,
-    DistictComponent,
+    DistictComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
