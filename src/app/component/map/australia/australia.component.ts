@@ -2,7 +2,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { HexGeneratorService } from 'src/app/services/hex-generator.service';
 import { australiaTileData } from 'src/app/tile-data';
-import { PerspectiveCamera, WebGLRenderer, Scene, PMREMGenerator, Raycaster, Vector2, Color } from 'three';
+import { PerspectiveCamera, WebGLRenderer, Scene, PMREMGenerator, Raycaster, Vector2, Color, Vector3 } from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { DistictComponent } from '../../distict/distict.component';
 
 @Component({
@@ -19,8 +20,12 @@ export class AustraliaComponent implements OnInit {
   pmrem !: PMREMGenerator;
   raycaster = new Raycaster();
   mouse = new Vector2();
-
+  controls: OrbitControls;
   isDialogedOpen = false;
+
+  zoomLevel = 6;
+  maxZoomLevel = 10;
+  minZoomLevel = 1;
 
   constructor(private hexGenerator: HexGeneratorService, public dialog: MatDialog) {
   }
@@ -31,7 +36,7 @@ export class AustraliaComponent implements OnInit {
   openDialog(tileID) {
     this.isDialogedOpen = true;
     const dialogRef = this.dialog.open(DistictComponent
-      , { height: '400px', data: { tileID: tileID } }
+      , { height: '600px', data: { tileID: tileID } }
     );
 
     dialogRef.afterClosed().subscribe(result => {
@@ -56,15 +61,16 @@ export class AustraliaComponent implements OnInit {
     }
 
     this.hexGenerator.createHexMap(texture, envMap, 9, 9, this.scene, tileData);
-    const controls = this.hexGenerator.addOrbitalControl(this.camera, this.renderer);
+    this.controls = this.hexGenerator.addOrbitalControl(this.camera, this.renderer);
     this.hexGenerator.addLight(this.scene);
 
     this.renderer.setAnimationLoop(() => {
-      controls.update();
+      this.controls.update();
       this.renderer.render(this.scene, this.camera);
     });
 
     window.addEventListener('click', this.onClick.bind(this), false);
+    document.addEventListener('wheel', this.worldZoom.bind(this), false);
   }
 
   onClick(event) {
@@ -77,11 +83,40 @@ export class AustraliaComponent implements OnInit {
     const intersects = this.raycaster.intersectObjects(this.scene.children);
     if (intersects.length >= 1) {
       this.openDialog(intersects[0].object["geometry"].name);
+      // console.log(intersects[0].object["geometry"].name)
     }
   }
 
   ngAfterViewInit(): void {
     this.initializeScene();
+  }
+
+  worldZoom(event) {
+    if (event.deltaY < 0 && this.zoomLevel <= this.maxZoomLevel)
+    {
+      let factor = 1;
+      let mX = (event.clientX / innerWidth) * 2 - 1;
+      let mY = -(event.clientY / innerHeight) * 2 + 1;
+      let vector = new Vector3(mX, mY, 0.1);
+      vector.unproject(this.camera);
+      vector.sub(this.camera.position);
+      this.camera.position.addVectors(this.camera.position, vector.setLength(factor));
+      this.controls.target.addVectors(this.controls.target, vector.setLength(factor));
+      this.zoomLevel++;
+    }
+    else if (event.deltaY > 0 && this.zoomLevel > this.minZoomLevel )
+    {
+      let factor = 1;
+      let mX = (event.clientX / innerWidth) * 2 - 1;
+      let mY = -(event.clientY / innerHeight) * 2 + 1;
+      let vector = new Vector3(mX, mY, 0.1);
+      vector.unproject(this.camera);
+      vector.sub(this.camera.position);
+      this.camera.position.subVectors(this.camera.position, vector.setLength(factor));
+      this.controls.target.subVectors(this.controls.target, vector.setLength(factor));
+      this.zoomLevel--;
+    }
+    event.stopPropagation();
   }
 
 }

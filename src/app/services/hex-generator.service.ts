@@ -47,11 +47,11 @@ export class HexGeneratorService {
     return textures;
   }
 
-  createHexMap(texture, envMap, height, width, scene,tileData) {
+  createHexMap(texture, envMap, height, width, scene, tileData) {
     let count = 0;
     for (let i = -height; i < height; i++) {
       for (let j = -width; j < width; j++) {
-        this.createHexagonTiles(0.2, this.tileToPosition(i, j), count++, texture, envMap, scene,tileData);
+        this.createHexagonTiles(0.2, this.tileToPosition(i, j), count++, texture, envMap, scene, tileData);
       }
     }
   }
@@ -60,7 +60,7 @@ export class HexGeneratorService {
     return new Vector2((tileX + (tileY % 2) * 0.5) * 1.77, tileY * 1.535);
   }
 
-  createHexagonTiles(height, position, tileIndex, textures, envMap, scene,tiledata) {
+  createHexagonTiles(height, position, tileIndex, textures, envMap, scene, tiledata) {
     const geo = this.createHexGeometry(height, position);
     geo.name = tileIndex;
     // const mesh = this.createSeaMesh(geo , textures.water, envMap);
@@ -170,8 +170,11 @@ export class HexGeneratorService {
     controls.dampingFactor = 0.5;
     controls.enableDamping = true;
     controls.enableRotate = false;
-    controls.maxZoom = 100.00;
-    controls.minZoom = 1.0;
+    // controls.maxZoom = 8.00;
+    // controls.minZoom = 1.0;
+    controls.minDistance = 0;
+    controls.maxDistance = 20;
+    controls.enableZoom = false;
     return controls;
   }
 
@@ -185,6 +188,40 @@ export class HexGeneratorService {
     const light = new DirectionalLight(new Color(0xFFFFFF).convertSRGBToLinear(), 1);
     light.position.set(0, 100, 0);
     scene.add(light);
+  }
+
+
+
+  createDistictHexMap(texture, envMap, height, width, scene, tileData) {
+    let count = 0;
+    for (let i = -height; i < height; i++) {
+      for (let j = -width; j < width; j++) {
+        this.createDistictHexagonTiles(0.2, this.tileToPosition(i, j), count++, texture, envMap, scene, tileData);
+      }
+    }
+  }
+
+  createDistictHexagonTiles(height, position, tileIndex, textures, envMap, scene, tiledata) {
+    const geo = this.createHexGeometry(height, position);
+    geo.name = tileIndex;
+
+    if (tiledata.distict.indexOf(tileIndex) >= 0) {
+      this.createAndAddMeshTexture(geo, textures.stone, envMap, scene);
+
+      if (Math.random() > 0.3) {
+        this.createAndAddMeshTexture(this.createStone(height, position), textures.stone, envMap, scene);
+      }
+      return;
+    }
+
+    // if (tiledata.sandTile.indexOf(tileIndex) >= 0) {
+    //   this.createAndAddMeshTexture(geo, textures.sand, envMap, scene);
+
+    //   if (Math.random() > 0.3) {
+    //     this.createAndAddMeshTexture(this.createStone(height, position), textures.sand, envMap, scene);
+    //   }
+    //   return;
+    // }
   }
 
 

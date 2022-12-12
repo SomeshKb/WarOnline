@@ -18,3 +18,12 @@ button {
 .cdk-global-scrollblock {
   overflow: hidden;
 }
+
+.mat-dialog-container{
+  background: #ffffff00;
+  padding: 0px !important;
+}
+
+.cdk-overlay-pane{
+  height: fit-content !important;
+}
