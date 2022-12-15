@@ -92,6 +92,9 @@ export class AustraliaComponent implements OnInit {
   }
 
   worldZoom(event) {
+    if (this.isDialogedOpen) {
+      return;
+    }
     if (event.deltaY < 0 && this.zoomLevel <= this.maxZoomLevel)
     {
       let factor = 1;

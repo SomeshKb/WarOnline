@@ -23,7 +23,8 @@ mat-dialog-content {
 
 .base-details {
   height: 100%;
-  width: 250px;
+  min-width: 250px;
+  width: 300px;
 }
 
 .base-details-header {

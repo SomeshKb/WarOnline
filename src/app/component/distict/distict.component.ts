@@ -24,9 +24,6 @@ export class DistictComponent implements OnInit, AfterViewInit {
   raycaster = new Raycaster();
   mouse = new Vector2();
 
-  isDialogedOpen = false;
-
-
   ngOnInit(): void {
   }
 
@@ -35,8 +32,8 @@ export class DistictComponent implements OnInit, AfterViewInit {
     this.scene.background = new Color("#0E5378");
     this.camera = this.hexGenerator.updateCamera(80, 0, 15, 0);
 
-    const height = 424.091;
-    const width = 590;
+    const height = innerHeight/1.6;
+    const width = innerWidth/3.5;
 
 
     this.renderer = new WebGLRenderer({ antialias: true, canvas: this.canvasRef.nativeElement, alpha: true });
@@ -80,9 +77,7 @@ export class DistictComponent implements OnInit, AfterViewInit {
   }
 
   onClick(event) {
-    if (this.isDialogedOpen) {
-      return;
-    }
+
     this.mouse.x = (event.clientX / this.renderer.domElement.clientWidth) * 2 - 1;
     this.mouse.y = - (event.clientY / this.renderer.domElement.clientHeight) * 2 + 1;
     this.raycaster.setFromCamera(this.mouse, this.camera);
