@@ -1,16 +1,6 @@
-<div class="base-wrapper">
-    <div class="base">
-        <canvas #canvas class="canvas"></canvas>
+<div class="container center-distict" *ngFor="let grid of gridArray; let i = index">
+    <div class="main-outside" (click)="onClick(i,j)" *ngFor="let item of [].constructor(grid); let j = index"
+      [ngStyle]="{'left': getStartingMargin(grid, 7)+'px'}">
+      <div class="main-inside"></div>
     </div>
-    <div class="base-details">
-        <div class="base-details-header">
-            <span>
-                {{tileID}}
-            </span>
-            <span>
-                <i class="fa-solid fa-share-nodes"></i>
-            </span>
-        </div>
-        </div>
-    </div>
-
+  </div>

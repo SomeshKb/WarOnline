@@ -2,40 +2,70 @@
   display: flex;
   flex-direction: column;
   min-width: 700px;
+  min-height: 700px;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: #969595;
+  
 }
 
-mat-dialog-content {
-  flex-grow: 1;
+.center-distict {
+  position: relative;
+  top: 34px;
+  left: 20px;
 }
 
-.base-wrapper {
+
+.hexa {
+  --s: 500px;
+  position: relative;
+  width: var(--s);
+  height: calc(var(--s)*0.7);
+  background: #386405;
+  -webkit-clip-path: polygon(25% 0%, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  clip-path: polygon(25% 0%, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  margin: -1px;
+}
+
+
+.main-outside {
+  position: relative;
+  width: 66px;
+  height: 58px;
+  display: inline-block;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background: #434408;
+  -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  z-index: 1;
+  margin: -12px -2px -10px 0px;
+}
+
+.main-inside {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  background-image: url("../../../assets/dirt.png");
+  background-repeat: repeat;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.distict-name {
+  color: #fff;
+  font-weight: 600;
+}
+
+.distict-sidebar {
+  background-color: #919191a1;
+  height: 70vh;
+  width: 412px;
+  position: absolute;
+  right: 12%;
+  top: 20%;
+  border-radius: 15px;
+  padding: 10px;
   display: flex;
-  background: linear-gradient(0.33turn, #169dd6, #1668aa, #1777a0, #1668aa);
-  border: 3px solid #60f4ff;
-  border-radius: 10px;
-}
-
-.base {
-  height: 100%;
-  border-bottom-left-radius: 7px;
-  border-top-left-radius: 7px;
-}
-
-.base-details {
-  height: 100%;
-  min-width: 250px;
-  width: 300px;
-}
-
-.base-details-header {
-  border-bottom: 1px solid #3fe2ff;
-  height: 35px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 5px;
-}
-
-.fa-share-nodes {
-  color: #60f4ff;
+  flex-direction: column;
+  text-align: center;
 }
