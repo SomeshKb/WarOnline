@@ -1,6 +1,20 @@
-<div class="container center-distict" *ngFor="let grid of gridArray; let i = index">
+<div class="container">
+<div class="center-distict" *ngFor="let grid of gridArray; let i = index">
     <div class="main-outside" (click)="onClick(i,j)" *ngFor="let item of [].constructor(grid); let j = index"
       [ngStyle]="{'left': getStartingMargin(grid, 7)+'px'}">
       <div class="main-inside"></div>
     </div>
   </div>
+</div>
+
+  <div class="distict-details">
+    <div class="heading">
+      Australia / {{tileID}}
+    </div>
+    <div class="armies-wrapper">
+
+    <div class="armies"  *ngFor="let armyCount of armies; let i = index">
+      {{armyCount}}
+    </div>
+  </div>
+</div>

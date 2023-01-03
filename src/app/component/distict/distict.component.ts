@@ -13,15 +13,9 @@ export class DistictComponent implements OnInit {
   noOfRow = 10;
   noOfCol = 10
 
-  distict = [2, 3, 2]
-
-  gridArray = [4, 5, 6, 7, 6, 5, 4]
+  gridArray = [3, 4, 5, 6, 7, 6, 5, 4, 3]
   largestRow = 7;
-  currentDistict:  { x: -1, y: -1 }
-  armies = [1,2,3,7,8,7,7,7,7,7,7];
-
-  color: tileColor = {
-  }
+  armies = [1, 2, 3, 7, 8, 7, 7, 7, 7, 7, 7];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { tileID: string }, private hexGenerator: HexGeneratorService, public dialog: MatDialog) {
     this.tileID = data.tileID;
@@ -29,25 +23,18 @@ export class DistictComponent implements OnInit {
   }
 
 
-ngOnInit(): void {
-}
+  ngOnInit(): void {
+  }
 
-getColor(i: number) {
-  return this.color[i] ? this.color[i] : 'blue';
-}
+  onClick(i: number, j: number) {
 
-onClick(i: number, j: number) {
-
-  // this.dialog.closeAll();
-  // this.dialog.open(BaseComponent, { data: { x: i, y: j } })
-  // this.router.navigate(['base', i, j]);
-}
-getStartingMargin(value: number, midRowValue: number) {
-  return ((midRowValue - value) * 33);
-}
+    // this.dialog.closeAll();
+    // this.dialog.open(BaseComponent, { data: { x: i, y: j } })
+    // this.router.navigate(['base', i, j]);
+  }
+  getStartingMargin(value: number, midRowValue: number) {
+    return ((midRowValue - value) * 33);
+  }
 
 }
 
-interface tileColor {
-  [key: number]: string
-}

@@ -1,20 +1,23 @@
 :host {
   display: flex;
-  flex-direction: column;
-  min-width: 700px;
-  min-height: 700px;
-  align-items: flex-start;
-  justify-content: center;
+  flex-direction: row;
+  width: 800px;
+  min-height: 50vh;
+  min-width: 200px;
+  align-items: center;
   background-color: #969595;
-  
+  border: 3px solid white;
+  border-radius: 15px;
+}
+
+.container {
+  width: 70%;
 }
 
 .center-distict {
   position: relative;
-  top: 34px;
   left: 20px;
 }
-
 
 .hexa {
   --s: 500px;
@@ -26,7 +29,6 @@
   clip-path: polygon(25% 0%, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
   margin: -1px;
 }
-
 
 .main-outside {
   position: relative;
@@ -68,4 +70,32 @@
   display: flex;
   flex-direction: column;
   text-align: center;
+}
+
+.distict-details {
+  min-width: 300px;
+  width: 30%;
+  background-color: #ffffff00;
+  min-height: 50vh;
+  border-left: 2px solid white;
+}
+
+.heading {
+  padding: 5px;
+  background: white;
+  border-top-right-radius: 10px;
+}
+
+.armies-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.armies {
+  background: aqua;
+  border: 1px solid #2017174d;
+  border-radius: 3px;
+  width: 45px;
+  height: 45px;
+  justify-content: left;
 }
