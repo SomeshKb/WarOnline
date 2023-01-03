@@ -11,6 +11,7 @@ import { ChatWindowComponent } from './component/chat-window/chat-window.compone
 import { DistictComponent } from './component/distict/distict.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,13 +21,14 @@ import { MatDialogModule } from '@angular/material/dialog';
     HeaderComponent,
     LeftNavComponent,
     ChatWindowComponent,
-    DistictComponent
+    DistictComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatDialogModule
+    MatDialogModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

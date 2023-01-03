@@ -3,13 +3,14 @@ import { ACESFilmicToneMapping, AxesHelper, BoxGeometry, BufferGeometry, Camera,
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
 import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils';
+import { TextureService } from './texture.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HexGeneratorService {
 
-  constructor() { }
+  constructor(private textureService:TextureService) { }
 
   async updateEnvMap(pmrem) {
     const envMapTexture = await new RGBELoader().setDataType(FloatType).loadAsync("assets/envmap.hdr");
@@ -40,7 +41,7 @@ export class HexGeneratorService {
       dirt: await new TextureLoader().loadAsync("assets/dirt.png"),
       dirt2: await new TextureLoader().loadAsync("assets/dirt2.jpg"),
       grass: await new TextureLoader().loadAsync("assets/grass.jpg"),
-      sand: await new TextureLoader().loadAsync("assets/sand.jpg"),
+      sand: await new TextureLoader().loadAsync("assets/materials/land.png"),
       water: await new TextureLoader().loadAsync("assets/water.jpg"),
       stone: await new TextureLoader().loadAsync("assets/stone.png"),
     };
@@ -66,6 +67,7 @@ export class HexGeneratorService {
     // const mesh = this.createSeaMesh(geo , textures.water, envMap);
     // this.scene.add(mesh);
 
+    console.log(this.textureService.texture)
     if (tiledata.stoneTile.indexOf(tileIndex) >= 0) {
       this.createAndAddMeshTexture(geo, textures.stone, envMap, scene);
 
