@@ -99,3 +99,18 @@
   height: 45px;
   justify-content: left;
 }
+
+
+.unit-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.units{
+  background: #fd7a22;
+  border: 1px solid #2017174d;
+  border-radius: 3px;
+  width: 45px;
+  height: 45px;
+  justify-content: left;
+}

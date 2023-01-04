@@ -12,6 +12,7 @@ import { DistictComponent } from './component/distict/distict.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
+import { BaseComponent } from './component/base/base.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
     LeftNavComponent,
     ChatWindowComponent,
     DistictComponent,
+    BaseComponent,
   ],
   imports: [
     BrowserModule,

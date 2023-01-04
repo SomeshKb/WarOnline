@@ -15,7 +15,10 @@ export class DistictComponent implements OnInit {
 
   gridArray = [3, 4, 5, 6, 7, 6, 5, 4, 3]
   largestRow = 7;
-  armies = [1, 2, 3, 7, 8, 7, 7, 7, 7, 7, 7];
+  ownArmy = "self";
+  armies = [1, 2, 3, 4, 5, 6];
+
+  selectedArmy = null;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { tileID: string }, private hexGenerator: HexGeneratorService, public dialog: MatDialog) {
     this.tileID = data.tileID;
@@ -28,12 +31,19 @@ export class DistictComponent implements OnInit {
 
   onClick(i: number, j: number) {
 
+    console.log(i,j);
     // this.dialog.closeAll();
     // this.dialog.open(BaseComponent, { data: { x: i, y: j } })
     // this.router.navigate(['base', i, j]);
   }
   getStartingMargin(value: number, midRowValue: number) {
     return ((midRowValue - value) * 33);
+  }
+
+  onArmySelection(index){
+      const selected = this.armies[index];
+      // TODO : GET selectedArmy
+      this.selectedArmy = [{ unit: "A1", count: 345 }, { unit: "A3", count: 89 }, { unit: "A2", count: 69 }];
   }
 
 }
