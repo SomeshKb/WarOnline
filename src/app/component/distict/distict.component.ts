@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HexGeneratorService } from 'src/app/services/hex-generator.service';
+import { BaseComponent } from '../base/base.component';
 
 @Component({
   selector: 'app-distict',
@@ -32,9 +33,8 @@ export class DistictComponent implements OnInit {
   onClick(i: number, j: number) {
 
     console.log(i,j);
-    // this.dialog.closeAll();
-    // this.dialog.open(BaseComponent, { data: { x: i, y: j } })
-    // this.router.navigate(['base', i, j]);
+    this.dialog.closeAll();
+    this.dialog.open(BaseComponent, { data: { x: i, y: j } })
   }
   getStartingMargin(value: number, midRowValue: number) {
     return ((midRowValue - value) * 33);

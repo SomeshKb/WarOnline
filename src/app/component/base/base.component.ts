@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-base',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BaseComponent implements OnInit {
 
-  constructor() { }
+  baseImage = "assets/base/oil.png"
+  units = [1, 2, 3, 4, 5, 6];
+  isBaseOwner = true;
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { x: string, y: string }) {
+    console.log("BASE",data)
+  }
 
   ngOnInit(): void {
   }

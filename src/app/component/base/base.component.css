@@ -1,0 +1,33 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  background-color: #969595;
+  border: 3px solid white;
+  border-radius: 15px;
+  width: min-content;
+}
+
+.base-img {
+  width: 500px;
+  border-bottom-left-radius: 15px;
+  border-top-left-radius: 15px;
+}
+
+.action-panel {
+  width: 300px;
+}
+
+.armies-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.armies {
+  background: aqua;
+  border: 1px solid #2017174d;
+  border-radius: 3px;
+  height: 45px;
+  margin: 1px;
+  width: calc((100% - 16px)/4);
+}

@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 import { BaseComponent } from './component/base/base.component';
+import { TrainUnitsComponent } from './component/train-units/train-units.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { BaseComponent } from './component/base/base.component';
     ChatWindowComponent,
     DistictComponent,
     BaseComponent,
+    TrainUnitsComponent,
   ],
   imports: [
     BrowserModule,
