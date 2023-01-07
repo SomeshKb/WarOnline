@@ -12,11 +12,18 @@ export class BaseComponent implements OnInit {
   units = [1, 2, 3, 4, 5, 6];
   isBaseOwner = true;
 
+
+  trainUnit = false;
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: { x: string, y: string }) {
     console.log("BASE",data)
   }
 
   ngOnInit(): void {
+  }
+
+  toggleTrainPanel() {
+    this.trainUnit = !this.trainUnit;
   }
 
 }

@@ -1,8 +1,10 @@
 :host {
+  background: #1668aa;
+  background: linear-gradient(0.33turn, #02374e, #1668aa, #02374e, #1668aa);
+  background: -webkit-linear-gradient(0.33turn, #02374e, #1668aa, #02374e, #1668aa);
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  background-color: #969595;
   border: 3px solid white;
   border-radius: 15px;
   width: min-content;

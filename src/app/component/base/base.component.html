@@ -1,7 +1,7 @@
-<!-- <img class="base-img" [src]="baseImage">
+<img class="base-img" [src]="baseImage">
 
 
-<ng-container *ngIf="isBaseOwner; then ownerTemplate; else enemyTemplate"></ng-container>
+<ng-container *ngIf="!trainUnit; then ownerTemplate; else enemyTemplate"></ng-container>
 <ng-template #ownerTemplate>
     <div class="action-panel" >
         <span>Units Stationed at Base</span>
@@ -10,12 +10,15 @@
               {{armyCount}}
             </div>
           </div>
+
+          <button class="button train" (click)="toggleTrainPanel()">
+            Train
+          </button>
 </div>
 </ng-template>
 <ng-template #enemyTemplate>
-    
+  <app-train-units></app-train-units>
 </ng-template>
- -->
 
 
- <app-train-units></app-train-units>
+
