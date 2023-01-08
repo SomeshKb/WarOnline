@@ -1,24 +1,51 @@
-<img class="base-img" [src]="baseImage">
+<!-- <ng-container *ngIf="!trainUnit; then ownerTemplate; else enemyTemplate"></ng-container> -->
+<!-- <img class="base-img" [src]="baseImage"> -->
+
+<div class="base-img" [style.background-image]="'url(/' +baseImage+ ')'">
 
 
-<ng-container *ngIf="!trainUnit; then ownerTemplate; else enemyTemplate"></ng-container>
-<ng-template #ownerTemplate>
-    <div class="action-panel" >
-        <span>Units Stationed at Base</span>
-        <div class="armies-wrapper">
-            <div class="armies" *ngFor="let armyCount of units; let i = index">
-              {{armyCount}}
-            </div>
-          </div>
+  <div class="action-panel">
+    <div class="user-info">
+      <div class="player-pic">
+      </div>
+      <div class="player-info">
+        <span>Devil Hunter</span>
+        <span>India</span>
+        <span>Level</span>
+      </div>
+    </div>
+    
+    <div class="action">
+      <div class="Attack"></div>
+      <div class="Attack"></div>
+    </div>
+    
+    
+  </div>
 
-          <button class="button train" (click)="toggleTrainPanel()">
-            Train
-          </button>
+
+  <div class="unit-panel">
+    <div class="action-army">
+      <div class="armies-wrapper">
+        <div class="armies" *ngFor="let armyCount of units; let i = index" >
+          {{armyCount}}
+        </div>
+      </div>
+
+    </div>
+
+    <div class="action-army">
+      <div class="armies-wrapper">
+        <div class="armies" *ngFor="let armyCount of units; let i = index">
+          {{armyCount}}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-</ng-template>
+
+
+<!-- </ng-template>
 <ng-template #enemyTemplate>
   <app-train-units></app-train-units>
-</ng-template>
-
-
-
+</ng-template> -->

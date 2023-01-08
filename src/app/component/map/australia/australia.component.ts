@@ -21,7 +21,6 @@ export class AustraliaComponent implements OnInit {
   raycaster = new Raycaster();
   mouse = new Vector2();
   controls: OrbitControls;
-  isDialogedOpen = false;
 
   zoomLevel = 6;
   maxZoomLevel = 10;
@@ -34,13 +33,11 @@ export class AustraliaComponent implements OnInit {
   }
 
   openDialog(tileID) {
-    this.isDialogedOpen = true;
     const dialogRef = this.dialog.open(DistictComponent
       , { height: '600px', data: { tileID: tileID } }
     );
 
     dialogRef.afterClosed().subscribe(result => {
-      this.isDialogedOpen = false;
     });
   }
   async initializeScene() {
@@ -74,7 +71,7 @@ export class AustraliaComponent implements OnInit {
   }
 
   onClick(event) {
-    if (this.isDialogedOpen) {
+    if (this.dialog.openDialogs.length > 0) {
       return;
     }
     this.mouse.x = (event.clientX / this.renderer.domElement.clientWidth) * 2 - 1;
@@ -92,11 +89,10 @@ export class AustraliaComponent implements OnInit {
   }
 
   worldZoom(event) {
-    if (this.isDialogedOpen) {
+    if (this.dialog.openDialogs.length > 0) {
       return;
     }
-    if (event.deltaY < 0 && this.zoomLevel <= this.maxZoomLevel)
-    {
+    if (event.deltaY < 0 && this.zoomLevel <= this.maxZoomLevel) {
       let factor = 1;
       let mX = (event.clientX / innerWidth) * 2 - 1;
       let mY = -(event.clientY / innerHeight) * 2 + 1;
@@ -107,8 +103,7 @@ export class AustraliaComponent implements OnInit {
       this.controls.target.addVectors(this.controls.target, vector.setLength(factor));
       this.zoomLevel++;
     }
-    else if (event.deltaY > 0 && this.zoomLevel > this.minZoomLevel )
-    {
+    else if (event.deltaY > 0 && this.zoomLevel > this.minZoomLevel) {
       let factor = 1;
       let mX = (event.clientX / innerWidth) * 2 - 1;
       let mY = -(event.clientY / innerHeight) * 2 + 1;

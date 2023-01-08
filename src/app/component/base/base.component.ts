@@ -8,7 +8,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class BaseComponent implements OnInit {
 
-  baseImage = "assets/base/oil.png"
+  baseImage = "assets/base/military.png"
   units = [1, 2, 3, 4, 5, 6];
   isBaseOwner = true;
 
