@@ -30,7 +30,7 @@ export class HexGeneratorService {
   }
 
   updateCamera(angle, x, y, z) {
-    const camera = new PerspectiveCamera(angle, innerWidth / innerHeight, 10, 100);
+    const camera = new PerspectiveCamera(angle, innerWidth / innerHeight, 1, 1000);
     camera.position.set(x, y, z);
     return camera;
   }
@@ -61,6 +61,7 @@ export class HexGeneratorService {
   }
 
   createHexagonTiles(height, position, tileIndex, textures, envMap, scene, tiledata) {
+    console.log(position);
     const geo = this.createHexGeometry(height, position);
     geo.name = tileIndex;
     // const mesh = this.createSeaMesh(geo , textures.water, envMap);
@@ -185,7 +186,7 @@ export class HexGeneratorService {
   }
 
   addLight(scene: Scene) {
-    const light = new DirectionalLight(new Color(0xFFFFFF).convertSRGBToLinear(), 1);
+    const light = new DirectionalLight(new Color(0xFFFFFF).convertSRGBToLinear(), 0.1);
     light.position.set(0, 100, 0);
     scene.add(light);
   }
