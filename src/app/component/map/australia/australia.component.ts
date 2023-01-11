@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { HexGeneratorService } from 'src/app/services/hex-generator.service';
 import { australiaTileData } from 'src/app/tile-data';
-import { PerspectiveCamera, WebGLRenderer, Scene, PMREMGenerator, Raycaster, Vector2, Color, Vector3 } from 'three';
+import { PerspectiveCamera, WebGLRenderer, Scene, PMREMGenerator, Raycaster, Vector2, Color, Vector3, AmbientLight } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { DistictComponent } from '../../distict/distict.component';
 
@@ -48,8 +48,6 @@ export class AustraliaComponent implements OnInit {
     this.pmrem.compileEquirectangularShader();
 
     const texture = await this.hexGenerator.loadTexture();
-    const envMap = await this.hexGenerator.updateEnvMap(this.pmrem);
-
     const tileData = {
       stoneTile: australiaTileData.stoneTile,
       sandTile: australiaTileData.sandTile,
@@ -57,10 +55,11 @@ export class AustraliaComponent implements OnInit {
       grassTile: australiaTileData.grassTile
     }
 
-    this.hexGenerator.createHexMap(texture, envMap, 9, 9, this.scene, tileData);
+    this.hexGenerator.createHexMap(texture, 9, 9, this.scene, tileData);
     this.controls = this.hexGenerator.addOrbitalControl(this.camera, this.renderer);
-    this.hexGenerator.addLight(this.scene);
-
+    var ambientLight = new AmbientLight(0xffffff); //color of the light
+    ambientLight.intensity = 0.8;
+    this.scene.add(ambientLight);
     this.renderer.setAnimationLoop(() => {
       this.controls.update();
       this.renderer.render(this.scene, this.camera);

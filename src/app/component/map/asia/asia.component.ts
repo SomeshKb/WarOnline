@@ -30,15 +30,15 @@ export class AsiaComponent implements OnInit, AfterViewInit {
 
   async initializeScene() {
     this.scene.background = new Color("#002e54");
-    this.camera = this.hexGenerator.updateCamera(45, 0, 40, 0);
+    this.camera = this.hexGenerator.updateCamera(45, 0, 80, 0);
     this.renderer = this.hexGenerator.addRenderer(this.canvasRef);
     this.pmrem = new PMREMGenerator(this.renderer);
     this.pmrem.compileEquirectangularShader();
 
     // this.hexGenerator.createHexMap(texture, envMap, 9, 9, this.scene, tileData);
     const controls = new OrbitControls(this.camera, this.renderer.domElement);
-    var ambientLight = new THREE.AmbientLight(0x404040); //color of the light
-    ambientLight.intensity = 2;
+    var ambientLight = new THREE.AmbientLight(0xffffff); //color of the light
+    ambientLight.intensity = 1;
     this.scene.add(ambientLight);
 
     this.renderer.setAnimationLoop(() => {
@@ -46,7 +46,7 @@ export class AsiaComponent implements OnInit, AfterViewInit {
       this.renderer.render(this.scene, this.camera);
     });
 
-    const dirt = await new TextureLoader().loadAsync("assets/materials/land.png")
+    const dirt = await new TextureLoader().loadAsync("assets/mouna.png")
     this.createHexagonShape(dirt);
   }
 
@@ -54,24 +54,24 @@ export class AsiaComponent implements OnInit, AfterViewInit {
 
     //create hexagon shape
     var hexagon = new THREE.CylinderGeometry(1, 1, 0, 6);
-    var hexagonMaterial = new THREE.MeshPhongMaterial({ color: 0x10b035 });
 
-    let stoneMaterial = new THREE.MeshBasicMaterial({
+    let stoneMaterial = new THREE.MeshPhongMaterial({
+      color:0xffffff,
       map: texture
     })
 
-    var hex = new THREE.Mesh(hexagon, hexagonMaterial);
+    var hex = new THREE.Mesh(hexagon, stoneMaterial);
 
     hex.position.set(0, 0, 0);
 
     //add the hexTileMap to the scene
     this.scene.add(hex);
-    window.addEventListener('click', this.onClick.bind(this), false);
+    // window.addEventListener('click', this.onClick.bind(this), false);
 
   }
 
   tileToPosition(tileX, tileY): Vector2 {
-    return new Vector2((tileX + (tileY % 2) * 0.5) * 1.73, tileY * 1.50);
+    return new Vector2((tileX + (tileY % 2) * 0.5) * 1.71, tileY * 1.50);
   }
   onClick(event) {
     this.mouse.x = (event.clientX / this.renderer.domElement.clientWidth) * 2 - 1;

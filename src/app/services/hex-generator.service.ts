@@ -1,5 +1,5 @@
 import { ElementRef, Injectable } from '@angular/core';
-import { ACESFilmicToneMapping, AxesHelper, BoxGeometry, BufferGeometry, Camera, Color, CylinderGeometry, DirectionalLight, FloatType, Mesh, MeshPhysicalMaterial, PCFShadowMap, PerspectiveCamera, PointLight, Renderer, Scene, SphereGeometry, sRGBEncoding, Texture, TextureLoader, Vector2, WebGLRenderer } from 'three';
+import { ACESFilmicToneMapping, AxesHelper, BoxGeometry, BufferGeometry, Camera, Color, CylinderGeometry, DirectionalLight, FloatType, Mesh, MeshPhongMaterial, MeshPhysicalMaterial, PCFShadowMap, PerspectiveCamera, PointLight, Renderer, Scene, SphereGeometry, sRGBEncoding, Texture, TextureLoader, Vector2, WebGLRenderer } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
 import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils';
@@ -37,30 +37,29 @@ export class HexGeneratorService {
 
   async loadTexture() {
     const textures = {
-      dirt: await new TextureLoader().loadAsync("assets/dirt.png"),
-      dirt2: await new TextureLoader().loadAsync("assets/dirt2.jpg"),
-      grass: await new TextureLoader().loadAsync("assets/grass.jpg"),
-      sand: await new TextureLoader().loadAsync("assets/materials/land.png"),
-      water: await new TextureLoader().loadAsync("assets/water.jpg"),
-      stone: await new TextureLoader().loadAsync("assets/stone.png"),
+      dirt: await new TextureLoader().loadAsync("assets/desert.png"),
+      grass: await new TextureLoader().loadAsync("assets/forest.png"),
+      sand: await new TextureLoader().loadAsync("assets/desert.png"),
+      water: await new TextureLoader().loadAsync("assets/desert.png"),
+      stone: await new TextureLoader().loadAsync("assets/moun.png"),
     };
     return textures;
   }
 
-  createHexMap(texture, envMap, height, width, scene, tileData) {
+  createHexMap(texture, height, width, scene, tileData) {
     let count = 0;
     for (let i = -height; i < height; i++) {
       for (let j = -width; j < width; j++) {
-        this.createHexagonTiles(0.2, this.tileToPosition(i, j), count++, texture, envMap, scene, tileData);
+        this.createHexagonTiles(0.2, this.tileToPosition(i, j), count++, texture, scene, tileData);
       }
     }
   }
 
   tileToPosition(tileX, tileY): Vector2 {
-    return new Vector2((tileX + (tileY % 2) * 0.5) * 1.77, tileY * 1.535);
+    return new Vector2((tileX + (tileY % 2) * 0.5) * 1.71, tileY * 1.52);
   }
 
-  createHexagonTiles(height, position, tileIndex, textures, envMap, scene, tiledata) {
+  createHexagonTiles(height, position, tileIndex, textures, scene, tiledata) {
     console.log(position);
     const geo = this.createHexGeometry(height, position);
     geo.name = tileIndex;
@@ -68,7 +67,7 @@ export class HexGeneratorService {
     // this.scene.add(mesh);
 
     if (tiledata.stoneTile.indexOf(tileIndex) >= 0) {
-      this.createAndAddMeshTexture(geo, textures.stone, envMap, scene);
+      this.createAndAddMeshTexture(geo, textures.stone, scene);
 
       if (Math.random() > 0.3) {
         // this.createAndAddMeshTexture(this.createStone(height, position), textures.stone, envMap, scene);
@@ -77,7 +76,7 @@ export class HexGeneratorService {
     }
 
     if (tiledata.sandTile.indexOf(tileIndex) >= 0) {
-      this.createAndAddMeshTexture(geo, textures.sand, envMap, scene);
+      this.createAndAddMeshTexture(geo, textures.sand, scene);
 
       if (Math.random() > 0.3) {
         // this.createAndAddMeshTexture(this.createStone(height, position), textures.sand, envMap, scene);
@@ -86,7 +85,7 @@ export class HexGeneratorService {
     }
 
     if (tiledata.dirtTile.indexOf(tileIndex) >= 0) {
-      this.createAndAddMeshTexture(geo, textures.dirt, envMap, scene);
+      this.createAndAddMeshTexture(geo, textures.dirt, scene);
 
       if (Math.random() > 0.1) {
         // this.grassGeo = mergeBufferGeometries([this.grassGeo, this.createTree(height, position)]);
@@ -95,7 +94,7 @@ export class HexGeneratorService {
     }
 
     if (tiledata.grassTile.indexOf(tileIndex) >= 0) {
-      this.createAndAddMeshTexture(geo, textures.grass, envMap, scene);
+      this.createAndAddMeshTexture(geo, textures.grass, scene);
 
       if (Math.random() > 0.8) {
         // this.grassGeo = mergeBufferGeometries([this.grassGeo, this.createTree(height, position)]);
@@ -110,19 +109,22 @@ export class HexGeneratorService {
     return geo;
   }
 
-  createAndAddMeshTexture(geometry, textures, envMap, scene) {
-    const mesh = this.hexMesh(geometry, textures, envMap);
+  createAndAddMeshTexture(geometry, textures, scene) {
+    const mesh = this.hexMesh(geometry, textures);
     scene.add(mesh);
   }
 
 
-  hexMesh(geo: BoxGeometry, map: Texture, envMap): Mesh<BoxGeometry, MeshPhysicalMaterial> {
-    const mat = new MeshPhysicalMaterial({
-      envMap: envMap,
-      envMapIntensity: 0.135,
-      flatShading: true,
+  hexMesh(geo: BoxGeometry, map: Texture): Mesh<BoxGeometry, MeshPhongMaterial> {
+    // const mat = new MeshPhysicalMaterial({
+    //   envMap: envMap,
+    //   envMapIntensity: 0.135,
+    //   flatShading: true,
+    //   map: map
+    // });
+    const mat = new MeshPhongMaterial({
       map: map
-    });
+    })
 
     const mesh = new Mesh(geo, mat);
     mesh.castShadow = true;
@@ -186,7 +188,7 @@ export class HexGeneratorService {
   }
 
   addLight(scene: Scene) {
-    const light = new PointLight(new Color(0xFFFFFF).convertSRGBToLinear(), 0.1);
+    const light = new PointLight(new Color(0x00000).convertSRGBToLinear(), 0.1);
     light.position.set(0, 100, 0);
     scene.add(light);
   }
@@ -207,10 +209,10 @@ export class HexGeneratorService {
     geo.name = tileIndex;
 
     if (tiledata.distict.indexOf(tileIndex) >= 0) {
-      this.createAndAddMeshTexture(geo, textures.stone, envMap, scene);
+      this.createAndAddMeshTexture(geo, textures.stone, scene);
 
       if (Math.random() > 0.3) {
-        this.createAndAddMeshTexture(this.createStone(height, position), textures.stone, envMap, scene);
+        this.createAndAddMeshTexture(this.createStone(height, position), textures.stone, scene);
       }
       return;
     }
