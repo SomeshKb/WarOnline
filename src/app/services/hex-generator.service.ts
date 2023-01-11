@@ -1,5 +1,5 @@
 import { ElementRef, Injectable } from '@angular/core';
-import { ACESFilmicToneMapping, AxesHelper, BoxGeometry, BufferGeometry, Camera, Color, CylinderGeometry, DirectionalLight, FloatType, Mesh, MeshPhysicalMaterial, PCFShadowMap, PerspectiveCamera, Renderer, Scene, SphereGeometry, sRGBEncoding, Texture, TextureLoader, Vector2, WebGLRenderer } from 'three';
+import { ACESFilmicToneMapping, AxesHelper, BoxGeometry, BufferGeometry, Camera, Color, CylinderGeometry, DirectionalLight, FloatType, Mesh, MeshPhysicalMaterial, PCFShadowMap, PerspectiveCamera, PointLight, Renderer, Scene, SphereGeometry, sRGBEncoding, Texture, TextureLoader, Vector2, WebGLRenderer } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
 import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils';
@@ -186,7 +186,7 @@ export class HexGeneratorService {
   }
 
   addLight(scene: Scene) {
-    const light = new DirectionalLight(new Color(0xFFFFFF).convertSRGBToLinear(), 0.1);
+    const light = new PointLight(new Color(0xFFFFFF).convertSRGBToLinear(), 0.1);
     light.position.set(0, 100, 0);
     scene.add(light);
   }

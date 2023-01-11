@@ -37,7 +37,10 @@ export class AsiaComponent implements OnInit, AfterViewInit {
 
     // this.hexGenerator.createHexMap(texture, envMap, 9, 9, this.scene, tileData);
     const controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.hexGenerator.addLight(this.scene);
+    var ambientLight = new THREE.AmbientLight(0x404040); //color of the light
+    ambientLight.intensity = 2;
+    this.scene.add(ambientLight);
+
     this.renderer.setAnimationLoop(() => {
       controls.update();
       this.renderer.render(this.scene, this.camera);
@@ -45,54 +48,24 @@ export class AsiaComponent implements OnInit, AfterViewInit {
 
     const dirt = await new TextureLoader().loadAsync("assets/materials/land.png")
     this.createHexagonShape(dirt);
-    // this.createTie(dirt);
   }
 
   createHexagonShape(texture) {
-    texture.wrapS = THREE.ClampToEdgeWrapping;
-    texture.wrapT = THREE.ClampToEdgeWrapping;
 
     //create hexagon shape
     var hexagon = new THREE.CylinderGeometry(1, 1, 0, 6);
-    var hexagonMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
+    var hexagonMaterial = new THREE.MeshPhongMaterial({ color: 0x10b035 });
 
     let stoneMaterial = new THREE.MeshBasicMaterial({
       map: texture
     })
 
+    var hex = new THREE.Mesh(hexagon, hexagonMaterial);
 
-    // Generate UV coordinates
-    hexagon.computeBoundingBox();
-    hexagon.computeVertexNormals();
-
-    //create hex tile map
-    var hexTileMap = new THREE.Object3D();
-
-    //hexagon radius is the distance from center to the middle of one side
-    var hexRadius = 1;
-
-    //map size
-    var mapWidth = 10;
-    var mapHeight = 10;
-
-    const rawMaterial = this.rawShaderMaterial(texture);
-    console.log(rawMaterial)
-    console.log(hexagon)
-
-    for (var q = -mapWidth / 2; q < mapWidth / 2; q++) {
-      for (var r = -mapHeight / 2; r < mapHeight / 2; r++) {
-        var hex = new THREE.Mesh(hexagon, stoneMaterial);
-        var x = hexRadius * Math.sqrt(3) * (q + r / 2);
-        var z = hexRadius * 3 / 2 * r;
-        const position = this.tileToPosition(r, q);
-        hex.position.set(position.x, 0, position.y);
-        hexTileMap.add(hex);
-      }
-    }
-
+    hex.position.set(0, 0, 0);
 
     //add the hexTileMap to the scene
-    this.scene.add(hexTileMap);
+    this.scene.add(hex);
     window.addEventListener('click', this.onClick.bind(this), false);
 
   }
