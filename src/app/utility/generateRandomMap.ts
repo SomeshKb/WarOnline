@@ -8,6 +8,7 @@ import { qrToWorld } from "./coords";
 import Grid from "./Grid";
 import { createHexagon } from "./hexagon";
 import { Height, TileData } from "./interfaces";
+import { mapdata } from "./mapData";
 import { MapMeshOptions, MapMeshTile } from "./MapMesh";
 import { perlin2, seed, simplex2 } from "./perlin";
 
@@ -86,7 +87,7 @@ function generateRivers(grid: Grid<TileData>): Grid<TileData> {
 
       const next =
         neighbors[
-          Math.max(neighbors.length - 1, Math.floor(Math.random() * 1.2))
+        Math.max(neighbors.length - 1, Math.floor(Math.random() * 1.2))
         ];
       river.push(next);
 
@@ -110,23 +111,14 @@ function generateRivers(grid: Grid<TileData>): Grid<TileData> {
   }
 }
 
-function randomHeight(q: number, r: number) {
-  var noise1 = simplex2(q / 10, r / 10);
-  var noise2 = perlin2(q / 5, r / 5);
-  var noise3 = perlin2(q / 30, r / 30);
-  var noise = noise1 + noise2 + noise3;
-
-  return (noise / 3.0) * 2.0;
-}
-
 function generateMap(
   size: number,
   tile: (q: number, r: number) => TileData
 ): Promise<Grid<TileData>> {
   const grid = new Grid<TileData>(size, size).mapQR((q, r) => tile(q, r));
-  const withRivers = generateRivers(grid);
+  // const withRivers = generateRivers(grid);
   //@ts-ignore
-  return withRivers;
+  return grid;
 }
 
 function generateRandomMap(
@@ -134,26 +126,18 @@ function generateRandomMap(
   tile: (q: number, r: number, height: Height) => TileData
 ): Promise<Grid<TileData>> {
   seed(Date.now() + Math.random());
-  console.log({ size });
-  return generateMap(size, (q, r) => tile(q, r, randomHeight(q, r)));
+  return generateMap(size, (q, r) => tile(q, r, 0));
 }
 
 export async function generateMapView(mapSize: number) {
-  function coldZone(q: number, r: number, height: number): string {
-    if (Math.abs(r) > mapSize * (0.44 + Math.random() * 0.03)) return "snow";
-    else return "tundra";
-  }
 
-  function warmZone(q: number, r: number, height: number): string {
-    return varying("grass", "grass", "grass", "plains", "plains", "desert");
-  }
-
-  function terrainAt(q: number, r: number, height: number): string {
-    if (height < 0.0) return "ocean";
-    else if (height > 0.75) return "mountain";
-    else if (Math.abs(r) > mapSize * 0.4) return coldZone(q, r, height);
-    else return warmZone(q, r, height);
-  }
+  function terrainAt(q: number, r: number): string {
+    const index = mapdata.findIndex(x=> x.x==q && x.y==r );
+    if(index!=-1){
+      return mapdata[index].terrain
+    }
+    return "ocean";
+}
 
   function treeAt(q: number, r: number, terrain: string): number | undefined {
     if (terrain == "snow") return 2;
@@ -162,13 +146,20 @@ export async function generateMapView(mapSize: number) {
   }
 
   return generateRandomMap(mapSize, (q, r, height): TileData => {
-    const terrain = terrainAt(q, r, height);
+
+    const terrain = terrainAt(q, r);
+
+    if(terrain=="mountain"){
+      height = 1.7;
+    }
+
     const trees =
       isMountain(height) || isWater(height) || terrain == "desert"
         ? undefined
         : varying(true, false, false)
-        ? treeAt(q, r, terrain)
-        : undefined;
+          ? treeAt(q, r, terrain)
+          : undefined;
+
     return {
       q,
       r,

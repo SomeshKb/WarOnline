@@ -54,7 +54,10 @@ export class AsiaComponent implements OnInit, AfterViewInit {
     const mapSize = 24;
 
     const map = await generateMapView(mapSize);
-    
+
+    console.log(map)
+
+
     const assetsList = [
       'assets/materials/terrain.png',
       'assets/materials/hills-normal.png',
