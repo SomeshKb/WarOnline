@@ -1,14 +1,37 @@
-.canvas{
-    width: 100% !important;
-    height: 100vh !important;
-    margin: 0px;
+.canvas {
+  width: 100% !important;
+  height: 100vh !important;
+  margin: 0px;
 }
 
-img{
-    width: 1013px;
-    height: 723px;
-    position: absolute;
-    left: 100px;
-    top: 100px;
-    opacity: 0.3;
+img {
+  width: 1013px;
+  height: 723px;
+  position: absolute;
+  left: 100px;
+  top: 100px;
+  opacity: 0.3;
+}
+
+#text,
+#debug {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 20px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 1.5em;
+  text-align: center;
+  pointer-events: none;
+  color: white;
+  text-shadow: 0 0 1px black;
+  box-sizing: border-box;
+}
+
+#debug {
+  top: auto;
+  bottom: 0;
+  text-align: left;
 }
