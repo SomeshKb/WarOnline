@@ -5,7 +5,6 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { asiaTileData } from 'src/app/tile-data';
 import {
   Color,
   PerspectiveCamera,
@@ -14,47 +13,20 @@ import {
   Scene,
   TextureLoader,
   Vector2,
-  Vector3,
   WebGLRenderer,
 } from 'three';
 import { HexGeneratorService } from '../../../services/hex-generator.service';
-import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { LAND_VERTEX_SHADER } from 'src/assets/shaders/land.vertex';
 import { LAND_FRAGMENT_SHADER } from 'src/assets/shaders/land.fragment';
-import { generateMapView } from 'src/utility/generateRandomMap';
-import { MOUNTAINS_FRAGMENT_SHADER } from 'src/shaders/mountains.fragment';
-import { MOUNTAINS_VERTEX_SHADER } from 'src/shaders/mountains.vertex';
-import { MapMeshOptions } from 'src/utility/MapMesh';
+import { generateMapView } from 'src/app/utility/generateRandomMap';
+import { MOUNTAINS_FRAGMENT_SHADER } from 'src/app/shaders/mountains.fragment';
+import { MOUNTAINS_VERTEX_SHADER } from 'src/app/shaders/mountains.vertex';
+import { MapMeshOptions } from 'src/app/utility/MapMesh';
 import { HttpClient } from '@angular/common/http';
-import MapView from 'src/utility/MapView';
-import { initInput } from 'src/utility/input';
-import Controller from 'src/utility/DefaultMapViewController';
-import { TileData } from 'src/utility/interfaces';
-
-/**
- * @param fog whether there should be fog on this tile making it appear darker
- * @param clouds whether there should be "clouds", i.e. an opaque texture, hiding the tile
- * @param range number of tiles around the given tile that should be updated
- * @param tile tile around which fog should be updated
- */
-function setFogAround(
-  mapView: MapView,
-  tile: TileData,
-  range: number,
-  fog: boolean,
-  clouds: boolean
-) {
-  const tiles = mapView.getTileGrid().neighbors(tile.q, tile.r, range);
-
-  const updated = tiles.map((t) => {
-    t.fog = fog;
-    t.clouds = clouds;
-    return t;
-  });
-
-  mapView.updateTiles(updated);
-}
+import MapView from 'src/app/utility/MapView';
+import { initInput } from 'src/app/utility/input';
+import Controller from 'src/app/utility/DefaultMapViewController';
+import { TileData } from 'src/app/utility/interfaces';
 
 @Component({
   selector: 'app-asia',
@@ -82,6 +54,7 @@ export class AsiaComponent implements OnInit, AfterViewInit {
     const mapSize = 24;
 
     const map = await generateMapView(mapSize);
+    
     const assetsList = [
       'assets/materials/terrain.png',
       'assets/materials/hills-normal.png',
@@ -140,95 +113,21 @@ export class AsiaComponent implements OnInit, AfterViewInit {
         }, // no options for tropical forests (index = 3)
       ],
     };
-    console.log(this.canvasRef);
+
     const mapView = new MapView(this.canvasRef);
     mapView.load(map, options);
     initInput(mapView);
     const controller = mapView.controller as Controller;
     controller.debugOutput = this.debugRef.nativeElement;
     mapView.onLoaded = () => {
-      // uncover tiles around initial selection
-      setFogAround(mapView, mapView.selectedTile, 10, true, false);
-      setFogAround(mapView, mapView.selectedTile, 5, false, false);
     };
 
     mapView.onTileSelected = (tile: TileData) => {
-      // uncover tiles around selection
-      setFogAround(mapView, tile, 2, false, false);
+      console.log(tile)
     };
   }
 
-  // async initializeScene() {
-  //   this.scene.background = new Color("#002e54");
-  //   this.camera = this.hexGenerator.updateCamera(45, 0, 80, 0);
-  //   this.renderer = this.hexGenerator.addRenderer(this.canvasRef);
-  //   this.pmrem = new PMREMGenerator(this.renderer);
-  //   this.pmrem.compileEquirectangularShader();
-
-  //   // this.hexGenerator.createHexMap(texture, envMap, 9, 9, this.scene, tileData);
-  //   const controls = new OrbitControls(this.camera, this.renderer.domElement);
-  //   var ambientLight = new THREE.AmbientLight(0xffffff); //color of the light
-  //   ambientLight.intensity = 1;
-  //   this.scene.add(ambientLight);
-
-  //   this.renderer.setAnimationLoop(() => {
-  //     controls.update();
-  //     this.renderer.render(this.scene, this.camera);
-  //   });
-
-  //   const dirt = await new TextureLoader().loadAsync("assets/mouna.png")
-  //   this.createHexagonShape(dirt);
-  // }
-
-  // createHexagonShape(texture) {
-
-  //   //create hexagon shape
-  //   var hexagon = new THREE.CylinderGeometry(1, 1, 0, 6);
-
-  //   let stoneMaterial = new THREE.MeshPhongMaterial({
-  //     color:0xffffff,
-  //     map: texture
-  //   })
-
-  //   var hex = new THREE.Mesh(hexagon, stoneMaterial);
-
-  //   hex.position.set(0, 0, 0);
-
-  //   //add the hexTileMap to the scene
-  //   this.scene.add(hex);
-  //   // window.addEventListener('click', this.onClick.bind(this), false);
-
-  // }
-
-  // tileToPosition(tileX, tileY): Vector2 {
-  //   return new Vector2((tileX + (tileY % 2) * 0.5) * 1.71, tileY * 1.50);
-  // }
-  // onClick(event) {
-  //   this.mouse.x = (event.clientX / this.renderer.domElement.clientWidth) * 2 - 1;
-  //   this.mouse.y = - (event.clientY / this.renderer.domElement.clientHeight) * 2 + 1;
-  //   this.raycaster.setFromCamera(this.mouse, this.camera);
-  //   const intersects = this.raycaster.intersectObjects(this.scene.children) as any;
-
-  //   console.log(intersects[0].object.position);
-
-  // }
 
   ngAfterViewInit(): void {
-    // this.initializeScene();
   }
-
-  // rawShaderMaterial(texture) {
-  //   // create the material with custom shaders
-  //   var material = new THREE.RawShaderMaterial({
-  //     uniforms: {
-  //       texture: {
-  //         value: texture
-  //       }
-  //     },
-  //     vertexShader: LAND_VERTEX_SHADER,
-  //     fragmentShader: LAND_FRAGMENT_SHADER,
-  //   });
-
-  //   return material;
-  // }
 }
