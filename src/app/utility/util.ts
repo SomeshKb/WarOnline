@@ -1,5 +1,5 @@
-import { FileLoader, TextureLoader, Texture } from "three";
-import { QR } from "./interfaces";
+import { FileLoader, TextureLoader, Texture } from 'three';
+import { QR } from './interfaces';
 
 const fileLoader = new FileLoader();
 const textureLoader = new TextureLoader();
@@ -166,7 +166,7 @@ export interface KeyAction {
 
 export function paramString(name: string, defaultValue: string): string {
   const queryMatch = document.location.href.match(
-    new RegExp(name + "=([^&]+)")
+    new RegExp(name + '=([^&]+)')
   );
   if (queryMatch) {
     return queryMatch[1];
@@ -176,11 +176,11 @@ export function paramString(name: string, defaultValue: string): string {
 }
 
 export function paramInt(name: string, defaultValue: number): number {
-  return parseInt(paramString(name, defaultValue + ""));
+  return parseInt(paramString(name, defaultValue + ''));
 }
 
 export function paramFloat(name: string, defaultValue: number): number {
-  return parseFloat(paramString(name, defaultValue + ""));
+  return parseFloat(paramString(name, defaultValue + ''));
 }
 
 export function varying<T>(...values: T[]): T {

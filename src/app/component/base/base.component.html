@@ -1,49 +1,41 @@
 <!-- <ng-container *ngIf="!trainUnit; then ownerTemplate; else enemyTemplate"></ng-container> -->
 <!-- <img class="base-img" [src]="baseImage"> -->
 
-<div class="base-img" [style.background-image]="'url(/' +baseImage+ ')'">
-
-
+<div class="base-img" [style.background-image]="'url(/' + baseImage + ')'">
   <div class="action-panel">
     <div class="user-info">
-      <div class="player-pic">
-      </div>
+      <div class="player-pic"></div>
       <div class="player-info">
         <span>Devil Hunter</span>
         <span>India</span>
         <span>Level</span>
       </div>
     </div>
-    
+
     <div class="action">
       <div class="Attack"></div>
       <div class="Attack"></div>
     </div>
-    
-    
   </div>
-
 
   <div class="unit-panel">
     <div class="action-army">
       <div class="armies-wrapper">
-        <div class="armies" *ngFor="let armyCount of units; let i = index" >
-          {{armyCount}}
+        <div class="armies" *ngFor="let armyCount of units; let i = index">
+          {{ armyCount }}
         </div>
       </div>
-
     </div>
 
     <div class="action-army">
       <div class="armies-wrapper">
         <div class="armies" *ngFor="let armyCount of units; let i = index">
-          {{armyCount}}
+          {{ armyCount }}
         </div>
       </div>
     </div>
   </div>
 </div>
-
 
 <!-- </ng-template>
 <ng-template #enemyTemplate>

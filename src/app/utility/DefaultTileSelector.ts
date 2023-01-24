@@ -1,5 +1,5 @@
-import { createHexagon } from "./hexagon";
-import { RingGeometry, MeshBasicMaterial, Mesh } from "three";
+import { createHexagon } from './hexagon';
+import { RingGeometry, MeshBasicMaterial, Mesh } from 'three';
 
 const geometry = new RingGeometry(0.85, 1, 6, 2);
 const material = new MeshBasicMaterial({

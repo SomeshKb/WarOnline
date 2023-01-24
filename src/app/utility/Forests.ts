@@ -1,4 +1,4 @@
-import { TileData } from "./interfaces";
+import { TileData } from './interfaces';
 import {
   Object3D,
   Texture,
@@ -10,13 +10,13 @@ import {
   Color,
   ShaderMaterial,
   RawShaderMaterial,
-} from "three";
-import Grid from "./Grid";
-import { range, flatten, flatMap } from "./util";
-import { qrToWorld } from "./coords";
-import { TREES_VERTEX_SHADER } from "../shaders/trees.vertex";
-import { TREES_FRAGMENT_SHADER } from "../shaders/trees.fragment";
-import { randomPointOnCoastTile, waterAdjacency } from "./map-generator";
+} from 'three';
+import Grid from './Grid';
+import { range, flatten, flatMap } from './util';
+import { qrToWorld } from './coords';
+import { TREES_VERTEX_SHADER } from '../shaders/trees.vertex';
+import { TREES_FRAGMENT_SHADER } from '../shaders/trees.fragment';
+import { randomPointOnCoastTile, waterAdjacency } from './map-generator';
 
 interface ForestTile extends TileData {
   bufferIndex: number;
@@ -80,7 +80,7 @@ export default class Forests extends Object3D {
     super();
 
     this._forestTiles = tiles
-      .filter((t) => typeof t.treeIndex != "undefined")
+      .filter((t) => typeof t.treeIndex != 'undefined')
       .map((t) => ({ bufferIndex: -1, ...t }));
     this._globalGrid = globalGrid;
     this._options = { ...options };
@@ -91,7 +91,7 @@ export default class Forests extends Object3D {
 
   updateTiles(tiles: TileData[]) {
     this._trees.updateTiles(
-      tiles.filter((t) => typeof t.treeIndex != "undefined")
+      tiles.filter((t) => typeof t.treeIndex != 'undefined')
     );
   }
 }
@@ -151,7 +151,7 @@ class Trees extends Object3D {
   private treeSize(treeIndex: number): number {
     if (
       this._options.treeOptions &&
-      typeof this._options.treeOptions[treeIndex] != "undefined"
+      typeof this._options.treeOptions[treeIndex] != 'undefined'
     ) {
       return (
         (this._options.treeOptions[treeIndex].scale || 1.0) *
@@ -165,7 +165,7 @@ class Trees extends Object3D {
   private numTreesPerForest(treeIndex: number): number {
     if (
       this._options.treeOptions &&
-      typeof this._options.treeOptions[treeIndex] != "undefined"
+      typeof this._options.treeOptions[treeIndex] != 'undefined'
     ) {
       return this._options.treeOptions[treeIndex].treesPerForest;
     } else {
@@ -205,7 +205,7 @@ class Trees extends Object3D {
     for (let i = 0; i < positions.length; i++) {
       posAttr.setXYZ(i, positions[i].x, positions[i].y, positions[i].z);
     }
-    geometry.setAttribute("position", posAttr);
+    geometry.setAttribute('position', posAttr);
 
     // tree parameters
     const cols = this._options.spritesheetSubdivisions;
@@ -237,7 +237,7 @@ class Trees extends Object3D {
 
     this._alphaAttr = new BufferAttribute(buffer, 3);
 
-    geometry.setAttribute("params", this._alphaAttr);
+    geometry.setAttribute('params', this._alphaAttr);
 
     return geometry;
   }
@@ -247,16 +247,16 @@ class Trees extends Object3D {
     const parameters = {
       uniforms: {
         texture: {
-          type: "t",
+          type: 't',
           value: this._texture,
         },
-        spritesheetSubdivisions: { type: "f", value: spritesheetSubdivisions },
+        spritesheetSubdivisions: { type: 'f', value: spritesheetSubdivisions },
         size: {
-          type: "f",
+          type: 'f',
           value: (this._options.mapScale || 1.0) * this._options.treeSize,
         },
-        scale: { type: "f", value: window.innerHeight / 2 },
-        alphaTest: { type: "f", value: this._options.alphaTest },
+        scale: { type: 'f', value: window.innerHeight / 2 },
+        alphaTest: { type: 'f', value: this._options.alphaTest },
       },
       transparent: true,
       vertexShader: TREES_VERTEX_SHADER,

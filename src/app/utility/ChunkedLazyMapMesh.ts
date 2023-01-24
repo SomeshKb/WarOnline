@@ -1,12 +1,12 @@
-import { Object3D, Vector2, Vector3, Sphere, Camera } from "three";
-import { TileData, TextureAtlas, TileDataSource } from "./interfaces";
-import Grid from "./Grid";
-import QuadTree from "./QuadTree";
-import { qrToWorld, screenToWorld, qrToWorldX, qrToWorldY } from "./coords";
-import MapMesh from "./MapMesh";
-import { BoundingBox } from "./BoundingBox";
-import { range } from "./util";
-import { MapMeshOptions } from "./MapMesh";
+import { Object3D, Vector2, Vector3, Sphere, Camera } from 'three';
+import { TileData, TextureAtlas, TileDataSource } from './interfaces';
+import Grid from './Grid';
+import QuadTree from './QuadTree';
+import { qrToWorld, screenToWorld, qrToWorldX, qrToWorldY } from './coords';
+import MapMesh from './MapMesh';
+import { BoundingBox } from './BoundingBox';
+import { range } from './util';
+import { MapMeshOptions } from './MapMesh';
 
 export default class ChunkedLazyMapMesh
   extends Object3D

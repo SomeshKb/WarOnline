@@ -1,4 +1,4 @@
-import { simplex2, perlin2, seed } from "./perlin";
+import { simplex2, perlin2, seed } from './perlin';
 import {
   Height,
   TileData,
@@ -6,11 +6,11 @@ import {
   isWater,
   isMountain,
   isHill,
-} from "./interfaces";
-import { shuffle, qrRange } from "./util";
-import Grid from "./Grid";
-import { Vector3 } from "three";
-import { randomPointInHexagonEx } from "./hexagon";
+} from './interfaces';
+import { shuffle, qrRange } from './util';
+import Grid from './Grid';
+import { Vector3 } from 'three';
+import { randomPointInHexagonEx } from './hexagon';
 
 function randomHeight(q: number, r: number) {
   var noise1 = simplex2(q / 10, r / 10);
@@ -76,7 +76,7 @@ function generateRivers(grid: Grid<TileData>): Grid<TileData> {
         (t) => !contains(t, river)
       );
       if (neighbors.length == 0) {
-        console.info("Aborted river generation", river, tile);
+        console.info('Aborted river generation', river, tile);
         return river;
       }
 

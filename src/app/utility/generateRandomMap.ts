@@ -3,14 +3,14 @@ import {
   InstancedBufferGeometry,
   Vector3,
   Vector4,
-} from "three";
-import { qrToWorld } from "./coords";
-import Grid from "./Grid";
-import { createHexagon } from "./hexagon";
-import { Height, TileData } from "./interfaces";
-import { mapdata } from "./mapData";
-import { MapMeshOptions, MapMeshTile } from "./MapMesh";
-import { perlin2, seed, simplex2 } from "./perlin";
+} from 'three';
+import { qrToWorld } from './coords';
+import Grid from './Grid';
+import { createHexagon } from './hexagon';
+import { Height, TileData } from './interfaces';
+import { mapdata } from './mapData';
+import { MapMeshOptions, MapMeshTile } from './MapMesh';
+import { perlin2, seed, simplex2 } from './perlin';
 
 export function shuffle<T>(a: T[]): T[] {
   var j: number, x: T, i: number;
@@ -81,13 +81,13 @@ function generateRivers(grid: Grid<TileData>): Grid<TileData> {
         (t) => !contains(t, river)
       );
       if (neighbors.length == 0) {
-        console.info("Aborted river generation", river, tile);
+        console.info('Aborted river generation', river, tile);
         return river;
       }
 
       const next =
         neighbors[
-        Math.max(neighbors.length - 1, Math.floor(Math.random() * 1.2))
+          Math.max(neighbors.length - 1, Math.floor(Math.random() * 1.2))
         ];
       river.push(next);
 
@@ -130,35 +130,33 @@ function generateRandomMap(
 }
 
 export async function generateMapView(mapSize: number) {
-
   function terrainAt(q: number, r: number): string {
-    const index = mapdata.findIndex(x=> x.x==q && x.y==r );
-    if(index!=-1){
-      return mapdata[index].terrain
+    const index = mapdata.findIndex((x) => x.x == q && x.y == r);
+    if (index != -1) {
+      return mapdata[index].terrain;
     }
-    return "ocean";
-}
+    return 'ocean';
+  }
 
   function treeAt(q: number, r: number, terrain: string): number | undefined {
-    if (terrain == "snow") return 2;
-    else if (terrain == "tundra") return 1;
+    if (terrain == 'snow') return 2;
+    else if (terrain == 'tundra') return 1;
     else return 0;
   }
 
   return generateRandomMap(mapSize, (q, r, height): TileData => {
-
     const terrain = terrainAt(q, r);
 
-    if(terrain=="mountain"){
+    if (terrain == 'mountain') {
       height = 1.7;
     }
 
     const trees =
-      isMountain(height) || isWater(height) || terrain == "desert"
+      isMountain(height) || isWater(height) || terrain == 'desert'
         ? undefined
         : varying(true, false, false)
-          ? treeAt(q, r, terrain)
-          : undefined;
+        ? treeAt(q, r, terrain)
+        : undefined;
 
     return {
       q,

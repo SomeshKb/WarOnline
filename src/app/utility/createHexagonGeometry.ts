@@ -3,12 +3,12 @@ import {
   InstancedBufferGeometry,
   Vector3,
   Vector4,
-} from "three";
-import { qrToWorld } from "./coords";
-import Grid from "./Grid";
-import { createHexagon } from "./hexagon";
-import { isHill, isWater, TileData } from "./interfaces";
-import { MapMeshOptions, MapMeshTile } from "./MapMesh";
+} from 'three';
+import { qrToWorld } from './coords';
+import Grid from './Grid';
+import { createHexagon } from './hexagon';
+import { isHill, isWater, TileData } from './interfaces';
+import { MapMeshOptions, MapMeshTile } from './MapMesh';
 function isNextOrPrevRiverTile(
   grid: Grid<TileData>,
   tile: TileData,
@@ -55,7 +55,7 @@ function computeCoastTextureIndex(
   }
 
   function bit(x: boolean) {
-    return x ? "1" : "0";
+    return x ? '1' : '0';
   }
 
   if (isWaterTile(tile.q, tile.r)) {
@@ -74,7 +74,7 @@ function computeCoastTextureIndex(
 }
 
 function bitStr(x: boolean): string {
-  return x ? "1" : "0";
+  return x ? '1' : '0';
 }
 
 function computeRiverTextureIndex(
@@ -120,9 +120,9 @@ export function createHexagonTilesGeometry(
   const textureAtlas = options.terrainAtlas;
 
   geometry.instanceCount = tiles.length;
-  geometry.setAttribute("position", (hexagon.attributes as any).position);
-  geometry.setAttribute("uv", (hexagon.attributes as any).uv);
-  geometry.setAttribute("border", (hexagon.attributes as any).border);
+  geometry.setAttribute('position', (hexagon.attributes as any).position);
+  geometry.setAttribute('uv', (hexagon.attributes as any).uv);
+  geometry.setAttribute('border', (hexagon.attributes as any).border);
 
   // positions for each hexagon tile
   const tilePositions: Vector3[] = tiles.map((tile) =>
@@ -136,7 +136,7 @@ export function createHexagonTilesGeometry(
   for (let i = 0; i < tilePositions.length; i++) {
     posAttr.setXY(i, tilePositions[i].x, tilePositions[i].y);
   }
-  geometry.setAttribute("offset", posAttr);
+  geometry.setAttribute('offset', posAttr);
 
   //----------------
   const cellSize = textureAtlas.cellSize;
@@ -179,7 +179,7 @@ export function createHexagonTilesGeometry(
     styleData[i * 4 + 3] = styles[i].w;
   }
   const styleAttr = new InstancedBufferAttribute(styleData, 4, true);
-  geometry.setAttribute("style", styleAttr);
+  geometry.setAttribute('style', styleAttr);
 
   // surrounding tile terrain represented as two consecutive Vector3s
   // 1. [tileIndex + 0] = NE, [tileIndex + 1] = E, [tileIndex + 2] = SE
@@ -210,8 +210,8 @@ export function createHexagonTilesGeometry(
     }
   }
 
-  geometry.setAttribute("neighborsEast", neighborsEast);
-  geometry.setAttribute("neighborsWest", neighborsWest);
+  geometry.setAttribute('neighborsEast', neighborsEast);
+  geometry.setAttribute('neighborsWest', neighborsWest);
 
   return geometry;
 }

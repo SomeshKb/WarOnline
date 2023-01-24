@@ -6,8 +6,8 @@ import {
   TextureAtlas,
   isHill,
   TileDataSource,
-} from "./interfaces";
-import { createHexagon } from "./hexagon";
+} from './interfaces';
+import { createHexagon } from './hexagon';
 import {
   InstancedBufferGeometry,
   InstancedBufferAttribute,
@@ -25,15 +25,15 @@ import {
   Color,
   FrontSide,
   RepeatWrapping,
-} from "three";
-import { loadFile, qrRange, loadTexture } from "./util";
-import { qrToWorld } from "./coords";
-import Grid from "./Grid";
-import { LAND_FRAGMENT_SHADER } from "../shaders/land.fragment";
-import { LAND_VERTEX_SHADER } from "../shaders/land.vertex";
-import { MOUNTAINS_FRAGMENT_SHADER } from "../shaders/mountains.fragment";
-import { MOUNTAINS_VERTEX_SHADER } from "../shaders/mountains.vertex";
-import Forests from "./Forests";
+} from 'three';
+import { loadFile, qrRange, loadTexture } from './util';
+import { qrToWorld } from './coords';
+import Grid from './Grid';
+import { LAND_FRAGMENT_SHADER } from '../shaders/land.fragment';
+import { LAND_VERTEX_SHADER } from '../shaders/land.vertex';
+import { MOUNTAINS_FRAGMENT_SHADER } from '../shaders/mountains.fragment';
+import { MOUNTAINS_VERTEX_SHADER } from '../shaders/mountains.vertex';
+import Forests from './Forests';
 
 export interface MapMeshOptions {
   /**
@@ -269,7 +269,7 @@ export default class MapMesh extends Group implements TileDataSource {
       this.createMountainMesh(this.tiles.filter((t) => t.isMountain)),
       this.createTrees(),
     ]).catch((err) => {
-      console.error("Could not create MapMesh", err);
+      console.error('Could not create MapMesh', err);
     });
   }
 
@@ -309,12 +309,12 @@ export default class MapMesh extends Group implements TileDataSource {
   updateFogAndClouds(tiles: TileData[]) {
     const landGeometry = this.land.geometry as InstancedBufferGeometry;
     const landStyleAttr = landGeometry.getAttribute(
-      "style"
+      'style'
     ) as InstancedBufferAttribute;
     const mountainsGeometry = this.mountains
       .geometry as InstancedBufferGeometry;
     const mountainsStyleAttr = mountainsGeometry.getAttribute(
-      "style"
+      'style'
     ) as InstancedBufferAttribute;
 
     tiles.forEach((updated) => {
@@ -407,19 +407,19 @@ export default class MapMesh extends Group implements TileDataSource {
         },
         gridColor: {
           value:
-            typeof this.options.gridColor != "undefined"
+            typeof this.options.gridColor != 'undefined'
               ? this.options.gridColor
               : new Color(0xffffff),
         },
         gridWidth: {
           value:
-            typeof this.options.gridWidth != "undefined"
+            typeof this.options.gridWidth != 'undefined'
               ? this.options.gridWidth
               : 0.02,
         },
         gridOpacity: {
           value:
-            typeof this.options.gridOpacity != "undefined"
+            typeof this.options.gridOpacity != 'undefined'
               ? this.options.gridOpacity
               : 0.33,
         },
@@ -470,19 +470,19 @@ export default class MapMesh extends Group implements TileDataSource {
         },
         gridColor: {
           value:
-            typeof this.options.gridColor != "undefined"
+            typeof this.options.gridColor != 'undefined'
               ? this.options.gridColor
               : new Color(0xffffff),
         },
         gridWidth: {
           value:
-            typeof this.options.gridWidth != "undefined"
+            typeof this.options.gridWidth != 'undefined'
               ? this.options.gridWidth
               : 0.02,
         },
         gridOpacity: {
           value:
-            typeof this.options.gridOpacity != "undefined"
+            typeof this.options.gridOpacity != 'undefined'
               ? this.options.gridOpacity
               : 0.33,
         },
@@ -513,9 +513,9 @@ function createHexagonTilesGeometry(
   const textureAtlas = options.terrainAtlas;
 
   geometry.instanceCount = tiles.length;
-  geometry.setAttribute("position", (hexagon.attributes as any).position);
-  geometry.setAttribute("uv", (hexagon.attributes as any).uv);
-  geometry.setAttribute("border", (hexagon.attributes as any).border);
+  geometry.setAttribute('position', (hexagon.attributes as any).position);
+  geometry.setAttribute('uv', (hexagon.attributes as any).uv);
+  geometry.setAttribute('border', (hexagon.attributes as any).border);
 
   // positions for each hexagon tile
   const tilePositions: Vector3[] = tiles.map((tile) =>
@@ -529,7 +529,7 @@ function createHexagonTilesGeometry(
   for (let i = 0; i < tilePositions.length; i++) {
     posAttr.setXY(i, tilePositions[i].x, tilePositions[i].y);
   }
-  geometry.setAttribute("offset", posAttr);
+  geometry.setAttribute('offset', posAttr);
 
   //----------------
   const cellSize = textureAtlas.cellSize;
@@ -572,7 +572,7 @@ function createHexagonTilesGeometry(
     styleData[i * 4 + 3] = styles[i].w;
   }
   const styleAttr = new InstancedBufferAttribute(styleData, 4, true);
-  geometry.setAttribute("style", styleAttr);
+  geometry.setAttribute('style', styleAttr);
 
   // surrounding tile terrain represented as two consecutive Vector3s
   // 1. [tileIndex + 0] = NE, [tileIndex + 1] = E, [tileIndex + 2] = SE
@@ -603,8 +603,8 @@ function createHexagonTilesGeometry(
     }
   }
 
-  geometry.setAttribute("neighborsEast", neighborsEast);
-  geometry.setAttribute("neighborsWest", neighborsWest);
+  geometry.setAttribute('neighborsEast', neighborsEast);
+  geometry.setAttribute('neighborsWest', neighborsWest);
 
   return geometry;
 }
@@ -620,7 +620,7 @@ function computeCoastTextureIndex(
   }
 
   function bit(x: boolean) {
-    return x ? "1" : "0";
+    return x ? '1' : '0';
   }
 
   if (isWaterTile(tile.q, tile.r)) {
@@ -705,5 +705,5 @@ function computeRiverTextureIndex(
 }
 
 function bitStr(x: boolean): string {
-  return x ? "1" : "0";
+  return x ? '1' : '0';
 }

@@ -1,4 +1,4 @@
-import { Vector3, Camera, Raycaster, Plane } from "three";
+import { Vector3, Camera, Raycaster, Plane } from 'three';
 
 export function pickingRay(vector: Vector3, camera: Camera): Raycaster {
   // set two vectors with opposing z values

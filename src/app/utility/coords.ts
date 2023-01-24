@@ -1,5 +1,5 @@
-import { Vector2, Vector3, Plane, Camera, Raycaster } from "three";
-import { QR } from "./interfaces";
+import { Vector2, Vector3, Plane, Camera, Raycaster } from 'three';
+import { QR } from './interfaces';
 
 const Z_PLANE = new Plane(new Vector3(0, 0, 1), 0);
 

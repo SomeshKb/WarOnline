@@ -139,4 +139,4 @@ void main() {
         gl_FragColor = texture2D(mapTexture, vec2(vPosition.x * 0.05, vPosition.y * 0.05));
     }    
 }
-`
+`;

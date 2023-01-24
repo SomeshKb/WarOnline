@@ -2,14 +2,24 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { HexGeneratorService } from 'src/app/services/hex-generator.service';
 import { australiaTileData } from 'src/app/tile-data';
-import { PerspectiveCamera, WebGLRenderer, Scene, PMREMGenerator, Raycaster, Vector2, Color, Vector3, AmbientLight } from 'three';
+import {
+  PerspectiveCamera,
+  WebGLRenderer,
+  Scene,
+  PMREMGenerator,
+  Raycaster,
+  Vector2,
+  Color,
+  Vector3,
+  AmbientLight,
+} from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { DistictComponent } from '../../distict/distict.component';
 
 @Component({
   selector: 'app-australia',
   templateUrl: './australia.component.html',
-  styleUrls: ['./australia.component.css']
+  styleUrls: ['./australia.component.css'],
 })
 export class AustraliaComponent implements OnInit {
   @ViewChild('canvas') canvasRef: ElementRef;
@@ -17,7 +27,7 @@ export class AustraliaComponent implements OnInit {
   private camera!: PerspectiveCamera;
   private renderer!: WebGLRenderer;
   private scene: Scene = new Scene();
-  pmrem !: PMREMGenerator;
+  pmrem!: PMREMGenerator;
   raycaster = new Raycaster();
   mouse = new Vector2();
   controls: OrbitControls;
@@ -26,22 +36,23 @@ export class AustraliaComponent implements OnInit {
   maxZoomLevel = 10;
   minZoomLevel = 1;
 
-  constructor(private hexGenerator: HexGeneratorService, public dialog: MatDialog) {
-  }
+  constructor(
+    private hexGenerator: HexGeneratorService,
+    public dialog: MatDialog
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   openDialog(tileID) {
-    const dialogRef = this.dialog.open(DistictComponent
-      , { height: '600px', data: { tileID: tileID } }
-    );
-
-    dialogRef.afterClosed().subscribe(result => {
+    const dialogRef = this.dialog.open(DistictComponent, {
+      height: '600px',
+      data: { tileID: tileID },
     });
+
+    dialogRef.afterClosed().subscribe((result) => {});
   }
   async initializeScene() {
-    this.scene.background = new Color("#0E5378");
+    this.scene.background = new Color('#0E5378');
     this.camera = this.hexGenerator.updateCamera(80, 0, 20, 0);
     this.renderer = this.hexGenerator.addRenderer(this.canvasRef);
     this.pmrem = new PMREMGenerator(this.renderer);
@@ -52,11 +63,14 @@ export class AustraliaComponent implements OnInit {
       stoneTile: australiaTileData.stoneTile,
       sandTile: australiaTileData.sandTile,
       dirtTile: australiaTileData.dirtTile,
-      grassTile: australiaTileData.grassTile
-    }
+      grassTile: australiaTileData.grassTile,
+    };
 
     this.hexGenerator.createHexMap(texture, 9, 9, this.scene, tileData);
-    this.controls = this.hexGenerator.addOrbitalControl(this.camera, this.renderer);
+    this.controls = this.hexGenerator.addOrbitalControl(
+      this.camera,
+      this.renderer
+    );
     var ambientLight = new AmbientLight(0xffffff); //color of the light
     ambientLight.intensity = 0.8;
     this.scene.add(ambientLight);
@@ -73,12 +87,14 @@ export class AustraliaComponent implements OnInit {
     if (this.dialog.openDialogs.length > 0) {
       return;
     }
-    this.mouse.x = (event.clientX / this.renderer.domElement.clientWidth) * 2 - 1;
-    this.mouse.y = - (event.clientY / this.renderer.domElement.clientHeight) * 2 + 1;
+    this.mouse.x =
+      (event.clientX / this.renderer.domElement.clientWidth) * 2 - 1;
+    this.mouse.y =
+      -(event.clientY / this.renderer.domElement.clientHeight) * 2 + 1;
     this.raycaster.setFromCamera(this.mouse, this.camera);
     const intersects = this.raycaster.intersectObjects(this.scene.children);
     if (intersects.length >= 1) {
-      this.openDialog(intersects[0].object["geometry"].name);
+      this.openDialog(intersects[0].object['geometry'].name);
       // console.log(intersects[0].object["geometry"].name)
     }
   }
@@ -98,22 +114,32 @@ export class AustraliaComponent implements OnInit {
       let vector = new Vector3(mX, mY, 0.1);
       vector.unproject(this.camera);
       vector.sub(this.camera.position);
-      this.camera.position.addVectors(this.camera.position, vector.setLength(factor));
-      this.controls.target.addVectors(this.controls.target, vector.setLength(factor));
+      this.camera.position.addVectors(
+        this.camera.position,
+        vector.setLength(factor)
+      );
+      this.controls.target.addVectors(
+        this.controls.target,
+        vector.setLength(factor)
+      );
       this.zoomLevel++;
-    }
-    else if (event.deltaY > 0 && this.zoomLevel > this.minZoomLevel) {
+    } else if (event.deltaY > 0 && this.zoomLevel > this.minZoomLevel) {
       let factor = 1;
       let mX = (event.clientX / innerWidth) * 2 - 1;
       let mY = -(event.clientY / innerHeight) * 2 + 1;
       let vector = new Vector3(mX, mY, 0.1);
       vector.unproject(this.camera);
       vector.sub(this.camera.position);
-      this.camera.position.subVectors(this.camera.position, vector.setLength(factor));
-      this.controls.target.subVectors(this.controls.target, vector.setLength(factor));
+      this.camera.position.subVectors(
+        this.camera.position,
+        vector.setLength(factor)
+      );
+      this.controls.target.subVectors(
+        this.controls.target,
+        vector.setLength(factor)
+      );
       this.zoomLevel--;
     }
     event.stopPropagation();
   }
-
 }

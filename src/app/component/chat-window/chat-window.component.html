@@ -1,23 +1,22 @@
-<div class="wrapper" [ngClass]="{'collapse': collapse}">
-
-    <div class="type-tab">
-        <div class="chat-wrapper">
-            <diV class="world chat">
-                <i class="fa-solid fa-earth-asia"></i>
-            </diV>
-            <diV class="country chat">
-                <i class="fa-solid fa-flag"></i>
-            </diV>
-            <diV class="squad chat">
-                <i class="fa-solid fa-people-group"></i>
-            </diV>
-        </div>
-
-        <button class="collapse-btn" (click)="toggle()">
-            <i class='fas'  [ngClass]="collapse? 'fa-angle-double-up' : 'fa-angle-double-down'"></i>
-        </button>
-
+<div class="wrapper" [ngClass]="{ collapse: collapse }">
+  <div class="type-tab">
+    <div class="chat-wrapper">
+      <diV class="world chat">
+        <i class="fa-solid fa-earth-asia"></i>
+      </diV>
+      <diV class="country chat">
+        <i class="fa-solid fa-flag"></i>
+      </diV>
+      <diV class="squad chat">
+        <i class="fa-solid fa-people-group"></i>
+      </diV>
     </div>
 
-
+    <button class="collapse-btn" (click)="toggle()">
+      <i
+        class="fas"
+        [ngClass]="collapse ? 'fa-angle-double-up' : 'fa-angle-double-down'"
+      ></i>
+    </button>
+  </div>
 </div>

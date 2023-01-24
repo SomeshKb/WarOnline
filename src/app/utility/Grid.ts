@@ -1,6 +1,6 @@
-import { QR } from "./interfaces";
-import { qrRange, range, isInteger } from "./util";
-import { Vector3 } from "three";
+import { QR } from './interfaces';
+import { qrRange, range, isInteger } from './util';
+import { Vector3 } from 'three';
 
 export default class Grid<T extends QR> {
   private data: T[][] = [];
@@ -23,7 +23,7 @@ export default class Grid<T extends QR> {
 
   constructor(private _width: number, private _height: number) {
     if (_width % 2 != 0 || _height % 2 != 0) {
-      throw new Error("With and height of grid must be divisible by 2");
+      throw new Error('With and height of grid must be divisible by 2');
     }
     this.data = [];
   }

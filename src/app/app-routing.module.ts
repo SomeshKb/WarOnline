@@ -4,12 +4,12 @@ import { AsiaComponent } from './component/map/asia/asia.component';
 import { AustraliaComponent } from './component/map/australia/australia.component';
 
 const routes: Routes = [
-  { path: "asia", component: AsiaComponent },
-  { path: "australia", component: AustraliaComponent }
+  { path: 'asia', component: AsiaComponent },
+  { path: 'australia', component: AustraliaComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

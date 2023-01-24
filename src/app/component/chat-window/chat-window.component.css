@@ -4,7 +4,7 @@
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   width: 270px;
-  transition: all .5s ease-in-out;
+  transition: all 0.5s ease-in-out;
   border: 2px solid #046a71;
   border-bottom: none;
   color: #f3f3f3;
@@ -21,7 +21,6 @@
 
 .chat {
   padding: 10px;
-
 }
 
 .collapse {
@@ -39,6 +38,6 @@
   color: #00c3ff;
 }
 
-.fa-solid{
-    cursor: pointer;
+.fa-solid {
+  cursor: pointer;
 }

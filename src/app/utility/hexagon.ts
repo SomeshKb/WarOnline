@@ -1,4 +1,4 @@
-import { Vector3, BufferGeometry, BufferAttribute } from "three";
+import { Vector3, BufferGeometry, BufferAttribute } from 'three';
 
 export const NE = 0b100000;
 export const E = 0b010000;
@@ -77,11 +77,11 @@ export function createHexagon(
   }
 
   var geometry = new BufferGeometry();
-  geometry.setAttribute("position", new BufferAttribute(positions, 3));
-  geometry.setAttribute("uv", new BufferAttribute(texcoords, 2));
+  geometry.setAttribute('position', new BufferAttribute(positions, 3));
+  geometry.setAttribute('uv', new BufferAttribute(texcoords, 2));
 
   // 1.0 = border vertex, 0.0 otherwise
-  geometry.setAttribute("border", new BufferAttribute(border, 1));
+  geometry.setAttribute('border', new BufferAttribute(border, 1));
 
   return geometry;
 }

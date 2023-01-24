@@ -1,5 +1,5 @@
-import { TileData, QR } from "./interfaces";
-import { Vector2, Vector3, Camera } from "three";
+import { TileData, QR } from './interfaces';
+import { Vector2, Vector3, Camera } from 'three';
 
 interface MapViewController {
   init(controls: MapViewControls, canvas: HTMLCanvasElement): void;

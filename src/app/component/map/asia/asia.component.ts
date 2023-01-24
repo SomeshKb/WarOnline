@@ -55,8 +55,7 @@ export class AsiaComponent implements OnInit, AfterViewInit {
 
     const map = await generateMapView(mapSize);
 
-    console.log(map)
-
+    console.log(map);
 
     const assetsList = [
       'assets/materials/terrain.png',
@@ -122,15 +121,12 @@ export class AsiaComponent implements OnInit, AfterViewInit {
     initInput(mapView);
     const controller = mapView.controller as Controller;
     controller.debugOutput = this.debugRef.nativeElement;
-    mapView.onLoaded = () => {
-    };
+    mapView.onLoaded = () => {};
 
     mapView.onTileSelected = (tile: TileData) => {
-      console.log(tile)
+      console.log(tile);
     };
   }
 
-
-  ngAfterViewInit(): void {
-  }
+  ngAfterViewInit(): void {}
 }

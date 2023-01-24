@@ -1,8 +1,8 @@
-import MapViewController from "./MapViewController";
-import { MapViewControls } from "./MapViewController";
-import { screenToWorld, pickingRay, qrToWorld } from "./coords";
-import { TileData, QR } from "./interfaces";
-import { Vector3, Camera, Vector2 } from "three";
+import MapViewController from './MapViewController';
+import { MapViewControls } from './MapViewController';
+import { screenToWorld, pickingRay, qrToWorld } from './coords';
+import { TileData, QR } from './interfaces';
+import { Vector3, Camera, Vector2 } from 'three';
 
 class Animation {
   /**
@@ -57,16 +57,16 @@ export default class Controller implements MapViewController {
   init(controls: MapViewControls, canvas: HTMLCanvasElement) {
     this.controls = controls;
 
-    document.addEventListener("keydown", this.onKeyDown, false);
+    document.addEventListener('keydown', this.onKeyDown, false);
 
-    canvas.addEventListener("mousedown", this.onMouseDown, false);
-    canvas.addEventListener("mousemove", this.onMouseMove, false);
-    canvas.addEventListener("mouseup", this.onMouseUp, false);
-    canvas.addEventListener("mouseout", this.onMouseOut, false);
-    canvas.addEventListener("mouseenter", this.onMouseEnter, false);
+    canvas.addEventListener('mousedown', this.onMouseDown, false);
+    canvas.addEventListener('mousemove', this.onMouseMove, false);
+    canvas.addEventListener('mouseup', this.onMouseUp, false);
+    canvas.addEventListener('mouseout', this.onMouseOut, false);
+    canvas.addEventListener('mouseenter', this.onMouseEnter, false);
 
     canvas.addEventListener(
-      "touchstart",
+      'touchstart',
       (e) => {
         this.onMouseDown(e.touches[0] as any);
         e.preventDefault();
@@ -74,7 +74,7 @@ export default class Controller implements MapViewController {
       { passive: true }
     );
     canvas.addEventListener(
-      "touchmove",
+      'touchmove',
       (e) => {
         this.onMouseMove(e.touches[0] as any);
         e.preventDefault();
@@ -82,7 +82,7 @@ export default class Controller implements MapViewController {
       { passive: true }
     );
     canvas.addEventListener(
-      "touchend",
+      'touchend',
       (e) => this.onMouseUp(e.touches[0] || (e.changedTouches[0] as any)),
       false
     );
