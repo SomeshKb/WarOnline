@@ -1,16 +1,6 @@
-import {
-  InstancedBufferAttribute,
-  InstancedBufferGeometry,
-  Vector3,
-  Vector4,
-} from 'three';
-import { qrToWorld } from './coords';
 import Grid from './Grid';
-import { createHexagon } from './hexagon';
 import { Height, TileData, QR } from './interfaces';
 import { mapdata } from './mapData';
-import { MapMeshOptions, MapMeshTile } from './MapMesh';
-import { perlin2, seed, simplex2 } from './perlin';
 
 class Utility {
   static isLand(height: Height) {
@@ -95,7 +85,7 @@ function generateRivers(grid: Grid<TileData>): Grid<TileData> {
 
       const next =
         neighbors[
-          Math.max(neighbors.length - 1, Math.floor(Math.random() * 1.2))
+        Math.max(neighbors.length - 1, Math.floor(Math.random() * 1.2))
         ];
       river.push(next);
 
@@ -161,12 +151,12 @@ class TileGenerator {
 
     const trees =
       Utility.isMountain(height) ||
-      Utility.isWater(height) ||
-      terrain == 'desert'
+        Utility.isWater(height) ||
+        terrain == 'desert'
         ? undefined
         : Utility.varying(true, false, false)
-        ? Utility.treeAt(terrain)
-        : undefined;
+          ? Utility.treeAt(terrain)
+          : undefined;
 
     return {
       q: this.coords.q,

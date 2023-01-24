@@ -38,9 +38,6 @@ export class AsiaComponent implements OnInit, AfterViewInit {
   @ViewChild('text') textRef: ElementRef;
   @ViewChild('debug') debugRef: ElementRef;
 
-  private camera!: PerspectiveCamera;
-  private renderer!: WebGLRenderer;
-  private scene: Scene = new Scene();
   pmrem!: PMREMGenerator;
   raycaster = new Raycaster();
   mouse = new Vector2();
@@ -82,6 +79,7 @@ export class AsiaComponent implements OnInit, AfterViewInit {
       treeSpritesheet,
       transitionTexture,
     ] = await Promise.all(promiseArr);
+
     const options: MapMeshOptions = {
       terrainAtlas,
       terrainAtlasTexture,
@@ -92,7 +90,7 @@ export class AsiaComponent implements OnInit, AfterViewInit {
       treeSpritesheet,
       treeSpritesheetSubdivisions: 4,
       transitionTexture,
-      treesPerForest: 50,
+      treesPerForest: 1,
       gridWidth: 0.025,
       gridColor: new Color(0x42322b),
       gridOpacity: 0.25,
@@ -107,11 +105,11 @@ export class AsiaComponent implements OnInit, AfterViewInit {
         undefined, // leave default options for trees with index 0 (temperate zone forests)
         {
           // tundra trees
-          treesPerForest: 25,
+          treesPerForest: 0,
         },
         {
           // snowy trees
-          treesPerForest: 10,
+          treesPerForest: 0,
           scale: 0.85,
         }, // no options for tropical forests (index = 3)
       ],
