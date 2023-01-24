@@ -7,54 +7,62 @@ import {
 import { qrToWorld } from './coords';
 import Grid from './Grid';
 import { createHexagon } from './hexagon';
-import { Height, TileData } from './interfaces';
+import { Height, TileData, QR } from './interfaces';
 import { mapdata } from './mapData';
 import { MapMeshOptions, MapMeshTile } from './MapMesh';
 import { perlin2, seed, simplex2 } from './perlin';
 
-export function shuffle<T>(a: T[]): T[] {
-  var j: number, x: T, i: number;
-  for (i = a.length; i; i--) {
-    j = Math.floor(Math.random() * i);
-    x = a[i - 1];
-    a[i - 1] = a[j];
-    a[j] = x;
+class Utility {
+  static isLand(height: Height) {
+    return height >= 0.0 && height < 0.75;
   }
-  return a;
-}
 
-export function varying<T>(...values: T[]): T {
-  return values[Math.round(Math.random() * (values.length - 1))];
-}
+  static isWater(height: Height) {
+    return height < 0.0;
+  }
 
-export function isLand(height: Height) {
-  return height >= 0.0 && height < 0.75;
-}
+  static isHill(height: Height) {
+    return height >= 0.375 && height < 0.75;
+  }
 
-export function isWater(height: Height) {
-  return height < 0.0;
-}
+  static isMountain(height: Height) {
+    return height >= 0.75;
+  }
 
-export function isHill(height: Height) {
-  return height >= 0.375 && height < 0.75;
-}
+  static treeAt(terrain: string): number | undefined {
+    if (terrain == 'snow') return 2;
+    else if (terrain == 'tundra') return 1;
+    else return 0;
+  }
 
-export function isMountain(height: Height) {
-  return height >= 0.75;
-}
+  static shuffle<T>(a: T[]): T[] {
+    var j: number, x: T, i: number;
+    for (i = a.length; i; i--) {
+      j = Math.floor(Math.random() * i);
+      x = a[i - 1];
+      a[i - 1] = a[j];
+      a[j] = x;
+    }
+    return a;
+  }
 
-function isAccessibleMountain(tile: TileData, grid: Grid<TileData>) {
-  let ns = grid.neighbors(tile.q, tile.r);
-  let spring = isMountain(tile.height);
-  return spring && ns.filter((t) => isLand(t.height)).length > 3;
+  static varying<T>(...values: T[]): T {
+    return values[Math.round(Math.random() * (values.length - 1))];
+  }
+
+  static isAccessibleMountain(tile: TileData, grid: Grid<TileData>) {
+    let ns = grid.neighbors(tile.q, tile.r);
+    let spring = Utility.isMountain(tile.height);
+    return spring && ns.filter((t) => Utility.isLand(t.height)).length > 3;
+  }
 }
 
 function generateRivers(grid: Grid<TileData>): Grid<TileData> {
   // find a few river spawn points, preferably in mountains
   const tiles = grid.toArray();
   const numRivers = Math.max(1, Math.round(Math.sqrt(grid.length) / 4));
-  const spawns: TileData[] = shuffle(
-    tiles.filter((t) => isAccessibleMountain(t, grid))
+  const spawns: TileData[] = Utility.shuffle(
+    tiles.filter((t) => Utility.isAccessibleMountain(t, grid))
   ).slice(0, numRivers);
 
   // grow the river towards the water by following the height gradient
@@ -76,7 +84,7 @@ function generateRivers(grid: Grid<TileData>): Grid<TileData> {
 
     let tile = spawn;
 
-    while (!isWater(tile.height) && river.length < 20) {
+    while (!Utility.isWater(tile.height) && river.length < 20) {
       const neighbors = sortByHeight(grid.neighbors(tile.q, tile.r)).filter(
         (t) => !contains(t, river)
       );
@@ -123,44 +131,46 @@ function generateMap(
 
 function generateRandomMap(
   size: number,
-  tile: (q: number, r: number, height: Height) => TileData
+  tile: (q: number, r: number) => TileData
 ): Promise<Grid<TileData>> {
-  seed(Date.now() + Math.random());
-  return generateMap(size, (q, r) => tile(q, r, 0));
+  return generateMap(size, (q, r) => tile(q, r));
 }
 
-export async function generateMapView(mapSize: number) {
-  function terrainAt(q: number, r: number): string {
-    const index = mapdata.findIndex((x) => x.x == q && x.y == r);
-    if (index != -1) {
-      return mapdata[index].terrain;
-    }
-    return 'ocean';
+class TileGenerator {
+  coords: QR;
+  mapDataHash: Record<string, string> = {};
+
+  constructor(coords: QR) {
+    this.coords = coords;
+    mapdata.forEach((tile) => {
+      this.mapDataHash[`${tile.x}:${tile.y}`] = tile.terrain;
+    });
   }
 
-  function treeAt(q: number, r: number, terrain: string): number | undefined {
-    if (terrain == 'snow') return 2;
-    else if (terrain == 'tundra') return 1;
-    else return 0;
+  terrainAt(): string {
+    const key = `${this.coords.q}:${this.coords.r}`;
+    return this.mapDataHash[key] || 'ocean';
   }
 
-  return generateRandomMap(mapSize, (q, r, height): TileData => {
-    const terrain = terrainAt(q, r);
-
+  generateTileData(): TileData {
+    const terrain = this.terrainAt();
+    let height = 0;
     if (terrain == 'mountain') {
       height = 1.7;
     }
 
     const trees =
-      isMountain(height) || isWater(height) || terrain == 'desert'
+      Utility.isMountain(height) ||
+      Utility.isWater(height) ||
+      terrain == 'desert'
         ? undefined
-        : varying(true, false, false)
-        ? treeAt(q, r, terrain)
+        : Utility.varying(true, false, false)
+        ? Utility.treeAt(terrain)
         : undefined;
 
     return {
-      q,
-      r,
+      q: this.coords.q,
+      r: this.coords.r,
       height,
       terrain,
       treeIndex: trees,
@@ -169,5 +179,24 @@ export async function generateMapView(mapSize: number) {
       fog: false,
       clouds: false,
     };
-  });
+  }
+}
+
+export class MapGenerator {
+  private mapSize: number;
+  constructor(mapSize: number) {
+    this.mapSize = mapSize;
+    // seed(Date.now() + Math.random());
+  }
+  generate() {
+    const size = this.mapSize;
+    const grid = new Grid<TileData>(size, size).mapQR((q, r) => {
+      const coords = { q, r };
+      const tileGenerator = new TileGenerator(coords);
+      return tileGenerator.generateTileData();
+    });
+    // const withRivers = generateRivers(grid);
+    //@ts-ignore
+    return grid;
+  }
 }

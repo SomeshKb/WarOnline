@@ -18,7 +18,7 @@ import {
 import { HexGeneratorService } from '../../../services/hex-generator.service';
 import { LAND_VERTEX_SHADER } from 'src/assets/shaders/land.vertex';
 import { LAND_FRAGMENT_SHADER } from 'src/assets/shaders/land.fragment';
-import { generateMapView } from 'src/app/utility/generateRandomMap';
+import { MapGenerator } from 'src/app/utility/generateRandomMap';
 import { MOUNTAINS_FRAGMENT_SHADER } from 'src/app/shaders/mountains.fragment';
 import { MOUNTAINS_VERTEX_SHADER } from 'src/app/shaders/mountains.vertex';
 import { MapMeshOptions } from 'src/app/utility/MapMesh';
@@ -53,7 +53,8 @@ export class AsiaComponent implements OnInit, AfterViewInit {
   async ngOnInit(): Promise<void> {
     const mapSize = 24;
 
-    const map = await generateMapView(mapSize);
+    const mapGenerator = new MapGenerator(mapSize);
+    const map = await mapGenerator.generate();
 
     console.log(map);
 
