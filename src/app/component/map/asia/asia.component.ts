@@ -41,7 +41,7 @@ export class AsiaComponent implements OnInit, AfterViewInit {
   constructor() { }
 
   async ngOnInit(): Promise<void> {
-    const mapSize = 24;
+    const mapSize = 48;
 
     const mapGenerator = new MapGenerator(mapSize);
     const map = await mapGenerator.generate();

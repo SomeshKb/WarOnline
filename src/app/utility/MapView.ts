@@ -25,14 +25,14 @@ import ChunkedLazyMapMesh from './ChunkedLazyMapMesh';
 import { MapMeshOptions } from './MapMesh';
 
 export default class MapView implements MapViewControls, TileDataSource {
-  private static DEFAULT_ZOOM = 25;
+  private static DEFAULT_ZOOM = 50;
 
   private _camera: PerspectiveCamera;
   private _scene: Scene;
   private _renderer: WebGLRenderer;
   private _scrollDir = new Vector3(0, 0, 0);
   private _lastTimestamp = Date.now();
-  private _zoom: number = 25;
+  private _zoom: number = 50;
   private _canvas: HTMLCanvasElement;
 
   private _mapMesh: Object3D & TileDataSource;
