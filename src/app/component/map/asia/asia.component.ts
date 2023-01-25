@@ -38,22 +38,13 @@ export class AsiaComponent implements OnInit, AfterViewInit {
   @ViewChild('text') textRef: ElementRef;
   @ViewChild('debug') debugRef: ElementRef;
 
-  pmrem!: PMREMGenerator;
-  raycaster = new Raycaster();
-  mouse = new Vector2();
-
-  constructor(
-    private hexGenerator: HexGeneratorService,
-    private http: HttpClient
-  ) {}
+  constructor() { }
 
   async ngOnInit(): Promise<void> {
     const mapSize = 24;
 
     const mapGenerator = new MapGenerator(mapSize);
     const map = await mapGenerator.generate();
-
-    console.log(map);
 
     const assetsList = [
       'assets/materials/terrain.png',
@@ -66,7 +57,6 @@ export class AsiaComponent implements OnInit, AfterViewInit {
     ];
     const response = await fetch('assets/materials/land-atlas.json');
     const terrainAtlas = await response.json();
-    console.log({ terrainAtlas });
     const promiseArr = assetsList.map((asset) =>
       new TextureLoader().loadAsync(asset)
     );
@@ -79,6 +69,8 @@ export class AsiaComponent implements OnInit, AfterViewInit {
       treeSpritesheet,
       transitionTexture,
     ] = await Promise.all(promiseArr);
+
+    riverAtlasTexture
 
     const options: MapMeshOptions = {
       terrainAtlas,
@@ -101,8 +93,7 @@ export class AsiaComponent implements OnInit, AfterViewInit {
 
       // options per tree index, varying the different kinds of trees a little
       treeOptions: [
-        //@ts-ignore
-        undefined, // leave default options for trees with index 0 (temperate zone forests)
+        { treesPerForest: 0, },
         {
           // tundra trees
           treesPerForest: 0,
@@ -120,12 +111,12 @@ export class AsiaComponent implements OnInit, AfterViewInit {
     initInput(mapView);
     const controller = mapView.controller as Controller;
     controller.debugOutput = this.debugRef.nativeElement;
-    mapView.onLoaded = () => {};
+    mapView.onLoaded = () => { };
 
     mapView.onTileSelected = (tile: TileData) => {
       console.log(tile);
     };
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void { }
 }

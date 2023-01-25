@@ -146,17 +146,10 @@ class TileGenerator {
     const terrain = this.terrainAt();
     let height = 0;
     if (terrain == 'mountain') {
-      height = 1.7;
+      height = 5;
     }
 
-    const trees =
-      Utility.isMountain(height) ||
-        Utility.isWater(height) ||
-        terrain == 'desert'
-        ? undefined
-        : Utility.varying(true, false, false)
-          ? Utility.treeAt(terrain)
-          : undefined;
+    const trees = 0;
 
     return {
       q: this.coords.q,
