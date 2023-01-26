@@ -1,6 +1,6 @@
 import Grid from './Grid';
 import { Height, TileData, QR } from './interfaces';
-import { africaMapData } from './mapData';
+import { southAmerica } from './mapData';
 
 class Utility {
   static isLand(height: Height) {
@@ -132,7 +132,7 @@ class TileGenerator {
 
   constructor(coords: QR) {
     this.coords = coords;
-    africaMapData.forEach((tile) => {
+    southAmerica.forEach((tile) => {
       this.mapDataHash[`${tile.x}:${tile.y}`] = tile.terrain;
     });
   }

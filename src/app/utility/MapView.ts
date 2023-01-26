@@ -6,6 +6,9 @@ import {
   Group,
   Camera,
   Object3D,
+  LineBasicMaterial,
+  BufferGeometry,
+  Line,
 } from 'three';
 import MapMesh from './MapMesh';
 import { TileData, TileDataSource, QR } from './interfaces';
@@ -45,8 +48,16 @@ export default class MapView implements MapViewControls, TileDataSource {
 
   private _onTileSelected: (tile: TileData) => void;
   private _onLoaded: () => void;
-  private _onAnimate: (dtS: number) => void = (dtS) => {};
+  private _onAnimate: (dtS: number) => void = (dtS) => { };
 
+  public get camera(): PerspectiveCamera {
+    return this._camera;
+  }
+
+  public get scene(): Scene {
+    return this._scene;
+  }
+  
   get controller() {
     return this._controller;
   }
@@ -181,7 +192,7 @@ export default class MapView implements MapViewControls, TileDataSource {
     } else {
       const mesh =
         (this._mapMesh =
-        this._chunkedMesh =
+          this._chunkedMesh =
           new ChunkedLazyMapMesh(tiles, options));
       this._scene.add(this._mapMesh);
       mesh.loaded.then(() => {
@@ -189,10 +200,10 @@ export default class MapView implements MapViewControls, TileDataSource {
       });
       console.info(
         'using ChunkedLazyMapMesh with ' +
-          mesh.numChunks +
-          ' chunks for ' +
-          tiles.width * tiles.height +
-          ' tiles'
+        mesh.numChunks +
+        ' chunks for ' +
+        tiles.width * tiles.height +
+        ' tiles'
       );
     }
   }
@@ -303,4 +314,19 @@ export default class MapView implements MapViewControls, TileDataSource {
     // just look up the coords in our grid
     return this._tileGrid.get(roundedAxialPos.q, roundedAxialPos.r);
   }
+
+
+  addLine() {
+    const material = new LineBasicMaterial({ color: 0x0000ff });
+    const points = [];
+    points.push(new Vector3(- 10, 0, 0));
+    points.push(new Vector3(0, 10, 0));
+    points.push(new Vector3(10, 0, 0));
+
+    const geometry = new BufferGeometry().setFromPoints(points);
+    const line = new Line(geometry, material);
+    this._scene.add(line);
+  }
+
+
 }
