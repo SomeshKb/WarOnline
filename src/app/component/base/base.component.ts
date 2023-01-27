@@ -6,7 +6,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.css'],
 })
-export class BaseComponent implements OnInit {
+export class BaseComponent {
   baseImage = 'assets/base/military.png';
   units = [1, 2, 3, 4, 5, 6];
   isBaseOwner = true;
@@ -16,8 +16,6 @@ export class BaseComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: { x: string; y: string }) {
     console.log('BASE', data);
   }
-
-  ngOnInit(): void {}
 
   toggleTrainPanel() {
     this.trainUnit = !this.trainUnit;

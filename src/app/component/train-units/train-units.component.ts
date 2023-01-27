@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './train-units.component.html',
   styleUrls: ['./train-units.component.css'],
 })
-export class TrainUnitsComponent implements OnInit {
+export class TrainUnitsComponent {
   unitsType = [
     'Tank',
     'Anti_Infantry',
@@ -21,6 +21,4 @@ export class TrainUnitsComponent implements OnInit {
     'Destroyer',
   ];
   constructor() {}
-
-  ngOnInit(): void {}
 }

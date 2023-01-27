@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { HexGeneratorService } from 'src/app/services/hex-generator.service';
 import { australiaTileData } from 'src/app/tile-data';
@@ -21,7 +27,7 @@ import { DistictComponent } from '../../distict/distict.component';
   templateUrl: './australia.component.html',
   styleUrls: ['./australia.component.css'],
 })
-export class AustraliaComponent implements OnInit {
+export class AustraliaComponent implements AfterViewInit {
   @ViewChild('canvas') canvasRef: ElementRef;
 
   private camera!: PerspectiveCamera;
@@ -40,8 +46,6 @@ export class AustraliaComponent implements OnInit {
     private hexGenerator: HexGeneratorService,
     public dialog: MatDialog
   ) {}
-
-  ngOnInit(): void {}
 
   openDialog(tileID) {
     const dialogRef = this.dialog.open(DistictComponent, {

@@ -33,12 +33,12 @@ import { TileData } from 'src/app/utility/interfaces';
   templateUrl: './asia.component.html',
   styleUrls: ['./asia.component.css'],
 })
-export class AsiaComponent implements OnInit, AfterViewInit {
+export class AsiaComponent implements OnInit {
   @ViewChild('canvas') canvasRef: ElementRef;
   @ViewChild('text') textRef: ElementRef;
   @ViewChild('debug') debugRef: ElementRef;
 
-  constructor() { }
+  constructor() {}
 
   async ngOnInit(): Promise<void> {
     const mapSize = 48;
@@ -70,7 +70,7 @@ export class AsiaComponent implements OnInit, AfterViewInit {
       transitionTexture,
     ] = await Promise.all(promiseArr);
 
-    riverAtlasTexture
+    riverAtlasTexture;
 
     const options: MapMeshOptions = {
       terrainAtlas,
@@ -93,7 +93,7 @@ export class AsiaComponent implements OnInit, AfterViewInit {
 
       // options per tree index, varying the different kinds of trees a little
       treeOptions: [
-        { treesPerForest: 0, },
+        { treesPerForest: 0 },
         {
           // tundra trees
           treesPerForest: 0,
@@ -111,12 +111,10 @@ export class AsiaComponent implements OnInit, AfterViewInit {
     initInput(mapView);
     const controller = mapView.controller as Controller;
     controller.debugOutput = this.debugRef.nativeElement;
-    mapView.onLoaded = () => { };
+    mapView.onLoaded = () => {};
 
     mapView.onTileSelected = (tile: TileData) => {
       console.log(tile);
     };
   }
-
-  ngAfterViewInit(): void { }
 }

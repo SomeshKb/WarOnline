@@ -15,7 +15,7 @@ import { BaseComponent } from '../base/base.component';
   templateUrl: './distict.component.html',
   styleUrls: ['./distict.component.css'],
 })
-export class DistictComponent implements OnInit {
+export class DistictComponent {
   tileID = null;
   title = 'World';
   noOfRow = 10;
@@ -36,8 +36,6 @@ export class DistictComponent implements OnInit {
     this.tileID = data.tileID;
     console.log(this.tileID);
   }
-
-  ngOnInit(): void {}
 
   onClick(i: number, j: number) {
     console.log(i, j);
