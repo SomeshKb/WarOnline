@@ -48,7 +48,7 @@ export default class MapView implements MapViewControls, TileDataSource {
 
   private _onTileSelected: (tile: TileData) => void;
   private _onLoaded: () => void;
-  private _onAnimate: (dtS: number) => void = (dtS) => { };
+  private _onAnimate: (dtS: number) => void = (dtS) => {};
 
   public get camera(): PerspectiveCamera {
     return this._camera;
@@ -57,7 +57,7 @@ export default class MapView implements MapViewControls, TileDataSource {
   public get scene(): Scene {
     return this._scene;
   }
-  
+
   get controller() {
     return this._controller;
   }
@@ -192,7 +192,7 @@ export default class MapView implements MapViewControls, TileDataSource {
     } else {
       const mesh =
         (this._mapMesh =
-          this._chunkedMesh =
+        this._chunkedMesh =
           new ChunkedLazyMapMesh(tiles, options));
       this._scene.add(this._mapMesh);
       mesh.loaded.then(() => {
@@ -200,10 +200,10 @@ export default class MapView implements MapViewControls, TileDataSource {
       });
       console.info(
         'using ChunkedLazyMapMesh with ' +
-        mesh.numChunks +
-        ' chunks for ' +
-        tiles.width * tiles.height +
-        ' tiles'
+          mesh.numChunks +
+          ' chunks for ' +
+          tiles.width * tiles.height +
+          ' tiles'
       );
     }
   }
@@ -315,11 +315,10 @@ export default class MapView implements MapViewControls, TileDataSource {
     return this._tileGrid.get(roundedAxialPos.q, roundedAxialPos.r);
   }
 
-
   addLine() {
     const material = new LineBasicMaterial({ color: 0x0000ff });
     const points = [];
-    points.push(new Vector3(- 10, 0, 0));
+    points.push(new Vector3(-10, 0, 0));
     points.push(new Vector3(0, 10, 0));
     points.push(new Vector3(10, 0, 0));
 
@@ -327,6 +326,4 @@ export default class MapView implements MapViewControls, TileDataSource {
     const line = new Line(geometry, material);
     this._scene.add(line);
   }
-
-
 }
