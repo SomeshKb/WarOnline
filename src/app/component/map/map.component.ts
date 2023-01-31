@@ -1,50 +1,37 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import {
-  Color,
-  PerspectiveCamera,
-  PMREMGenerator,
-  Raycaster,
-  Scene,
-  TextureLoader,
-  Vector2,
-  WebGLRenderer,
-} from 'three';
-import { HexGeneratorService } from '../../../services/hex-generator.service';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Color, TextureLoader } from 'three';
 import { LAND_VERTEX_SHADER } from 'src/assets/shaders/land.vertex';
 import { LAND_FRAGMENT_SHADER } from 'src/assets/shaders/land.fragment';
 import { MapGenerator } from 'src/app/utility/generateRandomMap';
 import { MOUNTAINS_FRAGMENT_SHADER } from 'src/app/shaders/mountains.fragment';
 import { MOUNTAINS_VERTEX_SHADER } from 'src/app/shaders/mountains.vertex';
 import { MapMeshOptions } from 'src/app/utility/MapMesh';
-import { HttpClient } from '@angular/common/http';
 import MapView from 'src/app/utility/MapView';
 import { initInput } from 'src/app/utility/input';
 import Controller from 'src/app/utility/DefaultMapViewController';
 import { TileData } from 'src/app/utility/interfaces';
+import { ActivatedRoute } from '@angular/router';
+import { Continent } from 'src/app/models/continents';
 
 @Component({
-  selector: 'app-asia',
-  templateUrl: './asia.component.html',
-  styleUrls: ['./asia.component.css'],
+  selector: 'app-map',
+  templateUrl: './map.component.html',
+  styleUrls: ['./map.component.css']
 })
-export class AsiaComponent implements OnInit {
+export class MapComponent implements OnInit {
   @ViewChild('canvas') canvasRef: ElementRef;
   @ViewChild('text') textRef: ElementRef;
   @ViewChild('debug') debugRef: ElementRef;
 
-  constructor() {}
+  constructor(private route : ActivatedRoute) {
+    
+   }
 
   async ngOnInit(): Promise<void> {
     const mapSize = 48;
-
+    const continent = this.route.snapshot.data['continent'];
     const mapGenerator = new MapGenerator(mapSize);
-    const map = await mapGenerator.generate();
+    const map = await mapGenerator.generate(continent as Continent);
 
     const assetsList = [
       'assets/materials/terrain.png',
@@ -111,7 +98,7 @@ export class AsiaComponent implements OnInit {
     initInput(mapView);
     const controller = mapView.controller as Controller;
     controller.debugOutput = this.debugRef.nativeElement;
-    mapView.onLoaded = () => {};
+    mapView.onLoaded = () => { };
 
     mapView.onTileSelected = (tile: TileData) => {
       console.log(tile);

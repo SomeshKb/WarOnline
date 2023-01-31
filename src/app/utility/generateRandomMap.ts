@@ -1,6 +1,7 @@
+import { Continent } from '../models/continents';
 import Grid from './Grid';
 import { Height, TileData, QR } from './interfaces';
-import { southAmerica } from './mapData';
+import { africaMapData, AustraliaMapData, southAmerica } from './mapData';
 
 class Utility {
   static isLand(height: Height) {
@@ -85,7 +86,7 @@ function generateRivers(grid: Grid<TileData>): Grid<TileData> {
 
       const next =
         neighbors[
-          Math.max(neighbors.length - 1, Math.floor(Math.random() * 1.2))
+        Math.max(neighbors.length - 1, Math.floor(Math.random() * 1.2))
         ];
       river.push(next);
 
@@ -130,12 +131,33 @@ class TileGenerator {
   coords: QR;
   mapDataHash: Record<string, string> = {};
 
-  constructor(coords: QR) {
+  constructor(coords: QR, continent: Continent) {
     this.coords = coords;
-    southAmerica.forEach((tile) => {
+    const tileDataInfo = this.getContinentName(continent)
+    tileDataInfo.forEach((tile) => {
       this.mapDataHash[`${tile.x}:${tile.y}`] = tile.terrain;
     });
   }
+
+  getContinentName(continent: Continent) {
+    switch (continent) {
+      case Continent.Africa:
+        return africaMapData;
+      case Continent.Asia:
+        return [];
+      case Continent.Europe:
+        return [];
+      case Continent.NorthAmerica:
+        return [];
+      case Continent.Australia:
+        return AustraliaMapData;
+      case Continent.SouthAmerica:
+        return southAmerica;
+      default:
+        return [];
+    }
+  }
+
 
   terrainAt(): string {
     const key = `${this.coords.q}:${this.coords.r}`;
@@ -171,11 +193,11 @@ export class MapGenerator {
     this.mapSize = mapSize;
     // seed(Date.now() + Math.random());
   }
-  generate() {
+  generate(continent: Continent) {
     const size = this.mapSize;
     const grid = new Grid<TileData>(size, size).mapQR((q, r) => {
       const coords = { q, r };
-      const tileGenerator = new TileGenerator(coords);
+      const tileGenerator = new TileGenerator(coords, continent);
       return tileGenerator.generateTileData();
     });
     // const withRivers = generateRivers(grid);
