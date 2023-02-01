@@ -3,18 +3,13 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-chat-window',
   templateUrl: './chat-window.component.html',
-  styleUrls: ['./chat-window.component.css']
+  styleUrls: ['./chat-window.component.css'],
 })
-export class ChatWindowComponent implements OnInit {
-
+export class ChatWindowComponent {
   collapse = false;
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
-  toggle(){
+  toggle() {
     this.collapse = !this.collapse;
   }
-
 }

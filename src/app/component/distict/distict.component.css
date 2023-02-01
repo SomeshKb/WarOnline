@@ -23,9 +23,16 @@
   --s: 500px;
   position: relative;
   width: var(--s);
-  height: calc(var(--s)*0.7);
+  height: calc(var(--s) * 0.7);
   background: #386405;
-  -webkit-clip-path: polygon(25% 0%, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  -webkit-clip-path: polygon(
+    25% 0%,
+    75% 0,
+    100% 50%,
+    75% 100%,
+    25% 100%,
+    0% 50%
+  );
   clip-path: polygon(25% 0%, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
   margin: -1px;
 }
@@ -37,7 +44,14 @@
   display: inline-block;
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
   background: #434408;
-  -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  -webkit-clip-path: polygon(
+    50% 0%,
+    100% 25%,
+    100% 75%,
+    50% 100%,
+    0% 75%,
+    0% 25%
+  );
   z-index: 1;
   margin: -12px -2px -10px 0px;
 }
@@ -100,13 +114,12 @@
   justify-content: left;
 }
 
-
 .unit-wrapper {
   display: flex;
   flex-wrap: wrap;
 }
 
-.units{
+.units {
   background: #fd7a22;
   border: 1px solid #2017174d;
   border-radius: 3px;

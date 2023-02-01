@@ -1,8 +1,8 @@
 :host {
-    height: 495px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  height: 495px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .container {
   display: grid;
@@ -11,7 +11,6 @@
   grid-template-columns: auto auto auto auto;
   width: 300px;
   padding: 4px;
-
 }
 
 .units {
@@ -23,19 +22,19 @@
   flex-direction: column;
 }
 
-.units>img {
+.units > img {
   width: 60px;
   height: 45px;
 }
 
-.units>span {
+.units > span {
   text-align: center;
   margin: 5px 0px;
   color: white;
   font-size: 10px;
 }
 
-.units>input {
+.units > input {
   width: 60px;
   background: #0606063b;
   outline: none;
@@ -46,12 +45,11 @@
 }
 
 .heading {
-    padding: 8px;
-    font-size: 14px;
-    color: white;
-    background: #061d2cd4;
-    border-radius: 0px 11px 0px 0px;
-
+  padding: 8px;
+  font-size: 14px;
+  color: white;
+  background: #061d2cd4;
+  border-radius: 0px 11px 0px 0px;
 }
 
 .button-group {
@@ -64,11 +62,11 @@
 
 .button {
   min-width: 75px;
-  background: #00B4DB;
+  background: #00b4db;
   /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #0083B0, #00B4DB);
+  background: -webkit-linear-gradient(to right, #0083b0, #00b4db);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #0083B0, #00B4DB);
+  background: linear-gradient(to right, #0083b0, #00b4db);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border: none;
   outline: none;
@@ -88,5 +86,4 @@
   /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #38ef7d, #11998e);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
 }

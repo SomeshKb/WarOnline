@@ -1,24 +1,53 @@
 import { ElementRef, Injectable } from '@angular/core';
-import { ACESFilmicToneMapping, AxesHelper, BoxGeometry, BufferGeometry, Camera, Color, CylinderGeometry, DirectionalLight, FloatType, Mesh, MeshPhongMaterial, MeshPhysicalMaterial, PCFShadowMap, PerspectiveCamera, PointLight, Renderer, Scene, SphereGeometry, sRGBEncoding, Texture, TextureLoader, Vector2, WebGLRenderer } from 'three';
+import {
+  ACESFilmicToneMapping,
+  AxesHelper,
+  BoxGeometry,
+  BufferGeometry,
+  Camera,
+  Color,
+  CylinderGeometry,
+  DirectionalLight,
+  FloatType,
+  Mesh,
+  MeshPhongMaterial,
+  MeshPhysicalMaterial,
+  PCFShadowMap,
+  PerspectiveCamera,
+  PointLight,
+  Renderer,
+  Scene,
+  SphereGeometry,
+  sRGBEncoding,
+  Texture,
+  TextureLoader,
+  Vector2,
+  WebGLRenderer,
+} from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
 import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HexGeneratorService {
-
-  constructor() { }
+  constructor() {}
 
   async updateEnvMap(pmrem) {
-    const envMapTexture = await new RGBELoader().setDataType(FloatType).loadAsync("assets/envmap.hdr");
+    const envMapTexture = await new RGBELoader()
+      .setDataType(FloatType)
+      .loadAsync('assets/envmap.hdr');
     const envMap = pmrem.fromEquirectangular(envMapTexture).texture;
     return envMap;
   }
 
   addRenderer(canvasRef: ElementRef) {
-    const renderer = new WebGLRenderer({ antialias: true, canvas: canvasRef.nativeElement, alpha: true });
+    const renderer = new WebGLRenderer({
+      antialias: true,
+      canvas: canvasRef.nativeElement,
+      alpha: true,
+    });
     renderer.setSize(innerWidth, innerHeight);
     renderer.toneMapping = ACESFilmicToneMapping;
     renderer.outputEncoding = sRGBEncoding;
@@ -30,18 +59,23 @@ export class HexGeneratorService {
   }
 
   updateCamera(angle, x, y, z) {
-    const camera = new PerspectiveCamera(angle, innerWidth / innerHeight, 1, 1000);
+    const camera = new PerspectiveCamera(
+      angle,
+      innerWidth / innerHeight,
+      1,
+      1000
+    );
     camera.position.set(x, y, z);
     return camera;
   }
 
   async loadTexture() {
     const textures = {
-      dirt: await new TextureLoader().loadAsync("assets/desert.png"),
-      grass: await new TextureLoader().loadAsync("assets/forest.png"),
-      sand: await new TextureLoader().loadAsync("assets/desert.png"),
-      water: await new TextureLoader().loadAsync("assets/desert.png"),
-      stone: await new TextureLoader().loadAsync("assets/moun.png"),
+      dirt: await new TextureLoader().loadAsync('assets/desert.png'),
+      grass: await new TextureLoader().loadAsync('assets/forest.png'),
+      sand: await new TextureLoader().loadAsync('assets/desert.png'),
+      water: await new TextureLoader().loadAsync('assets/desert.png'),
+      stone: await new TextureLoader().loadAsync('assets/moun.png'),
     };
     return textures;
   }
@@ -50,7 +84,14 @@ export class HexGeneratorService {
     let count = 0;
     for (let i = -height; i < height; i++) {
       for (let j = -width; j < width; j++) {
-        this.createHexagonTiles(0.2, this.tileToPosition(i, j), count++, texture, scene, tileData);
+        this.createHexagonTiles(
+          0.2,
+          this.tileToPosition(i, j),
+          count++,
+          texture,
+          scene,
+          tileData
+        );
       }
     }
   }
@@ -114,8 +155,10 @@ export class HexGeneratorService {
     scene.add(mesh);
   }
 
-
-  hexMesh(geo: BoxGeometry, map: Texture): Mesh<BoxGeometry, MeshPhongMaterial> {
+  hexMesh(
+    geo: BoxGeometry,
+    map: Texture
+  ): Mesh<BoxGeometry, MeshPhongMaterial> {
     // const mat = new MeshPhysicalMaterial({
     //   envMap: envMap,
     //   envMapIntensity: 0.135,
@@ -123,8 +166,8 @@ export class HexGeneratorService {
     //   map: map
     // });
     const mat = new MeshPhongMaterial({
-      map: map
-    })
+      map: map,
+    });
 
     const mesh = new Mesh(geo, mat);
     mesh.castShadow = true;
@@ -136,7 +179,7 @@ export class HexGeneratorService {
     const px = Math.random() * 0.4;
     const pz = Math.random() * 0.4;
 
-    const geo = new SphereGeometry(Math.random() * 0.3 + 0.1, 7, 7)
+    const geo = new SphereGeometry(Math.random() * 0.3 + 0.1, 7, 7);
     geo.translate(position.x + px, height, position.y + pz);
     return geo;
   }
@@ -156,12 +199,12 @@ export class HexGeneratorService {
     return mergeBufferGeometries([geo, geo2, geo3]);
   }
 
-
   createSeaMesh(geo, waterTexture: Texture, envMap) {
-    const seaMesh = new Mesh(geo,
+    const seaMesh = new Mesh(
+      geo,
       new MeshPhysicalMaterial({
         envMap: envMap,
-        color: new Color("#55aaff").convertSRGBToLinear().multiplyScalar(3),
+        color: new Color('#55aaff').convertSRGBToLinear().multiplyScalar(3),
       })
     );
     return seaMesh;
@@ -193,18 +236,32 @@ export class HexGeneratorService {
     scene.add(light);
   }
 
-
-
   createDistictHexMap(texture, envMap, height, width, scene, tileData) {
     let count = 0;
     for (let i = -height; i < height; i++) {
       for (let j = -width; j < width; j++) {
-        this.createDistictHexagonTiles(0.2, this.tileToPosition(i, j), count++, texture, envMap, scene, tileData);
+        this.createDistictHexagonTiles(
+          0.2,
+          this.tileToPosition(i, j),
+          count++,
+          texture,
+          envMap,
+          scene,
+          tileData
+        );
       }
     }
   }
 
-  createDistictHexagonTiles(height, position, tileIndex, textures, envMap, scene, tiledata) {
+  createDistictHexagonTiles(
+    height,
+    position,
+    tileIndex,
+    textures,
+    envMap,
+    scene,
+    tiledata
+  ) {
     const geo = this.createHexGeometry(height, position);
     geo.name = tileIndex;
 
@@ -212,7 +269,11 @@ export class HexGeneratorService {
       this.createAndAddMeshTexture(geo, textures.stone, scene);
 
       if (Math.random() > 0.3) {
-        this.createAndAddMeshTexture(this.createStone(height, position), textures.stone, scene);
+        this.createAndAddMeshTexture(
+          this.createStone(height, position),
+          textures.stone,
+          scene
+        );
       }
       return;
     }
@@ -226,6 +287,4 @@ export class HexGeneratorService {
     //   return;
     // }
   }
-
-
 }

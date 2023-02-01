@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AsiaComponent } from './component/map/asia/asia.component';
-import { AustraliaComponent } from './component/map/australia/australia.component';
+import { MapComponent } from './component/map/map.component';
+import { Continent } from './models/continents';
 
 const routes: Routes = [
-  { path: "asia", component: AsiaComponent },
-  { path: "australia", component: AustraliaComponent }
+  { path: 'africa', component: MapComponent, data: { continent: Continent.Africa } },
+  { path: 'south-america', component: MapComponent, data: { continent: Continent.SouthAmerica } },
+  { path: 'australia', component: MapComponent, data: { continent: Continent.Australia } },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule { }

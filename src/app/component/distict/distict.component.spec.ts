@@ -8,9 +8,8 @@ describe('DistictComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DistictComponent ]
-    })
-    .compileComponents();
+      declarations: [DistictComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

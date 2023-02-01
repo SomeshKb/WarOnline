@@ -32,17 +32,17 @@
 }
 
 .left-menu {
-    position: absolute;
-    left: 0px;
-    top: 25%;
-    width: 100px;
+  position: absolute;
+  left: 0px;
+  top: 25%;
+  width: 100px;
 }
 
 .selected-continent {
   filter: brightness(0.7);
 }
 
-.chat-window{
+.chat-window {
   position: absolute;
   width: 100px;
   right: 200px;

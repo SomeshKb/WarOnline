@@ -1,7 +1,13 @@
 :host {
   background: #1668aa;
   background: linear-gradient(0.33turn, #02374e, #1668aa, #02374e, #1668aa);
-  background: -webkit-linear-gradient(0.33turn, #02374e, #1668aa, #02374e, #1668aa);
+  background: -webkit-linear-gradient(
+    0.33turn,
+    #02374e,
+    #1668aa,
+    #02374e,
+    #1668aa
+  );
   border: 3px solid white;
   border-radius: 15px;
   width: min-content;
@@ -46,7 +52,7 @@
   top: 40px;
 }
 
-.user-info{
+.user-info {
   display: flex;
   flex-direction: row;
   width: 250px;
@@ -75,8 +81,7 @@
   width: 120px;
 }
 
-
-.action{
+.action {
   display: flex;
   flex-direction: row;
   width: 250px;
