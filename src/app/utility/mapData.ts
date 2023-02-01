@@ -10,7 +10,6 @@ export const africaMapData = [
   { x: -1, y: 0, terrain: 'grass' },
   { x: -2, y: 0, terrain: 'grass' },
   { x: -3, y: 0, terrain: 'grass' },
-
   { x: 0, y: -1, terrain: 'grass' },
   { x: 1, y: -1, terrain: 'grass' },
   { x: 2, y: -1, terrain: 'grass' },
@@ -22,7 +21,6 @@ export const africaMapData = [
   { x: -1, y: -1, terrain: 'grass' },
   { x: -2, y: -1, terrain: 'grass' },
   { x: -3, y: -1, terrain: 'grass' },
-
   { x: 0, y: -2, terrain: 'grass' },
   { x: 1, y: -2, terrain: 'grass' },
   { x: 2, y: -2, terrain: 'grass' },
@@ -32,7 +30,6 @@ export const africaMapData = [
   { x: 6, y: -2, terrain: 'mountain' },
   { x: 7, y: -2, terrain: 'plains' },
   { x: -1, y: -2, terrain: 'grass' },
-
   { x: 0, y: -3, terrain: 'grass' },
   { x: 1, y: -3, terrain: 'grass' },
   { x: 2, y: -3, terrain: 'grass' },
@@ -42,7 +39,6 @@ export const africaMapData = [
   { x: 6, y: -3, terrain: 'grass' },
   { x: 7, y: -3, terrain: 'mountain' },
   { x: 8, y: -3, terrain: 'plains' },
-
   { x: 0, y: -4, terrain: 'grass' },
   { x: 1, y: -4, terrain: 'grass' },
   { x: 2, y: -4, terrain: 'grass' },
@@ -52,7 +48,6 @@ export const africaMapData = [
   { x: 6, y: -4, terrain: 'grass' },
   { x: 7, y: -4, terrain: 'mountain' },
   { x: 8, y: -4, terrain: 'plains' },
-
   { x: 0, y: -5, terrain: 'grass' },
   { x: 1, y: -5, terrain: 'grass' },
   { x: 2, y: -5, terrain: 'grass' },
@@ -62,7 +57,6 @@ export const africaMapData = [
   { x: 6, y: -5, terrain: 'grass' },
   { x: 7, y: -5, terrain: 'mountain' },
   { x: 8, y: -5, terrain: 'plains' },
-
   { x: 1, y: -6, terrain: 'grass' },
   { x: 2, y: -6, terrain: 'grass' },
   { x: 3, y: -6, terrain: 'grass' },
@@ -72,7 +66,6 @@ export const africaMapData = [
   { x: 7, y: -6, terrain: 'mountain' },
   { x: 8, y: -6, terrain: 'plains' },
   { x: 9, y: -6, terrain: 'plains' },
-
   { x: 1, y: -7, terrain: 'grass' },
   { x: 2, y: -7, terrain: 'grass' },
   { x: 3, y: -7, terrain: 'grass' },
@@ -81,7 +74,6 @@ export const africaMapData = [
   { x: 6, y: -7, terrain: 'grass' },
   { x: 7, y: -7, terrain: 'mountain' },
   { x: 8, y: -7, terrain: 'plains' },
-
   { x: 2, y: -8, terrain: 'plains' },
   { x: 3, y: -8, terrain: 'plains' },
   { x: 4, y: -8, terrain: 'plains' },
@@ -90,7 +82,6 @@ export const africaMapData = [
   { x: 7, y: -8, terrain: 'plains' },
   { x: 8, y: -8, terrain: 'mountain' },
   { x: 9, y: -8, terrain: 'plains' },
-
   { x: 3, y: -9, terrain: 'plains' },
   { x: 4, y: -9, terrain: 'plains' },
   { x: 5, y: -9, terrain: 'plains' },
@@ -98,31 +89,26 @@ export const africaMapData = [
   { x: 7, y: -9, terrain: 'plains' },
   { x: 8, y: -9, terrain: 'mountain' },
   { x: 9, y: -9, terrain: 'plains' },
-
   { x: 4, y: -10, terrain: 'plains' },
   { x: 5, y: -10, terrain: 'plains' },
   { x: 6, y: -10, terrain: 'plains' },
   { x: 7, y: -10, terrain: 'plains' },
   { x: 8, y: -10, terrain: 'mountain' },
   { x: 9, y: -10, terrain: 'mountain' },
-
   { x: 4, y: -11, terrain: 'plains' },
   { x: 5, y: -11, terrain: 'plains' },
   { x: 6, y: -11, terrain: 'plains' },
   { x: 7, y: -11, terrain: 'plains' },
   { x: 8, y: -11, terrain: 'mountain' },
   { x: 9, y: -11, terrain: 'grass' },
-
   { x: 5, y: -12, terrain: 'plains' },
   { x: 6, y: -12, terrain: 'plains' },
   { x: 7, y: -12, terrain: 'plains' },
   { x: 8, y: -12, terrain: 'mountain' },
   { x: 9, y: -12, terrain: 'grass' },
-
   { x: 6, y: -13, terrain: 'grass' },
   { x: 7, y: -13, terrain: 'grass' },
   { x: 8, y: -13, terrain: 'grass' },
-
   { x: 0, y: 1, terrain: 'grass' },
   { x: 1, y: 1, terrain: 'grass' },
   { x: 2, y: 1, terrain: 'grass' },
@@ -134,7 +120,6 @@ export const africaMapData = [
   { x: -1, y: 1, terrain: 'grass' },
   { x: -2, y: 1, terrain: 'grass' },
   { x: -3, y: 1, terrain: 'grass' },
-
   { x: 0, y: 2, terrain: 'grass' },
   { x: 1, y: 2, terrain: 'grass' },
   { x: 2, y: 2, terrain: 'grass' },
@@ -148,7 +133,6 @@ export const africaMapData = [
   { x: -1, y: 2, terrain: 'grass' },
   { x: -2, y: 2, terrain: 'grass' },
   { x: -3, y: 2, terrain: 'grass' },
-
   { x: 0, y: 3, terrain: 'plains' },
   { x: 1, y: 3, terrain: 'plains' },
   { x: 2, y: 3, terrain: 'plains' },
@@ -169,7 +153,6 @@ export const africaMapData = [
   { x: -9, y: 3, terrain: 'grass' },
   { x: -10, y: 3, terrain: 'grass' },
   { x: -11, y: 3, terrain: 'grass' },
-
   { x: 0, y: 4, terrain: 'desert' },
   { x: 1, y: 4, terrain: 'desert' },
   { x: 2, y: 4, terrain: 'desert' },
@@ -192,7 +175,6 @@ export const africaMapData = [
   { x: -11, y: 4, terrain: 'plains' },
   { x: -12, y: 4, terrain: 'plains' },
   { x: -13, y: 4, terrain: 'plains' },
-
   { x: 0, y: 5, terrain: 'desert' },
   { x: 1, y: 5, terrain: 'desert' },
   { x: 2, y: 5, terrain: 'desert' },
@@ -213,7 +195,6 @@ export const africaMapData = [
   { x: -12, y: 5, terrain: 'desert' },
   { x: -13, y: 5, terrain: 'desert' },
   { x: -14, y: 5, terrain: 'desert' },
-
   { x: 0, y: 6, terrain: 'desert' },
   { x: 1, y: 6, terrain: 'desert' },
   { x: 2, y: 6, terrain: 'desert' },
@@ -234,7 +215,6 @@ export const africaMapData = [
   { x: -13, y: 6, terrain: 'desert' },
   { x: -14, y: 6, terrain: 'desert' },
   { x: -15, y: 6, terrain: 'desert' },
-
   { x: 0, y: 7, terrain: 'desert' },
   { x: 1, y: 7, terrain: 'desert' },
   { x: 2, y: 7, terrain: 'desert' },
@@ -253,7 +233,6 @@ export const africaMapData = [
   { x: -13, y: 7, terrain: 'desert' },
   { x: -14, y: 7, terrain: 'desert' },
   { x: -15, y: 7, terrain: 'desert' },
-
   { x: 0, y: 8, terrain: 'desert' },
   { x: 1, y: 8, terrain: 'desert' },
   { x: -1, y: 8, terrain: 'desert' },
@@ -272,7 +251,6 @@ export const africaMapData = [
   { x: -14, y: 8, terrain: 'desert' },
   { x: -15, y: 8, terrain: 'desert' },
   { x: -16, y: 8, terrain: 'desert' },
-
   { x: 0, y: 9, terrain: 'desert' },
   { x: -1, y: 9, terrain: 'desert' },
   { x: -2, y: 9, terrain: 'desert' },
@@ -290,7 +268,6 @@ export const africaMapData = [
   { x: -14, y: 9, terrain: 'desert' },
   { x: -15, y: 9, terrain: 'desert' },
   { x: -16, y: 9, terrain: 'desert' },
-
   { x: -1, y: 10, terrain: 'desert' },
   { x: -2, y: 10, terrain: 'desert' },
   { x: -3, y: 10, terrain: 'desert' },
@@ -307,7 +284,6 @@ export const africaMapData = [
   { x: -14, y: 10, terrain: 'desert' },
   { x: -15, y: 10, terrain: 'desert' },
   { x: -16, y: 10, terrain: 'desert' },
-
   { x: -2, y: 11, terrain: 'desert' },
   { x: -3, y: 11, terrain: 'desert' },
   { x: -4, y: 11, terrain: 'desert' },
@@ -323,7 +299,6 @@ export const africaMapData = [
   { x: -14, y: 11, terrain: 'desert' },
   { x: -15, y: 11, terrain: 'desert' },
   { x: -16, y: 11, terrain: 'desert' },
-
   { x: -3, y: 12, terrain: 'desert' },
   { x: -4, y: 12, terrain: 'plains' },
   { x: -5, y: 12, terrain: 'desert' },
@@ -338,7 +313,6 @@ export const africaMapData = [
   { x: -14, y: 12, terrain: 'desert' },
   { x: -15, y: 12, terrain: 'desert' },
   { x: -16, y: 12, terrain: 'desert' },
-
   { x: -4, y: 13, terrain: 'plains' },
   { x: -5, y: 13, terrain: 'plains' },
   { x: -6, y: 13, terrain: 'desert' },
@@ -351,14 +325,12 @@ export const africaMapData = [
   { x: -14, y: 13, terrain: 'desert' },
   { x: -15, y: 13, terrain: 'desert' },
   { x: -16, y: 13, terrain: 'desert' },
-
   { x: -11, y: 14, terrain: 'desert' },
   { x: -12, y: 14, terrain: 'desert' },
   { x: -13, y: 14, terrain: 'desert' },
   { x: -14, y: 14, terrain: 'desert' },
   { x: -15, y: 14, terrain: 'desert' },
   { x: -16, y: 14, terrain: 'desert' },
-
   { x: -11, y: 15, terrain: 'desert' },
   { x: -12, y: 15, terrain: 'desert' },
   { x: -13, y: 15, terrain: 'desert' },

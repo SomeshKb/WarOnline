@@ -56,17 +56,6 @@
   margin: -12px -2px -10px 0px;
 }
 
-.main-inside {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  right: 2px;
-  bottom: 2px;
-  background-image: url("../../../assets/dirt.png");
-  background-repeat: repeat;
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-}
-
 .distict-name {
   color: #fff;
   font-weight: 600;

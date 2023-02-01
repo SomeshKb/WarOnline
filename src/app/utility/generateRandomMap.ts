@@ -166,9 +166,12 @@ class TileGenerator {
 
   generateTileData(): TileData {
     const terrain = this.terrainAt();
-    let height = 0;
+    let height = 0.2;
     if (terrain == 'mountain') {
-      height = 5;
+      height = 1.;
+    }
+    if (terrain == 'ocean') {
+      height = -1;
     }
 
     const trees = 0;
