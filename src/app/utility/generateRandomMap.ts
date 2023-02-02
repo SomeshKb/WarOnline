@@ -1,7 +1,11 @@
 import { Continent } from '../models/continents';
 import Grid from './Grid';
 import { Height, TileData, QR } from './interfaces';
-import { africaMapData, AustraliaMapData, southAmerica } from './mapData';
+import southAmerica from 'src/assets/map-data/south-america.json';
+import northAmerica from 'src/assets/map-data/north-america.json';
+import africa from 'src/assets/map-data/africa.json';
+import australia from 'src/assets/map-data/australia.json';
+import europe from 'src/assets/map-data/europe.json';
 
 class Utility {
   static isLand(height: Height) {
@@ -86,7 +90,7 @@ function generateRivers(grid: Grid<TileData>): Grid<TileData> {
 
       const next =
         neighbors[
-        Math.max(neighbors.length - 1, Math.floor(Math.random() * 1.2))
+          Math.max(neighbors.length - 1, Math.floor(Math.random() * 1.2))
         ];
       river.push(next);
 
@@ -133,7 +137,7 @@ class TileGenerator {
 
   constructor(coords: QR, continent: Continent) {
     this.coords = coords;
-    const tileDataInfo = this.getContinentName(continent)
+    const tileDataInfo = this.getContinentName(continent);
     tileDataInfo.forEach((tile) => {
       this.mapDataHash[`${tile.x}:${tile.y}`] = tile.terrain;
     });
@@ -142,22 +146,21 @@ class TileGenerator {
   getContinentName(continent: Continent) {
     switch (continent) {
       case Continent.Africa:
-        return africaMapData;
+        return africa;
       case Continent.Asia:
         return [];
       case Continent.Europe:
-        return [];
+        return europe;
       case Continent.NorthAmerica:
-        return [];
+        return northAmerica;
       case Continent.Australia:
-        return AustraliaMapData;
+        return australia;
       case Continent.SouthAmerica:
         return southAmerica;
       default:
         return [];
     }
   }
-
 
   terrainAt(): string {
     const key = `${this.coords.q}:${this.coords.r}`;
@@ -168,7 +171,7 @@ class TileGenerator {
     const terrain = this.terrainAt();
     let height = 0.2;
     if (terrain == 'mountain') {
-      height = 1.;
+      height = 1;
     }
     if (terrain == 'ocean') {
       height = -1;
