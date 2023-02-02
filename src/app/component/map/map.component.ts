@@ -12,20 +12,19 @@ import Controller from 'src/app/utility/DefaultMapViewController';
 import { TileData } from 'src/app/utility/interfaces';
 import { ActivatedRoute } from '@angular/router';
 import { Continent } from 'src/app/models/continents';
+import terrainAtlas from 'src/assets/land-atlas.json';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  styleUrls: ['./map.component.css'],
 })
 export class MapComponent implements OnInit {
   @ViewChild('canvas') canvasRef: ElementRef;
   @ViewChild('text') textRef: ElementRef;
   @ViewChild('debug') debugRef: ElementRef;
 
-  constructor(private route : ActivatedRoute) {
-    
-   }
+  constructor(private route: ActivatedRoute) {}
 
   async ngOnInit(): Promise<void> {
     const mapSize = 48;
@@ -42,8 +41,6 @@ export class MapComponent implements OnInit {
       'assets/materials/trees.png',
       'assets/materials/transitions.png',
     ];
-    const response = await fetch('assets/materials/land-atlas.json');
-    const terrainAtlas = await response.json();
     const promiseArr = assetsList.map((asset) =>
       new TextureLoader().loadAsync(asset)
     );
@@ -98,7 +95,7 @@ export class MapComponent implements OnInit {
     initInput(mapView);
     const controller = mapView.controller as Controller;
     controller.debugOutput = this.debugRef.nativeElement;
-    mapView.onLoaded = () => { };
+    mapView.onLoaded = () => {};
 
     mapView.onTileSelected = (tile: TileData) => {
       console.log(tile);
