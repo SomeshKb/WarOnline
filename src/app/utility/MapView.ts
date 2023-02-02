@@ -302,7 +302,8 @@ export default class MapView implements MapViewControls, TileDataSource {
     const worldPos = qrToWorld(tile.q, tile.r);
     // Tile Selector
     // console.log({x: tile.q, y: tile.r, terrain: tile.terrain});
-    this.textCreater.createText(worldPos,"h","black")
+    const positionText = `(${tile.q},${tile.r})`;
+    this.textCreater.createText(worldPos,positionText);
     this._tileSelector.position.set(worldPos.x, worldPos.y, 0.1);
     if (this._onTileSelected) {
       this._onTileSelected(tile);
