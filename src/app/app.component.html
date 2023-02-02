@@ -2,13 +2,13 @@
   <app-header></app-header>
 </div>
 <router-outlet></router-outlet>
-<!-- <div class="continent-div">
-  <img class="continent-routes first" src="assets/australia.jpg" />
-  <img class="continent-routes selected-continent" src="assets/australia.jpg" />
-  <img class="continent-routes" src="assets/australia.jpg" />
-  <img class="continent-routes" src="assets/australia.jpg" />
-  <img class="continent-routes last" src="assets/australia.jpg" />
-</div> -->
+<div class="continent-div">
+  <img class="continent-routes first" title="australia" routerLinkActive="selected-continent" routerLink="/australia" src="assets/food.png" />
+  <img class="continent-routes" title="south-america" routerLinkActive="selected-continent" routerLink="/south-america" src="assets/food.png" />
+  <img class="continent-routes" title="north-america" routerLinkActive="selected-continent" routerLink="/north-america" src="assets/food.png" />
+  <img class="continent-routes" title="europe" routerLinkActive="selected-continent" routerLink="/europe" src="assets/food.png" />
+  <img class="continent-routes last" title="africa" routerLinkActive="selected-continent" routerLink="/africa" src="assets/food.png" />
+</div>
 
 <div class="left-menu">
   <app-left-nav></app-left-nav>

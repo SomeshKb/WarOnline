@@ -3,13 +3,17 @@ import {
   Scene,
   WebGLRenderer,
   Vector3,
-  Group,
   Camera,
   Object3D,
   LineBasicMaterial,
   BufferGeometry,
   Line,
+  MeshBasicMaterial,
+  Mesh,
 } from 'three';
+
+import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
 import MapMesh from './MapMesh';
 import { TileData, TileDataSource, QR } from './interfaces';
 import Grid from './Grid';
@@ -26,6 +30,8 @@ import {
 } from './coords';
 import ChunkedLazyMapMesh from './ChunkedLazyMapMesh';
 import { MapMeshOptions } from './MapMesh';
+
+import { TextCreater } from './TextCreater';
 
 export default class MapView implements MapViewControls, TileDataSource {
   private static DEFAULT_ZOOM = 50;
@@ -48,7 +54,10 @@ export default class MapView implements MapViewControls, TileDataSource {
 
   private _onTileSelected: (tile: TileData) => void;
   private _onLoaded: () => void;
-  private _onAnimate: (dtS: number) => void = (dtS) => {};
+  private _onAnimate: (dtS: number) => void = (dtS) => { };
+
+  private textCreater: TextCreater;
+
 
   public get camera(): PerspectiveCamera {
     return this._camera;
@@ -137,7 +146,7 @@ export default class MapView implements MapViewControls, TileDataSource {
 
   public scrollSpeed: number = 10;
 
-  constructor(ref) {
+   constructor(ref) {
     const canvas = (this._canvas = ref.nativeElement);
     const camera = (this._camera = new PerspectiveCamera(
       30,
@@ -150,12 +159,14 @@ export default class MapView implements MapViewControls, TileDataSource {
     canvas.appendChild(renderer.domElement);
     renderer.setPixelRatio(window.devicePixelRatio);
 
+    this.textCreater = new TextCreater(scene);
+
     if (renderer.extensions.get('ANGLE_instanced_arrays') === false) {
       throw new Error(
         'Your browser is not supported (missing extension ANGLE_instanced_arrays)'
       );
     }
-
+    
     renderer.setClearColor(0x4d89eb);
     renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -176,6 +187,7 @@ export default class MapView implements MapViewControls, TileDataSource {
     this._controller.init(this, canvas);
   }
 
+
   load(tiles: Grid<TileData>, options: MapMeshOptions) {
     this._tileGrid = tiles;
     this._selectedTile = this._tileGrid.get(0, 0);
@@ -192,7 +204,7 @@ export default class MapView implements MapViewControls, TileDataSource {
     } else {
       const mesh =
         (this._mapMesh =
-        this._chunkedMesh =
+          this._chunkedMesh =
           new ChunkedLazyMapMesh(tiles, options));
       this._scene.add(this._mapMesh);
       mesh.loaded.then(() => {
@@ -200,10 +212,10 @@ export default class MapView implements MapViewControls, TileDataSource {
       });
       console.info(
         'using ChunkedLazyMapMesh with ' +
-          mesh.numChunks +
-          ' chunks for ' +
-          tiles.width * tiles.height +
-          ' tiles'
+        mesh.numChunks +
+        ' chunks for ' +
+        tiles.width * tiles.height +
+        ' tiles'
       );
     }
   }
@@ -288,6 +300,9 @@ export default class MapView implements MapViewControls, TileDataSource {
 
   selectTile(tile: TileData) {
     const worldPos = qrToWorld(tile.q, tile.r);
+    // Tile Selector
+    // console.log({x: tile.q, y: tile.r, terrain: tile.terrain});
+    this.textCreater.createText(worldPos,"h","black")
     this._tileSelector.position.set(worldPos.x, worldPos.y, 0.1);
     if (this._onTileSelected) {
       this._onTileSelected(tile);

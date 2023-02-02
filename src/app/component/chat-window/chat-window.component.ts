@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chat-window.component.css'],
 })
 export class ChatWindowComponent {
-  collapse = false;
+  collapse = true;
   constructor() {}
 
   toggle() {
