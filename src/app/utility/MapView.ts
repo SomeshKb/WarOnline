@@ -160,7 +160,7 @@ export default class MapView implements MapViewControls, TileDataSource {
       );
     }
     
-    renderer.setClearColor(0x4d89eb);
+    renderer.setClearColor(0x4e6597);
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     window.addEventListener('resize', (e) => this.onWindowResize(e), false);
