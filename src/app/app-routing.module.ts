@@ -29,6 +29,11 @@ const routes: Routes = [
     component: MapComponent,
     data: { continent: Continent.Europe },
   },
+  {
+    path: 'asia',
+    component: MapComponent,
+    data: { continent: Continent.Asia },
+  },
 ];
 
 @NgModule({
