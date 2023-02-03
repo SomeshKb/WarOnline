@@ -10,6 +10,12 @@ import {
   Line,
   MeshBasicMaterial,
   Mesh,
+  RingGeometry,
+  PointsMaterial,
+  Points,
+  Float32BufferAttribute,
+  ShapeGeometry,
+  Shape,
 } from 'three';
 
 import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
@@ -141,7 +147,7 @@ export default class MapView implements MapViewControls, TileDataSource {
 
   public scrollSpeed: number = 10;
 
-   constructor(ref) {
+  constructor(ref) {
     const canvas = (this._canvas = ref.nativeElement);
     const camera = (this._camera = new PerspectiveCamera(
       30,
@@ -159,7 +165,7 @@ export default class MapView implements MapViewControls, TileDataSource {
         'Your browser is not supported (missing extension ANGLE_instanced_arrays)'
       );
     }
-    
+
     renderer.setClearColor(0x4e6597);
     renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -291,10 +297,43 @@ export default class MapView implements MapViewControls, TileDataSource {
     this._camera.position.copy(this.getCameraFocusPositionWorld(v));
   }
 
+  calculteSides(center) {
+    var radius = 1;
+    var numSides = 6;
+    var angle = 2 * Math.PI / numSides;
+    var hexagonCoords = [];
+
+    for (var i = 0; i < numSides; i++) {
+      var x = center.x + radius * Math.cos(angle * i + Math.PI / 6);
+      var y = center.y + radius * Math.sin(angle * i + Math.PI / 6);
+
+      hexagonCoords.push(new Vector3(x, y, 0));
+    }
+    hexagonCoords.push(new Vector3(hexagonCoords[0].x, hexagonCoords[0].y, 0));
+
+    this.drawLine(hexagonCoords)
+  }
+
+  drawLine(points) {
+    let newpoints = []
+    points.map(x => {
+      newpoints.push(new Vector3(x.x-0.01, x.y-0.01, 0.01));
+    });
+    // newpoints.push(new Vector3(points[0].x, points[0].y, 0));
+    const geometry = new BufferGeometry().setFromPoints(newpoints);
+    const material = new LineBasicMaterial({ color: 0x0000ff , fog: true, linewidth : 5});
+    const line = new Line(geometry, material);
+    this._scene.add(line)
+  }
+
+
+
   selectTile(tile: TileData) {
     const worldPos = qrToWorld(tile.q, tile.r);
+
+    this.calculteSides(worldPos)
     // Tile Selector
-    if(tile.terrain !='ocean'){
+    if (tile.terrain != 'ocean') {
       this._tileSelector.position.set(worldPos.x, worldPos.y, 0.1);
     }
     if (this._onTileSelected) {

@@ -7,7 +7,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { HexGeneratorService } from 'src/app/services/hex-generator.service';
 import { BaseComponent } from '../base/base.component';
 
 @Component({
@@ -30,7 +29,6 @@ export class DistictComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { tileID: string },
-    private hexGenerator: HexGeneratorService,
     public dialog: MatDialog
   ) {
     this.tileID = data.tileID;
