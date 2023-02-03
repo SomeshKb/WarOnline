@@ -31,8 +31,6 @@ import {
 import ChunkedLazyMapMesh from './ChunkedLazyMapMesh';
 import { MapMeshOptions } from './MapMesh';
 
-import { TextCreater } from './TextCreater';
-
 export default class MapView implements MapViewControls, TileDataSource {
   private static DEFAULT_ZOOM = 50;
 
@@ -55,9 +53,6 @@ export default class MapView implements MapViewControls, TileDataSource {
   private _onTileSelected: (tile: TileData) => void;
   private _onLoaded: () => void;
   private _onAnimate: (dtS: number) => void = (dtS) => { };
-
-  private textCreater: TextCreater;
-
 
   public get camera(): PerspectiveCamera {
     return this._camera;
@@ -158,8 +153,6 @@ export default class MapView implements MapViewControls, TileDataSource {
     const renderer = (this._renderer = new WebGLRenderer());
     canvas.appendChild(renderer.domElement);
     renderer.setPixelRatio(window.devicePixelRatio);
-
-    this.textCreater = new TextCreater(scene);
 
     if (renderer.extensions.get('ANGLE_instanced_arrays') === false) {
       throw new Error(
@@ -301,10 +294,9 @@ export default class MapView implements MapViewControls, TileDataSource {
   selectTile(tile: TileData) {
     const worldPos = qrToWorld(tile.q, tile.r);
     // Tile Selector
-    // console.log({x: tile.q, y: tile.r, terrain: tile.terrain});
-    const positionText = `(${tile.q},${tile.r})`;
-    this.textCreater.createText(worldPos,positionText);
-    this._tileSelector.position.set(worldPos.x, worldPos.y, 0.1);
+    if(tile.terrain !='ocean'){
+      this._tileSelector.position.set(worldPos.x, worldPos.y, 0.1);
+    }
     if (this._onTileSelected) {
       this._onTileSelected(tile);
     }
