@@ -6,6 +6,7 @@ import northAmerica from 'src/assets/map-data/north-america.json';
 import africa from 'src/assets/map-data/africa.json';
 import australia from 'src/assets/map-data/australia.json';
 import europe from 'src/assets/map-data/europe.json';
+import asia from 'src/assets/map-data/asia.json';
 
 class Utility {
   static isLand(height: Height) {
@@ -148,7 +149,7 @@ class TileGenerator {
       case Continent.Africa:
         return africa;
       case Continent.Asia:
-        return [];
+        return asia;
       case Continent.Europe:
         return europe;
       case Continent.NorthAmerica:
