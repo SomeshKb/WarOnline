@@ -49,3 +49,21 @@
   right: 200px;
   bottom: 0px;
 }
+
+
+.tempClass {
+  display: flex;
+  z-index: 100000;
+  top: 0px;
+  left: 323px;
+  position: absolute;
+  font-size: 40px;
+}
+
+input[type="checkbox"]{
+  width: 30px; /*Desired width*/
+  height: 30px; /*Desired height*/
+}
+.skl{
+  display: flex;
+}

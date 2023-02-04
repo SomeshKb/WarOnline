@@ -36,6 +36,8 @@ import {
 } from './coords';
 import ChunkedLazyMapMesh from './ChunkedLazyMapMesh';
 import { MapMeshOptions } from './MapMesh';
+import { TestService } from '../test.service';
+import { AppInjector } from '../app.module';
 
 export default class MapView implements MapViewControls, TileDataSource {
   private static DEFAULT_ZOOM = 50;
@@ -59,6 +61,8 @@ export default class MapView implements MapViewControls, TileDataSource {
   private _onTileSelected: (tile: TileData) => void;
   private _onLoaded: () => void;
   private _onAnimate: (dtS: number) => void = (dtS) => { };
+
+  myService = AppInjector.get(TestService);
 
   public get camera(): PerspectiveCamera {
     return this._camera;
@@ -160,6 +164,7 @@ export default class MapView implements MapViewControls, TileDataSource {
     canvas.appendChild(renderer.domElement);
     renderer.setPixelRatio(window.devicePixelRatio);
 
+    this.myService.scene.next(scene);
     if (renderer.extensions.get('ANGLE_instanced_arrays') === false) {
       throw new Error(
         'Your browser is not supported (missing extension ANGLE_instanced_arrays)'
@@ -309,7 +314,7 @@ export default class MapView implements MapViewControls, TileDataSource {
 
       hexagonCoords.push(new Vector3(x, y, 0));
     }
-    hexagonCoords.push(new Vector3(hexagonCoords[0].x, hexagonCoords[0].y, 0));
+    // hexagonCoords.push(new Vector3(hexagonCoords[0].x, hexagonCoords[0].y, 0));
 
     this.drawLine(hexagonCoords)
   }
@@ -319,13 +324,28 @@ export default class MapView implements MapViewControls, TileDataSource {
     points.map(x => {
       newpoints.push(new Vector3(x.x-0.01, x.y-0.01, 0.01));
     });
-    // newpoints.push(new Vector3(points[0].x, points[0].y, 0));
-    const geometry = new BufferGeometry().setFromPoints(newpoints);
-    const material = new LineBasicMaterial({ color: 0x0000ff , fog: true, linewidth : 5});
-    const line = new Line(geometry, material);
-    this._scene.add(line)
+    newpoints.push(new Vector3(points[0].x, points[0].y, 0));
+
+    const sides = this.getSide(newpoints)
+
+    this.myService.hexInfo.next(sides);
+    // const geometry = new BufferGeometry().setFromPoints(newpoints);
+    // const material = new LineBasicMaterial({ color: 0x0000ff , fog: true, linewidth : 5});
+    // const line = new Line(geometry, material);
+    // this._scene.add(line)
   }
 
+
+  getSide(points) {
+    console.log(points)
+    let sides =[]
+    points.map((x,index)=>{
+      if(index<6){
+        sides.push([points[index],points[index+1]]);
+      }
+    });
+    return sides;
+  }
 
 
   selectTile(tile: TileData) {
