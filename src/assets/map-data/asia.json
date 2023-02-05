@@ -1,11 +1,6 @@
 [
     {
         "terrain": "mountain",
-        "x": -6,
-        "y": 4
-    },
-    {
-        "terrain": "mountain",
         "x": -7,
         "y": 4
     },
@@ -21,32 +16,7 @@
     },
     {
         "terrain": "mountain",
-        "x": -4,
-        "y": 3
-    },
-    {
-        "terrain": "mountain",
-        "x": -3,
-        "y": 3
-    },
-    {
-        "terrain": "mountain",
-        "x": -2,
-        "y": 3
-    },
-    {
-        "terrain": "mountain",
         "x": -1,
-        "y": 3
-    },
-    {
-        "terrain": "mountain",
-        "x": 0,
-        "y": 3
-    },
-    {
-        "terrain": "mountain",
-        "x": 1,
         "y": 3
     },
     {
@@ -146,62 +116,12 @@
     },
     {
         "terrain": "mountain",
-        "x": -2,
-        "y": 4
-    },
-    {
-        "terrain": "mountain",
-        "x": -3,
-        "y": 4
-    },
-    {
-        "terrain": "mountain",
         "x": -4,
         "y": 2
     },
     {
         "terrain": "mountain",
-        "x": -5,
-        "y": 4
-    },
-    {
-        "terrain": "mountain",
-        "x": -4,
-        "y": 4
-    },
-    {
-        "terrain": "mountain",
         "x": -8,
-        "y": 5
-    },
-    {
-        "terrain": "mountain",
-        "x": -8,
-        "y": 4
-    },
-    {
-        "terrain": "mountain",
-        "x": -3,
-        "y": 5
-    },
-    {
-        "terrain": "mountain",
-        "x": -2,
-        "y": 5
-    },
-    {
-        "terrain": "mountain",
-        "x": -1,
-        "y": 4
-    },
-    {
-        "terrain": "mountain",
-        "x": 1,
-        "y": 4
-    },
-    {
-        "terrain": "mountain",
-        "x": 2,
         "y": 4
     },
     {
@@ -223,21 +143,6 @@
         "terrain": "mountain",
         "x": -5,
         "y": 2
-    },
-    {
-        "terrain": "mountain",
-        "x": 0,
-        "y": 4
-    },
-    {
-        "terrain": "mountain",
-        "x": -9,
-        "y": 5
-    },
-    {
-        "terrain": "mountain",
-        "x": -9,
-        "y": 6
     },
     {
         "terrain": "desert",
@@ -437,11 +342,6 @@
     {
         "terrain": "desert",
         "x": -1,
-        "y": 5
-    },
-    {
-        "terrain": "desert",
-        "x": 0,
         "y": 5
     },
     {
@@ -3008,5 +2908,110 @@
         "terrain": "grass",
         "x": -20,
         "y": 10
+    },
+    {
+        "terrain": "desert",
+        "x": -9,
+        "y": 6
+    },
+    {
+        "terrain": "desert",
+        "x": -9,
+        "y": 5
+    },
+    {
+        "terrain": "desert",
+        "x": 0,
+        "y": 5
+    },
+    {
+        "terrain": "desert",
+        "x": -3,
+        "y": 5
+    },
+    {
+        "terrain": "desert",
+        "x": -3,
+        "y": 4
+    },
+    {
+        "terrain": "desert",
+        "x": -2,
+        "y": 5
+    },
+    {
+        "terrain": "desert",
+        "x": -2,
+        "y": 4
+    },
+    {
+        "terrain": "desert",
+        "x": -2,
+        "y": 3
+    },
+    {
+        "terrain": "desert",
+        "x": -3,
+        "y": 3
+    },
+    {
+        "terrain": "desert",
+        "x": -1,
+        "y": 4
+    },
+    {
+        "terrain": "desert",
+        "x": 0,
+        "y": 4
+    },
+    {
+        "terrain": "desert",
+        "x": 1,
+        "y": 4
+    },
+    {
+        "terrain": "desert",
+        "x": 2,
+        "y": 4
+    },
+    {
+        "terrain": "grass",
+        "x": 10,
+        "y": 10
+    },
+    {
+        "terrain": "desert",
+        "x": -4,
+        "y": 4
+    },
+    {
+        "terrain": "desert",
+        "x": -4,
+        "y": 3
+    },
+    {
+        "terrain": "desert",
+        "x": -5,
+        "y": 4
+    },
+    {
+        "terrain": "desert",
+        "x": -6,
+        "y": 4
+    },
+    {
+        "terrain": "desert",
+        "x": -8,
+        "y": 5
+    },
+    {
+        "terrain": "desert",
+        "x": 0,
+        "y": 3
+    },
+    {
+        "terrain": "desert",
+        "x": 1,
+        "y": 3
     }
 ]
