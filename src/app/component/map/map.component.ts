@@ -90,7 +90,7 @@ export class MapComponent implements OnInit {
       ],
     };
 
-    const mapView = new MapView(this.canvasRef);
+    const mapView = new MapView(this.canvasRef,continent as Continent);
     mapView.load(map, options);
     initInput(mapView);
     const controller = mapView.controller as Controller;
