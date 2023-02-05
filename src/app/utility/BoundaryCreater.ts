@@ -14,9 +14,8 @@ export class ContinentBoundaryCreater {
         this._scene = scene;
     }
 
-    drawLine(continent: Continent, colorCode = "0xff0000",) {
+    drawLine(continent: Continent, colorCode = "white") {
         const sides = this.getContinentBoundaryData(continent);
-        
         sides.map(x => {
             const geometry = new BufferGeometry().setFromPoints(x);
             const material = new LineBasicMaterial({ color: colorCode, fog: true, linewidth: 5 });

@@ -32,6 +32,7 @@ import ChunkedLazyMapMesh from './ChunkedLazyMapMesh';
 import { MapMeshOptions } from './MapMesh';
 import { ContinentBoundaryCreater } from './BoundaryCreater';
 import { Continent } from '../models/continents';
+import { TextCreater } from '../utility/TextCreater';
 
 export default class MapView implements MapViewControls, TileDataSource {
   private static DEFAULT_ZOOM = 50;
@@ -56,7 +57,7 @@ export default class MapView implements MapViewControls, TileDataSource {
   private _onLoaded: () => void;
   private _onAnimate: (dtS: number) => void = (dtS) => { };
 
-  private selectedContinent : Continent;
+  private selectedContinent: Continent;
 
   public get camera(): PerspectiveCamera {
     return this._camera;
@@ -145,7 +146,7 @@ export default class MapView implements MapViewControls, TileDataSource {
 
   public scrollSpeed: number = 10;
 
-   constructor(ref, continent: Continent) {
+  constructor(ref, continent: Continent) {
     this.selectedContinent = continent;
     const canvas = (this._canvas = ref.nativeElement);
     const camera = (this._camera = new PerspectiveCamera(
@@ -164,7 +165,7 @@ export default class MapView implements MapViewControls, TileDataSource {
         'Your browser is not supported (missing extension ANGLE_instanced_arrays)'
       );
     }
-    
+
     renderer.setClearColor(0x4e6597);
     renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -199,6 +200,7 @@ export default class MapView implements MapViewControls, TileDataSource {
       console.info(
         'using single MapMesh for ' + tiles.width * tiles.height + ' tiles'
       );
+
     } else {
       const mesh =
         (this._mapMesh =
@@ -216,8 +218,19 @@ export default class MapView implements MapViewControls, TileDataSource {
         ' tiles'
       );
     }
-    const boundary = new ContinentBoundaryCreater(this._scene); 
+    const boundary = new ContinentBoundaryCreater(this._scene);
     boundary.drawLine(this.selectedContinent);
+    this.createTileLabel();
+  }
+
+  async createTileLabel(){
+    const textCreater = new TextCreater(this._scene);
+    this.getTileGrid().toArray().map((tile: TileData) => {
+      const worldPos = qrToWorld(tile.q, tile.r);
+      if (tile.terrain != 'ocean') {
+        textCreater.createText(worldPos, `(${tile.r},${tile.q})`)
+      }
+    });
   }
 
   updateTiles(tiles: TileData[]) {
@@ -301,12 +314,13 @@ export default class MapView implements MapViewControls, TileDataSource {
   selectTile(tile: TileData) {
     const worldPos = qrToWorld(tile.q, tile.r);
     // Tile Selector
-    if(tile.terrain !='ocean'){
+    if (tile.terrain != 'ocean') {
       this._tileSelector.position.set(worldPos.x, worldPos.y, 0.1);
     }
     if (this._onTileSelected) {
       this._onTileSelected(tile);
     }
+
   }
 
   pickTile(worldPos: Vector3): TileData | null {

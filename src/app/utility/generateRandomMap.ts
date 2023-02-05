@@ -91,7 +91,7 @@ function generateRivers(grid: Grid<TileData>): Grid<TileData> {
 
       const next =
         neighbors[
-          Math.max(neighbors.length - 1, Math.floor(Math.random() * 1.2))
+        Math.max(neighbors.length - 1, Math.floor(Math.random() * 1.2))
         ];
       river.push(next);
 
