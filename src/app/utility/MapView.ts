@@ -220,7 +220,7 @@ export default class MapView implements MapViewControls, TileDataSource {
     }
     const boundary = new ContinentBoundaryCreater(this._scene);
     boundary.drawLine(this.selectedContinent);
-    this.createTileLabel();
+    // this.createTileLabel();
   }
 
   async createTileLabel(){
@@ -228,7 +228,7 @@ export default class MapView implements MapViewControls, TileDataSource {
     this.getTileGrid().toArray().map((tile: TileData) => {
       const worldPos = qrToWorld(tile.q, tile.r);
       if (tile.terrain != 'ocean') {
-        textCreater.createText(worldPos, `(${tile.r},${tile.q})`)
+        textCreater.createText(worldPos, `(${tile.r},${tile.q})`, tile)
       }
     });
   }

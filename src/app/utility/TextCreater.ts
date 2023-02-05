@@ -2,6 +2,7 @@ import { Vector3, MeshBasicMaterial, Mesh, Scene, Color } from "three";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 import { Font, FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import font from 'src/assets/fonts/helvetiker_regular.typeface.json'
+import { TileData } from "./interfaces";
 export class TextCreater {
     private font: Font;
     private scene: Scene;
@@ -17,7 +18,7 @@ export class TextCreater {
         this.font = fontLoader.parse(font);
     }
 
-    public createText(pos: Vector3, text: string, color: string = '#ffffff', size: number = 0.2, height: number = 0.02) {
+    public createText(pos: Vector3, text: string, tile : TileData,color: string = '#ffffff', size: number = 0.2, height: number = 0.02) {
 
         const colorValue = parseInt(color.replace("#", "0x"), 16);
         const colorCode = new Color(colorValue);
@@ -35,7 +36,7 @@ export class TextCreater {
         const textMesh = new Mesh(textGeo, textMaterial);
 
         // set the position of the text
-        textMesh.position.set(pos.x - 0.4, pos.y, pos.z);
+        textMesh.position.set(pos.x-0.3, pos.y, pos.z);
 
         // add the text to the scene
         this.scene.add(textMesh)
