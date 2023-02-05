@@ -98,7 +98,7 @@ export class MapComponent implements OnInit {
     mapView.onLoaded = () => {};
 
     mapView.onTileSelected = (tile: TileData) => {
-      // console.log(tile);
+      console.log(tile);
     };
   }
 }
