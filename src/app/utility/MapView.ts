@@ -30,6 +30,8 @@ import {
 } from './coords';
 import ChunkedLazyMapMesh from './ChunkedLazyMapMesh';
 import { MapMeshOptions } from './MapMesh';
+import { ContinentBoundaryCreater } from './BoundaryCreater';
+import { Continent } from '../models/continents';
 
 export default class MapView implements MapViewControls, TileDataSource {
   private static DEFAULT_ZOOM = 50;
@@ -53,6 +55,8 @@ export default class MapView implements MapViewControls, TileDataSource {
   private _onTileSelected: (tile: TileData) => void;
   private _onLoaded: () => void;
   private _onAnimate: (dtS: number) => void = (dtS) => { };
+
+  private selectedContinent : Continent;
 
   public get camera(): PerspectiveCamera {
     return this._camera;
@@ -141,7 +145,8 @@ export default class MapView implements MapViewControls, TileDataSource {
 
   public scrollSpeed: number = 10;
 
-   constructor(ref) {
+   constructor(ref, continent: Continent) {
+    this.selectedContinent = continent;
     const canvas = (this._canvas = ref.nativeElement);
     const camera = (this._camera = new PerspectiveCamera(
       30,
@@ -211,6 +216,8 @@ export default class MapView implements MapViewControls, TileDataSource {
         ' tiles'
       );
     }
+    const boundary = new ContinentBoundaryCreater(this._scene); 
+    boundary.drawLine(this.selectedContinent);
   }
 
   updateTiles(tiles: TileData[]) {
