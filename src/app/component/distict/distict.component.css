@@ -13,11 +13,16 @@
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(7, 1fr);
   margin: 5px;
+  border-bottom: 1px solid grey;
+  border-right: 1px solid grey;
 }
 
 .grid-item {
   width: 75px;
-  height: 75px
+  height: 75px;
+  border-left: 1px solid grey;
+  border-top: 1px solid grey;
+  margin: -1px;
 }
 
 

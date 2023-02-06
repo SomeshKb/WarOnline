@@ -20,7 +20,7 @@ export class DistictComponent {
   title = 'World';
   noOfBase = 49;
   ownArmy = 'self';
-  armies = [1, 2, 3, 4, 5, 61, 2, 3, 4, 5, 6,1, 2, 3, 4, 5, 61, 2, 3, 4, 5, 6,1, 2,1];
+  armies = [1, 2, 3];
 
   selectedArmy = null;
 
