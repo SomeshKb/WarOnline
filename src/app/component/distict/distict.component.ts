@@ -7,7 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { HexGeneratorService } from 'src/app/services/hex-generator.service';
+import { TileData } from './../../utility/interfaces';
 import { BaseComponent } from '../base/base.component';
 
 @Component({
@@ -16,25 +16,20 @@ import { BaseComponent } from '../base/base.component';
   styleUrls: ['./distict.component.css'],
 })
 export class DistictComponent {
-  tileID = null;
+  tile = null;
   title = 'World';
-  noOfRow = 10;
-  noOfCol = 10;
-
-  gridArray = [3, 4, 5, 6, 7, 6, 5, 4, 3];
-  largestRow = 7;
+  noOfBase = 49;
   ownArmy = 'self';
-  armies = [1, 2, 3, 4, 5, 6];
+  armies = [1, 2, 3, 4, 5, 61, 2, 3, 4, 5, 6,1, 2, 3, 4, 5, 61, 2, 3, 4, 5, 6,1, 2,1];
 
   selectedArmy = null;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { tileID: string },
-    private hexGenerator: HexGeneratorService,
+    @Inject(MAT_DIALOG_DATA) public data: TileData,
     public dialog: MatDialog
   ) {
-    this.tileID = data.tileID;
-    console.log(this.tileID);
+    this.tile = data;
+    console.log(this.tile);
   }
 
   onClick(i: number, j: number) {
@@ -52,7 +47,25 @@ export class DistictComponent {
     this.selectedArmy = [
       { unit: 'A1', count: 345 },
       { unit: 'A3', count: 89 },
+      { unit: 'A2', count: 69 },      { unit: 'A3', count: 89 },
+      { unit: 'A2', count: 69 },      { unit: 'A3', count: 89 },
+      { unit: 'A2', count: 69 },      { unit: 'A3', count: 89 },
+      { unit: 'A2', count: 69 },      { unit: 'A3', count: 89 },
+      { unit: 'A2', count: 69 },
+      { unit: 'A2', count: 69 },      { unit: 'A3', count: 89 },
+      { unit: 'A2', count: 69 },      { unit: 'A3', count: 89 },
+      { unit: 'A2', count: 69 },      { unit: 'A3', count: 89 },
+      { unit: 'A2', count: 69 },     { unit: 'A2', count: 69 },      { unit: 'A3', count: 89 },
+      { unit: 'A2', count: 69 },      { unit: 'A3', count: 89 },
+      { unit: 'A2', count: 69 },      { unit: 'A3', count: 89 },
+      { unit: 'A2', count: 69 },     { unit: 'A2', count: 69 },      { unit: 'A3', count: 89 },
+      { unit: 'A2', count: 69 },      { unit: 'A3', count: 89 },
+      { unit: 'A2', count: 69 },      { unit: 'A3', count: 89 },
       { unit: 'A2', count: 69 },
     ];
+  }
+
+  numSequence(n: number): Array<number> {
+    return Array(n);
   }
 }

@@ -13,6 +13,8 @@ import { TileData } from 'src/app/utility/interfaces';
 import { ActivatedRoute } from '@angular/router';
 import { Continent } from 'src/app/models/continents';
 import terrainAtlas from 'src/assets/land-atlas.json';
+import { MatDialog } from '@angular/material/dialog';
+import { DistictComponent } from '../distict/distict.component';
 
 @Component({
   selector: 'app-map',
@@ -24,7 +26,7 @@ export class MapComponent implements OnInit {
   @ViewChild('text') textRef: ElementRef;
   @ViewChild('debug') debugRef: ElementRef;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute,public dialog: MatDialog) {}
 
   async ngOnInit(): Promise<void> {
     const mapSize = 48;
@@ -98,7 +100,7 @@ export class MapComponent implements OnInit {
     mapView.onLoaded = () => {};
 
     mapView.onTileSelected = (tile: TileData) => {
-      // console.log(tile);
+      this.dialog.open(DistictComponent, {data : tile});
     };
   }
 }
