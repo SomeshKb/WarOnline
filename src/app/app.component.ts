@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BufferGeometry, LineBasicMaterial, Line } from 'three';
 import { TestService } from '../app/test.service';
-
+import asia from "src/assets/map-data/asia-boundary.json"
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,7 +9,7 @@ import { TestService } from '../app/test.service';
 })
 export class AppComponent {
 
-  selectedSides = []
+  selectedSides = asia;
   _scene
   selectedIndex = [false, false, false, false, false, false]
   sides = [];
@@ -30,6 +30,7 @@ export class AppComponent {
   }
 
   selection() {
+    console.log(this.sides)
     this.selectedIndex.map((x, index) => {
       if (x == true) {
         this.selectedSides.push(this.sides[index])
