@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BufferGeometry, LineBasicMaterial, Line } from 'three';
 import { TestService } from '../app/test.service';
-import asia from "src/assets/map-data/asia-boundary.json"
+import asia from "src/assets/map-data/south-america-boundary.json"
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
