@@ -40,3 +40,7 @@ button {
 ::-webkit-scrollbar-thumb {
   border-radius: 1px;
 }
+
+.train-base-wrapper{
+  background-color: #767676;
+}

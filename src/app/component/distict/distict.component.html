@@ -1,6 +1,8 @@
 
 <div class="grid-container">
-  <div class="grid-item" *ngFor="let item of numSequence(noOfBase)">item</div>
+  <div class="grid-item" *ngFor="let item of numSequence(noOfBase);let i=index">
+    <span (click)="openBaseDialog(i)" ><i class="fa-solid fa-plus"></i></span>
+  </div>
 </div>
 <div class="distict-details">
   <div class="heading">({{tile.q}},{{tile.r}}) </div>

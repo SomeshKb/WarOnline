@@ -19,13 +19,19 @@
 
 .grid-item {
   width: 75px;
-  height: 75px;
   border-left: 1px solid grey;
   border-top: 1px solid grey;
-  margin: -1px;
+  background-color: #acacac;
 }
 
-
+.grid-item>span {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 12px;
+}
 
 .distict-name {
   color: #fff;

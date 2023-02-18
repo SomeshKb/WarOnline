@@ -1,36 +1,55 @@
 <!-- <ng-container *ngIf="!trainUnit; then ownerTemplate; else enemyTemplate"></ng-container> -->
 <!-- <img class="base-img" [src]="baseImage"> -->
 
-<div class="base-img" [style.background-image]="'url(/' + baseImage + ')'">
-  <div class="action-panel">
-    <div class="user-info">
-      <div class="player-pic"></div>
-      <div class="player-info">
-        <span>Devil Hunter</span>
-        <span>India</span>
-        <span>Level</span>
-      </div>
-    </div>
-
-    <div class="action">
-      <div class="Attack"></div>
-      <div class="Attack"></div>
-    </div>
-  </div>
-
-  <div class="unit-panel">
-    <div class="action-army">
-      <div class="armies-wrapper">
-        <div class="armies" *ngFor="let armyCount of units; let i = index">
-          {{ armyCount }}
+<span class="close-icon" (click)="closeDialog()">
+  <i class="fa-solid fa-xmark"></i>
+</span>
+<div class="wrapper">
+  <div class="base-img" [style.background-image]="'url(/' + baseImage + ')'">
+    <div class="action-panel">
+      <div class="user-info">
+        <div class="player-pic"></div>
+        <div class="player-info">
+          <span>Devil Hunter</span>
+          <span>India</span>
+          <span>Level</span>
         </div>
       </div>
+
+      <div class="action">
+        <div class="Attack"></div>
+        <div class="Attack"></div>
+      </div>
     </div>
 
-    <div class="action-army">
-      <div class="armies-wrapper">
-        <div class="armies" *ngFor="let armyCount of units; let i = index">
-          {{ armyCount }}
+    <div class="unit-panel">
+      <div class="action-army">
+        <div class="armies-wrapper">
+          <div class="armies" *ngFor="let armyCount of numSequence(6); let i = index">
+            <ng-container *ngIf="true; else elseTemplate">
+              <div (click)="openArmy()" >
+                <span><i class="fa-solid fa-plus"></i></span>
+              </div>
+            </ng-container>
+            <ng-template #elseTemplate>
+
+            </ng-template>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-army">
+        <div class="armies-wrapper">
+          <div class="armies" *ngFor="let armyCount of numSequence(6); let i = index">
+            <ng-container *ngIf="true; else elseTemplate">
+              <div>
+                <i class="fa-regular fa-circle"></i>
+              </div>
+            </ng-container>
+            <ng-template #elseTemplate>
+
+            </ng-template>
+          </div>
         </div>
       </div>
     </div>

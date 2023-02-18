@@ -68,4 +68,22 @@ export class DistictComponent {
   numSequence(n: number): Array<number> {
     return Array(n);
   }
+
+
+  openBaseDialog(index: number) {
+    this.dialog.closeAll();
+    const baseDialog = this.dialog.open(BaseComponent, {data  : {tile : this.tile, baseIndex: index }});
+    baseDialog.afterClosed().subscribe(()=>{
+      this.openDistict(this.tile);
+    });
+  }
+
+  closeDialog(){
+    this.dialog.closeAll();
+  }
+
+  openDistict(tile){
+    this.dialog.open(DistictComponent, {data : tile});
+  }
+
 }
